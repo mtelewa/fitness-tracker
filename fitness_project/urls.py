@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from nutrition_guide.views import index
+from nutrition_guide.views import index 
 
 urlpatterns = [
     path('nutrition_guide/', index, name='nutrition_guide'),
