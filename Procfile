@@ -1,1 +1,1 @@
-web: gunicorn fitness_project.wsgi
+web: gunicorn fitness_tracker.wsgi
