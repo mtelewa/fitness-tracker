@@ -20,5 +20,6 @@ from nutrition_guide.views import index
 
 urlpatterns = [
     path("fitness_tracker/", include("nutrition_guide.urls"), name="nutrition_guide-urls"),
+    path('summernote/', include('django_summernote.urls')),
     path('admin/', admin.site.urls),
 ]
