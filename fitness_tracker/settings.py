@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'dashboard',
 ]
 
+# Allauth constants 
 SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
@@ -130,7 +131,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 
 # Internationalization
