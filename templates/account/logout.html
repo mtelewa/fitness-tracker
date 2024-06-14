@@ -1,32 +1,34 @@
 {% extends "base.html" %}
 {% load allauth i18n %}
 
-{% block head_title %} {% trans "Sign Out" %}{% endblock head_title %}
+{% block head_title %}
+    {% trans "Sign Out" %}
+{% endblock head_title %}
 
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 mt-3 offset-md-2">
-                <h2> {% trans "Sign Out" %} </h2>
-                <p> {% trans 'Are you sure you want to sign out?' %} </p>   
-            </div>
-        </div>
-    
-        <div class="row">
-            <div class="col-md-8 mt-3 offset-md-2">
-                <form method="post" action=account_url no_visible_fields=True> </form>
 
-                        {% csrf_token %}
-                        {{ redirect_field }}
-
-                        <!-- {% if redirect_field_value %}
-                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-                        {% endif %} -->
-
-                        <button class="btn btn-signup right" type="submit">{% trans 'Sign Out' %}</button>
-
-                </form>
-            </div>
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-8 mt-3 offset-md-2">
+            <h2> {% trans "Sign Out" %} </h2>
+            <p> {% trans 'Are you sure you want to sign out?' %} </p>   
         </div>
     </div>
-{% endblock%}
+    
+    <div class="row">
+        <div class="col-md-8 mt-3 offset-md-2">
+            {% url 'account_logout' as action_url %}
+            {% element form method="post" action=action_url no_visible_fields=True %}
+                {% slot body %}
+                    {% csrf_token %}
+                    {{ redirect_field }}
+                {% endslot %}
+                {% slot actions %}
+                    <button class="btn btn-danger right" type="submit">{% trans 'Sign Out' %}</button>
+                {% endslot %}
+            {% endelement %}
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
