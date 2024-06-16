@@ -1,13 +1,22 @@
+body {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
 
-/* #nav-login {
-    margin-left: auto;
-} */
+/* Trim images overflowing from skewness */
 
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
 
 /* Colors */
 
 .image-home--bg-color {
-    background-color: rgb(0, 0, 0, 0.4);
+    background-color: rgb(0, 0, 0, 0.5);
 }
 
 
@@ -38,12 +47,10 @@
     height: 100%;
 }
 
-
 #image-swim {
     background: url("../images/swimming.webp") no-repeat center;
     background-size: cover;
 }
-
 
 #image-lift {
     background: url("../images/lifting.webp") no-repeat center;
@@ -77,6 +84,8 @@
 }
 
 
+/* Buttons */
+
 .btn--red {
     background-color: #f05f40;
     border-color: #f05f40;
@@ -96,5 +105,21 @@
 .btn--red:active:focus {
     background-color: #df4929;
     border-color: #df4929;
+    color: white;
+}
+
+/* Stars rating */
+
+.checked {
+    color: orange;
+  }
+
+
+/* footer container */
+
+#footer-box{
+    width: 100%;
+    margin: auto;
+    padding: 10px 15px;
     color: white;
 }
