@@ -26,7 +26,7 @@ def index(request):
 
     return render(
         request,
-        "activity/index.html",
+        "dashboard/index.html",
         {
             "activity": activity,
         }
