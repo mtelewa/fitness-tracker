@@ -32,7 +32,7 @@
   </svg>
 
 
-  <main>
+  <main class="bg-light">
 
     <!-- authenticated users see the sidebar with only icons for small displays
      and icons and text for medium and large displays -->
@@ -47,7 +47,7 @@
       </a>
       <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
         <li class="nav-item sidebar-item">
-          <a href="#" class="nav-link py-3 active border-bottom text-white" aria-current="page" title="Home" data-bs-toggle="tooltip" data-bs-placement="right">
+          <a href="{% url 'home' %}" class="nav-link py-3 active border-bottom text-white" aria-current="page" title="Home" data-bs-toggle="tooltip" data-bs-placement="right">
             <i class="fa-solid fa-house fa-lg"></i>
           </a>
         </li>
@@ -83,10 +83,10 @@
         </li>
       </ul>
       <div class="dropdown border-top">
-        <a href="#" class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
+        <a href="#" class="d-flex align-items-center text-white justify-content-center p-3 text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
           <img src="https://github.com/mdo.png" alt="mdo" width="24" height="24" class="rounded-circle">
         </a>
-        <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">
+        <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser3">
           <li><a class="dropdown-item" href="#">Profile</a></li>
           <li><a class="dropdown-item" href="#">New Session</a></li>
           <li><hr class="dropdown-divider"></li>
@@ -104,7 +104,7 @@
       <hr>
       <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-          <a href="#" class="nav-link active" aria-current="page">
+          <a href="{% url 'home' %}" class="nav-link active" aria-current="page">
             <i class="fa-solid fa-house"></i> &nbsp; Home
           </a>
         </li>
@@ -154,7 +154,7 @@
       </div>
     </div>
 
-    {% block content %}
+    {% block logout %}
     {% endblock %}
 
     <!-- Non-authenticated users -->
@@ -162,7 +162,7 @@
     {% else %}
 
     <!-- Navigation bar -->
-    <div class="container-fluid">
+    <div class="container-fluid px-0">
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
           <!-- <a class="navbar-brand" href="#">Navbar</a> -->
@@ -188,11 +188,15 @@
 
       {% block login %}
       {% endblock %}
+
+      {% block content %}
+      {% endblock %}
   
     </div>
 
 
     {% endif %}
+
 
 
 
