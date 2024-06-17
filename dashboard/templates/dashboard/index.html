@@ -1,14 +1,72 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block content %}
 
 {% if user.is_authenticated %}
 
-<div></div>
+{% block dashboard %}
 
+
+<div class="container-fluid">
+    <h1 class="p-5"> Your Summary</h1>
+
+    <div id="dashboard" class=" dashboard--bg-color container d-flex flex-row justify-content-center dashboard-border--shadow p-5 mx-auto">
+        <div class="row gy-2" >
+            <div class="card col-md-12 col-lg-6 bg-light dashboard-item-border--shadow" >
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">Profile</h5>
+                    <p class="card-text"> 
+                        <span> Weight: </span> <span> 90 kg </span> <br>
+                        <span> Height: </span> <span> 190 m </span> <br>
+                        <span> BMI: </span> <span> {{ bmi }} </span>
+                    </p>
+                    <div class="align-self-end">
+                        <button href="#" class="btn btn-md btn-primary"> View History </button>
+                        <button href="#" class="btn btn-md btn-success"> Update Measures </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card col-md-12 col-lg-6 bg-light dashboard-item-border--shadow" >
+                <div class="card-body">
+                    <h5 class="card-title">Calendar</h5>
+                    <p class="card-text">
+                        Some quick example text to build on the card title and make up the bulk of the card's content.
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit, explicabo a. Voluptates, quam commodi provident asperiores ipsam odio magnam necessitatibus laborum amet soluta architecto saepe, dignissimos sit vitae, unde similique?
+                    </p>
+                    <a href="#" class="card-link">Card link</a>
+                </div>
+            </div>
+            <div class="card col-md-12 col-lg-6 bg-light dashboard-item-border--shadow" >
+                <div class="card-body">
+                    <h5 class="card-title">Activity</h5>
+                    <p class="card-text">
+                        Some quick example text to build on the card title and make up the bulk of the card's content.
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit, explicabo a. Voluptates, quam commodi provident asperiores ipsam odio magnam necessitatibus laborum amet soluta architecto saepe, dignissimos sit vitae, unde similique?
+                    </p>
+                    <a href="#" class="card-link">Card link</a>
+                </div>
+            </div>
+            <div class="card col-md-12 col-lg-6 bg-light dashboard-item-border--shadow" >
+                <div class="card-body">
+                    <h5 class="card-title">Nutrition</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <button class="btn btn-md btn-primary"> View History </button>
+                    <button class="btn btn-md btn-success"> New Session </button>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+{% endblock %}
 
 {% else %}
+
+{% block content %}
 
 <!-- Signup -->
 <section>
@@ -96,7 +154,7 @@
     </div>
 </section>
 
+{% endblock %}
 
 {% endif %}
 
-{% endblock %}
