@@ -13,4 +13,4 @@ class ActivityAdmin(admin.ModelAdmin):
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('weight', 'height', )
+    list_display = ('user', 'weight', 'height', 'birthdate',)
