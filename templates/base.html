@@ -37,25 +37,18 @@
     <!-- authenticated users see the sidebar with only icons for small displays
      and icons and text for medium and large displays -->
 
-    <section> </section>
-    <!-- For small displays -->
+
 
     {% if user.is_authenticated %}
-
-    <div class="d-flex d-md-none flex-column col-xs-3 flex-shrink-0 bg-dark" >
-      <a href="/" class="d-block py-3 mx-auto text-decoration-none text-white" title="title" data-bs-toggle="tooltip" data-bs-placement="right">
+    
+    <!-- For small displays -->
+    <div class="sidebar sidebar--sticky d-md-none d-flex flex-column col-xs-3 flex-shrink-0 text-white bg-dark" >
+      <a href="/" class="d-block text-decoration-none text-white py-3 mx-auto" title="title" data-bs-toggle="tooltip" data-bs-placement="right">
         <i class="fa-solid fa-heart-pulse fa-2xl"></i>
       </a>
       <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
-
-        <!-- <li >
-          <a href="" class="nav-link py-3  border-bottom text-white"  title="Home" data-bs-toggle="tooltip" data-bs-placement="right">
-            <i class="fa-solid fa-house fa-lg"></i>
-          </a>
-        </li> -->
-
         <li class="nav-item sidebar-item">
-          <a href="{% url 'home' %}" class="nav-link py-3 active border-bottom text-white" aria-current="page" title="Dashboard" data-bs-toggle="tooltip" data-bs-placement="right">
+          <a href="{% url 'home' %}" class="nav-link py-3 active border-bottom " aria-current="page" title="Dashboard" data-bs-toggle="tooltip" data-bs-placement="right">
             <i class="fa-solid fa-gauge fa-lg"></i>
           </a>
         </li>
@@ -99,8 +92,7 @@
     </div>
 
     <!-- For medium and large displays -->
-
-    <div class="sidebar d-none d-md-flex flex-column col-lg-3 flex-shrink-0 p-3 text-white bg-dark">
+    <div class="sidebar sidebar--sticky d-none d-md-flex flex-column col-lg-3 flex-shrink-0 p-3 text-white bg-dark">
       <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
         <i class="fa-solid fa-heart-pulse fa-xl"></i> &nbsp; <span class="fs-4">Fitness Tracker</span>
       </a>
@@ -151,6 +143,7 @@
         </ul>
       </div>
     </div>
+    
 
     {% block logout %}
     {% endblock %}
