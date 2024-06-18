@@ -47,3 +47,5 @@ class Profile(models.Model):
     height = models.IntegerField()
     weight = models.FloatField()
     profile_image = CloudinaryField('image', default="placeholder")
+    birthdate = models.DateField()
+
