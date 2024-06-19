@@ -27,7 +27,7 @@ def index(request):
 
     # # activity = Activity.objects.all()
 
-    # user = Profile.objects.get(user=request.user.id)
+    user = Profile.objects.get(user=request.user)
     # print(user)
     # weight = user.weight
     # height = user.height
