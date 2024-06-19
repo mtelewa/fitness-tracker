@@ -29,9 +29,9 @@ def index(request):
 
     user = Profile.objects.get(user=request.user)
     # print(user)
-    # weight = user.weight
-    # height = user.height
-    # birthdate = user.birthdate
+    weight = user.weight
+    height = user.height
+    birthdate = user.birthdate
 
     # # Body Mass Index (BMI)
     # bmi_unrounded = weight / (height/100)**2    # kg/m2
