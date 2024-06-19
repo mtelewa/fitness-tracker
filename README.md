@@ -11,3 +11,7 @@ https://www.freepik.com/free-photo/kayaking-man-paddling-kayak-canoeing-paddling
 
 
 https://www.freepik.com/free-photo/low-angle-view-unrecognizable-muscular-build-man-preparing-lifting-barbell-health-club_25743546.htm#fromView=search&page=1&position=0&uuid=e541bca9-0193-4687-b077-c0d88bc50b43
+
+
+Color-Palette
+https://www.pinterest.com/pin/128563764357456253/
