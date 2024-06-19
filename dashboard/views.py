@@ -54,14 +54,11 @@ def index(request):
         classification = 'Obese Class III'
 
     # Age
-    # today = datetime.date.today()
-    
-    # age = relativedelta(today, birthdate).years
     age = (date.today() - birthdate) // timedelta(days=365.2425)
     
     # Basal Metabolic Rate (BMR)
     # Revised Harris-Benedict Equation (for Men - just for illustration)
-    # bmr = np.round(13.397 * weight + 4.799 * height - 5.677 * age + 88.362)
+    bmr = np.round(13.397 * weight + 4.799 * height - 5.677 * age + 88.362)
 
     return render(
         request,
@@ -72,6 +69,6 @@ def index(request):
             'weight': weight,
             'height': height,
             'age': age,
-        #     # 'bmr': bmr,
+            'bmr': bmr,
         }
     )
