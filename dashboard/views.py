@@ -28,7 +28,6 @@ def index(request):
     # # activity = Activity.objects.all()
 
     user = Profile.objects.get(user=request.user)
-    # print(user)
     weight = user.weight
     height = user.height
     birthdate = user.birthdate
@@ -37,22 +36,22 @@ def index(request):
     bmi_unrounded = weight / (height/100)**2    # kg/m2
     bmi = np.round(bmi_unrounded, 2)
 
-    # if bmi < 16:
-    #     classification = 'Severe Thinness'
-    # elif bmi >= 16 and bmi < 17:
-    #     classification = 'Moderate Thinness'
-    # elif bmi >= 17 and bmi < 18.5:
-    #     classification = 'Mild Thinness'
-    # elif bmi >= 18.5 and bmi < 25:
-    #     classification = 'Normal'
-    # elif bmi >= 25 and bmi < 30:
-    #     classification = 'Overweight'
-    # elif bmi >= 30 and bmi < 35:
-    #     classification = 'Obese Class I'
-    # elif bmi >=35 and bmi < 40:
-    #     classification = 'Obese Class II'
-    # else:
-    #     classification = 'Obese Class III'
+    if bmi < 16:
+        classification = 'Severe Thinness'
+    elif bmi >= 16 and bmi < 17:
+        classification = 'Moderate Thinness'
+    elif bmi >= 17 and bmi < 18.5:
+        classification = 'Mild Thinness'
+    elif bmi >= 18.5 and bmi < 25:
+        classification = 'Normal'
+    elif bmi >= 25 and bmi < 30:
+        classification = 'Overweight'
+    elif bmi >= 30 and bmi < 35:
+        classification = 'Obese Class I'
+    elif bmi >=35 and bmi < 40:
+        classification = 'Obese Class II'
+    else:
+        classification = 'Obese Class III'
 
     # # Age
     # # today = datetime.date.today()
@@ -67,9 +66,9 @@ def index(request):
         "dashboard/index.html",
         {
             'bmi': bmi,
-        #     'classification': classification,
-        #     'weight': weight,
-        #     'height': height,
+            'classification': classification,
+            'weight': weight,
+            'height': height,
         #     # 'age': age,
         #     # 'bmr': bmr,
         }
