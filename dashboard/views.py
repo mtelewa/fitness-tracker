@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Activity, Profile
 import numpy as np
-# from dateutil.relativedelta import relativedelta
 import datetime
+from dateutil.relativedelta import relativedelta
 
 # Create your views here.
 
@@ -53,13 +53,13 @@ def index(request):
     else:
         classification = 'Obese Class III'
 
-    # # Age
-    # # today = datetime.date.today()
-    # # age = relativedelta(today, birthdate).years
+    # Age
+    today = datetime.date.today()
+    age = relativedelta(today, birthdate).years
     
-    # # Basal Metabolic Rate (BMR)
-    # # Revised Harris-Benedict Equation (for Men - just for illustration)
-    # # bmr = np.round(13.397 * weight + 4.799 * height - 5.677 * age + 88.362)
+    # Basal Metabolic Rate (BMR)
+    # Revised Harris-Benedict Equation (for Men - just for illustration)
+    # bmr = np.round(13.397 * weight + 4.799 * height - 5.677 * age + 88.362)
 
     return render(
         request,
