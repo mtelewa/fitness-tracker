@@ -59,7 +59,7 @@ def index(request):
     
     # Basal Metabolic Rate (BMR)
     # Revised Harris-Benedict Equation (for Men - just for illustration)
-    bmr = np.round(13.397 * weight + 4.799 * height - 5.677 * age + 88.362)
+    # bmr = np.round(13.397 * weight + 4.799 * height - 5.677 * age + 88.362)
 
     return render(
         request,
@@ -69,7 +69,7 @@ def index(request):
             'classification': classification,
             'weight': weight,
             'height': height,
-            'age': age,
-            'bmr': bmr,
+            # 'age': age,
+            # 'bmr': bmr,
         }
     )
