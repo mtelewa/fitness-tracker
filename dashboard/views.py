@@ -33,9 +33,9 @@ def index(request):
     height = user.height
     birthdate = user.birthdate
 
-    # # Body Mass Index (BMI)
-    # bmi_unrounded = weight / (height/100)**2    # kg/m2
-    # bmi = np.round(bmi_unrounded, 2)
+    # Body Mass Index (BMI)
+    bmi_unrounded = weight / (height/100)**2    # kg/m2
+    bmi = np.round(bmi_unrounded, 2)
 
     # if bmi < 16:
     #     classification = 'Severe Thinness'
@@ -65,12 +65,12 @@ def index(request):
     return render(
         request,
         "dashboard/index.html",
-        # {
-        #     'bmi': bmi,
+        {
+            'bmi': bmi,
         #     'classification': classification,
         #     'weight': weight,
         #     'height': height,
         #     # 'age': age,
         #     # 'bmr': bmr,
-        # }
+        }
     )
