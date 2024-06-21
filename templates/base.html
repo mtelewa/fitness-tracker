@@ -50,7 +50,7 @@
       </a>
       <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
         <li class="nav-item sidebar-item">
-          <a href="{% url 'home' %}" class="nav-link py-3 active border-bottom " aria-current="page" title="Dashboard" data-bs-toggle="tooltip" data-bs-placement="right">
+          <a href="{% url 'home' %}" class="nav-link py-3 {% if request.path == home_url %}active {% endif %} border-bottom " aria-current="page" title="Dashboard" data-bs-toggle="tooltip" data-bs-placement="right">
             <i class="fa-solid fa-gauge fa-lg"></i>
           </a>
         </li>
