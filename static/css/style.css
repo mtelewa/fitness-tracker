@@ -208,3 +208,10 @@ hr.h-divider {
     opacity: 0.75
 }
 
+
+/* Form input */
+
+#id_weight,
+#id_weight_target {
+    width: 25%;
+}
