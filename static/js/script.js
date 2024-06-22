@@ -13,7 +13,7 @@
 const updateButton = $('.btn-update');
 const cardText = $('.card-text')
 const weightText = $('#id_weight');
-const targetWeightText = $('#id_target_weight');
+const targetWeightText = $('#id_weight_target');
 const heightText = $('#id_height');
 
 $(document).ready(function(){
@@ -35,7 +35,7 @@ $(document).ready(function(){
     let weight = $('#weight-val');
     weightText.val(weight.text());
 
-    let targetWeight = $('#target-weight-val');
+    let targetWeight = $('#weight-target-val');
     targetWeightText.val(targetWeight.text());
 
     let height = $('#height-val');
