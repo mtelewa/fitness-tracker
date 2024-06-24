@@ -4,12 +4,9 @@
 {% load crispy_forms_tags %}
 {% crispy metrics_form metrics_form.helper %}
 
-{% url 'profile' as profile_url %}
-
 {% if user.is_authenticated %}
 
 {% block dashboard %}
-
 
 <div class="col-xs-9">
        <!-- displaying Django messages -->
@@ -35,24 +32,13 @@
                     <h3 class="card-title">Profile</h3>
                     <h5> Current Metrics </h5>
                     <p class="card-text"> 
-                        <!-- <span class="show-hide"> Height: </span> 
-                        <span class="show-hide" id="height-val">{{ height }}</span>
-                        <span class="show-hide"> cm </span>  <br> -->
-                        
                         <span class="show-hide"> Weight: </span> 
                         <span class="show-hide" id="weight-val">{{ weight }}</span>
                         <span class="show-hide"> kg </span>  <br>
-
-                        <!-- <span class="show-hide"> Age: </span> 
-                        <span class="show-hide" id="age-val">{{ age }}</span>
-                        <span class="show-hide"> years </span>  <br> -->
                     </p>
-                    <form class="hide-show d-none form-inline" method="post">
-                        <!-- {{ metrics_form | crispy }} -->
+                    <form class="hide-show d-none" method="post">
                         {% crispy metrics_form %}
                         {% csrf_token %}
-                        <!-- <button class="submitButton" type="submit"
-                        class="btn btn-signup btn-lg">Submit</button> -->
                     </form>
                     <p>
                         <span> BMI: </span> <span> {{ bmi }} </span> <br>
@@ -116,8 +102,6 @@
                 </div>
             </div>
         </div>
-        
-        
     </div>
 </div>
 
