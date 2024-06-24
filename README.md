@@ -15,3 +15,11 @@ https://www.freepik.com/free-photo/low-angle-view-unrecognizable-muscular-build-
 
 Color-Palette
 https://www.pinterest.com/pin/128563764357456253/
+
+
+
+
+https://stackoverflow.com/questions/33680908/how-to-redirect-to-url-by-cancel-button-in-django-crispy-forms
+
+
+https://stackoverflow.com/questions/46314246/how-to-update-a-foreign-key-field-in-django-models-py
