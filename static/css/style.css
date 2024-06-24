@@ -125,12 +125,6 @@ html, body {
     top: 0;
 }
 
-.sidebar-item {
-    width: 100%;
-    background-color: white;
-}
-
-
 /* Buttons */
 
 .btn--red {
@@ -211,7 +205,20 @@ hr.h-divider {
 
 /* Form input */
 
-#id_weight,
-#id_weight_target {
+#div_id_weight,
+#div_id_weight_target,
+#div_id_height {
     width: 25%;
+    min-width: 75px;
+}
+
+#div_id_height {
+    width: 25%;
+    max-width: 170px;
+}
+
+#div_id_profile_image,
+#div_id_birthdate {
+    width: 30%;
+    min-width: 220px;
 }
