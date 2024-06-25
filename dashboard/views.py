@@ -72,22 +72,8 @@ def dashboard(request):
 
         weight_rec =  np.round(bmi_rec * (height/100)**2)
 
-        if bmi < 16:
-            classification = 'Severe Thinness'
-        elif bmi >= 16 and bmi < 17:
-            classification = 'Moderate Thinness'
-        elif bmi >= 17 and bmi < 18.5:
-            classification = 'Mild Thinness'
-        elif bmi >= 18.5 and bmi < 25:
-            classification = 'Normal'
-        elif bmi >= 25 and bmi < 30:
-            classification = 'Overweight'
-        elif bmi >= 30 and bmi < 35:
-            classification = 'Obese Class I'
-        elif bmi >=35 and bmi < 40:
-            classification = 'Obese Class II'
-        else:
-            classification = 'Obese Class III'
+        classification = get_classification(bmi)
+        classification_target = get_classification(bmi_target)
 
         # Age
         age = (date.today() - birthdate) // timedelta(days=365.2425)
@@ -113,6 +99,7 @@ def dashboard(request):
                 'weight_rec': weight_rec,
                 'weight_target': weight_target,
                 'classification': classification,
+                'classification_target': classification_target,
                 'metrics_form': metrics_form,
             })
     
@@ -135,8 +122,12 @@ def profile(request):
 
     **Template:**
 
-    :template:`dashboard/profile_details.html`
+    :template:`dashboard/profile.html`
     """
+
+    # Update foreign key
+    profile = Profile.objects.get(pk=1)
+    Profile.objects.all().update(user=profile)
 
     # The latest entries by the user
     queryset = Profile.objects.filter(user=request.user).latest('updated_on')
@@ -152,7 +143,7 @@ def profile(request):
     if request.method == "POST":
         profile_form = ProfileForm(data=request.POST)
 
-        if metrics_form.is_valid() and queryset.user == request.user:
+        if profile_form.is_valid() and queryset.user == request.user:
             height = profile_form.cleaned_data.get('height')
             birthdate = profile_form.cleaned_data.get('birthdate')
 
@@ -163,12 +154,11 @@ def profile(request):
 
             messages.add_message(
                 request, messages.SUCCESS,
-                'Your values have been updated!'
+                'Your data has been updated!'
                 )
     
     # Age
     age = (date.today() - birthdate) // timedelta(days=365.2425)
-
 
     return render(
         request,
@@ -176,6 +166,7 @@ def profile(request):
         {
             'height': height,
             'age': age,
+            'birthdate': birthdate,
             'profile_form': profile_form,
         })
 
@@ -202,3 +193,26 @@ def calendar(request):
             'API_KEY': settings.API_KEY,
             'CLIENT_ID': settings.CLIENT_ID,
         })
+
+
+def get_classification(bmi):
+
+    if bmi < 16:
+        classification = 'Severe Thinness'
+    elif bmi >= 16 and bmi < 17:
+        classification = 'Moderate Thinness'
+    elif bmi >= 17 and bmi < 18.5:
+        classification = 'Mild Thinness'
+    elif bmi >= 18.5 and bmi < 25:
+        classification = 'Normal'
+    elif bmi >= 25 and bmi < 30:
+        classification = 'Overweight'
+    elif bmi >= 30 and bmi < 35:
+        classification = 'Obese Class I'
+    elif bmi >=35 and bmi < 40:
+        classification = 'Obese Class II'
+    else:
+        classification = 'Obese Class III'
+    
+    return classification
+        
