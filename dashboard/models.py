@@ -13,7 +13,7 @@ class Activity(models.Model):
         )
     distance = models.FloatField()
     duration = models.FloatField()
-    activity_on = models.DateTimeField(auto_now_add=True)
+    activity_on = models.DateTimeField(auto_now=True)
 
     class Meta:
         """
@@ -28,7 +28,7 @@ class Nutrition(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="user_nutrition"
         )
-    nutrition_on = models.DateTimeField(auto_now_add=True)
+    nutrition_on = models.DateTimeField(auto_now=True)
 
 
 class Feedback(models.Model):
@@ -44,10 +44,10 @@ class Profile(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="user_profile"
         )
-    height = models.IntegerField()
+    height = models.FloatField()
     weight = models.FloatField()
     weight_target = models.FloatField()
     profile_image = CloudinaryField('image', default="placeholder")
-    updated_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
     birthdate = models.DateField()
 
