@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib import messages
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 
 from datetime import date, timedelta
 import numpy as np
@@ -35,14 +36,19 @@ def dashboard(request):
         profile = Profile.objects.get(pk=1)
         Profile.objects.all().update(user=profile)
 
-        # The latest entries by the user
-        queryset = Profile.objects.filter(user=request.user).latest('updated_on')
-        # user = Profile.objects.get(user=request.user)
-
-        height = queryset.height
-        weight = queryset.weight
-        weight_target = queryset.weight_target
-        birthdate = queryset.birthdate
+        # Filter by user
+        user = Profile.objects.filter(user=request.user)
+        
+        # If user has previous entries i.e. existing user
+        # use their last entry else set to None
+        try:
+            queryset =  user.latest('updated_on')
+            height = queryset.height
+            weight = queryset.weight
+            weight_target = queryset.weight_target
+            birthdate = queryset.birthdate
+        except ObjectDoesNotExist:
+            height = weight =  weight_target = birthdate = None
 
         metrics_form = MetricsForm()
 
@@ -65,25 +71,31 @@ def dashboard(request):
                     'Your values have been updated!'
                     )
 
-        # Body Mass Index (BMI)
-        bmi = np.round(weight / (height/100)**2, 2) # kg/m2
-        bmi_target = np.round(weight_target/ (height/100)**2, 2) # kg/m2
-        bmi_rec = 24
+        if weight is not None:
+            # Body Mass Index (BMI)
+            bmi = np.round(weight / (height/100)**2, 2) # kg/m2
+            bmi_target = np.round(weight_target/ (height/100)**2, 2) # kg/m2
+            bmi_rec = 24
 
-        weight_rec =  np.round(bmi_rec * (height/100)**2)
+            weight_rec =  np.round(bmi_rec * (height/100)**2)
 
-        classification = get_classification(bmi)
-        classification_target = get_classification(bmi_target)
+            # Classification
+            classification = get_classification(bmi)
+            classification_target = get_classification(bmi_target)
 
-        # Age
-        age = (date.today() - birthdate) // timedelta(days=365.2425)
+            # Age
+            age = (date.today() - birthdate) // timedelta(days=365.2425)
 
-        # Basal Metabolic Rate (BMR)
-        # Revised Harris-Benedict Equation (for Men - just for illustration)
-        bmr = np.round(13.397 * weight + 4.799 * height - 5.677 * age + 88.362)
-        bmr_rec = np.round(13.397 * weight_rec + 4.799 * height - 5.677 * age + 88.362)
-        bmr_target = np.round(13.397 * weight_target + 4.799 * height - 5.677 * age + 88.362)
+            # Basal Metabolic Rate (BMR)
+            # Revised Harris-Benedict Equation (for Men - just for illustration)
+            bmr = np.round(13.397 * weight + 4.799 * height - 5.677 * age + 88.362)
+            bmr_rec = np.round(13.397 * weight_rec + 4.799 * height - 5.677 * age + 88.362)
+            bmr_target = np.round(13.397 * weight_target + 4.799 * height - 5.677 * age + 88.362)
 
+        else:
+            bmi = bmi_target = bmi_rec = weight_rec \
+                = classification = classification_target \
+                = age = bmr = bmr_rec = bmr_target = None
 
         return render(
             request,
@@ -129,13 +141,19 @@ def profile(request):
     profile = Profile.objects.get(pk=1)
     Profile.objects.all().update(user=profile)
 
-    # The latest entries by the user
-    queryset = Profile.objects.filter(user=request.user).latest('updated_on')
-
-    birthdate = queryset.birthdate
-    weight = queryset.weight
-    weight_target = queryset.weight_target
-    height = queryset.height
+    # Filter by user
+    user = Profile.objects.filter(user=request.user)
+    
+    # If user has previous entries i.e. existing user
+    # use their last entry else set to None
+    try:
+        queryset =  user.latest('updated_on')
+        height = queryset.height
+        weight = queryset.weight
+        weight_target = queryset.weight_target
+        birthdate = queryset.birthdate
+    except ObjectDoesNotExist:
+        height = weight =  weight_target = birthdate = None
 
     profile_form = ProfileForm()
 
@@ -157,8 +175,11 @@ def profile(request):
                 'Your data has been updated!'
                 )
     
-    # Age
-    age = (date.today() - birthdate) // timedelta(days=365.2425)
+    if height is not None:
+        # Age
+        age = (date.today() - birthdate) // timedelta(days=365.2425)
+    else:
+        height = age = birthdate = None
 
     return render(
         request,
