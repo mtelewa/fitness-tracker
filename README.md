@@ -23,3 +23,8 @@ https://stackoverflow.com/questions/33680908/how-to-redirect-to-url-by-cancel-bu
 
 
 https://stackoverflow.com/questions/46314246/how-to-update-a-foreign-key-field-in-django-models-py
+
+
+
+https://jqueryui.com/datepicker/
+https://stackoverflow.com/questions/5250244/jquery-date-formatting
