@@ -15,6 +15,7 @@ const cardText = $('.card-text')
 const weightText = $('#id_weight');
 const targetWeightText = $('#id_weight_target');
 const heightText = $('#id_height');
+const birthdateText = $('#id_birthdate');
 
 $(document).ready(function(){
   /**
@@ -41,9 +42,14 @@ $(document).ready(function(){
     let height = $('#height-val');
     heightText.val(height.text());
 
-    // let birthdate = $('#age-val');
-    // ageText.val();
-
+    let birthdate = $('#birthdate-val');
+    birthdateText.val($.datepicker.formatDate('dd-mm-yy', new Date(birthdate.text())));
 
   });
+
+  // Date Picker
+  $( function() {
+    birthdateText.datepicker({ dateFormat: 'dd-mm-yy' });
+  } );
+
 });
