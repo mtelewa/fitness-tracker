@@ -11,11 +11,12 @@
 
 
 const updateButton = $('.btn-update');
-const cardText = $('.card-text')
+const cardText = $('.card-text');
 const weightText = $('#id_weight');
 const targetWeightText = $('#id_weight_target');
 const heightText = $('#id_height');
 const birthdateText = $('#id_birthdate');
+const ddash = $('.ddash')
 
 $(document).ready(function(){
   /**
@@ -51,5 +52,8 @@ $(document).ready(function(){
   $( function() {
     birthdateText.datepicker({ dateFormat: 'dd-mm-yy' });
   } );
+
+  // For new users with no previous records, show --
+  ddash.text('--');
 
 });
