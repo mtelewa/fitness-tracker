@@ -45,8 +45,8 @@ class Profile(models.Model):
         User, on_delete=models.CASCADE, related_name="user_profile"
         )
     height = models.FloatField()
-    weight = models.FloatField()
-    weight_target = models.FloatField()
+    weight = models.FloatField(null=True)
+    weight_target = models.FloatField(null=True)
     profile_image = CloudinaryField('image', default="placeholder")
     updated_on = models.DateTimeField(auto_now=True)
     birthdate = models.DateField()
