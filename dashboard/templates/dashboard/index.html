@@ -68,7 +68,7 @@
                             <span> Classification: </span> <span class="text-success fw-bold {% if classification_target is None %} ddash {% endif %}"> {{ classification_target }} </span>
                         </p>
                         <hr class="h-divider h-divider--orange">
-                        {% if weight_target is None %}
+                        {% if height is None %}
                         <p class="card-text">
                             <strong>
                             You have no entries yet! <br>
@@ -76,11 +76,20 @@
                             </strong>
                         </p>
                         {% else %}
+                        {% if weight is None %}
+                        <p class="card-text">
+                            <strong>
+                            You have created a profile! <br>
+                            Please create metrics now!
+                            </strong>
+                        </p>                        
+                        {% else %}
                         <p class="card-text"> 
                             You are <strong>{{ weight|sub:weight_target }}</strong> kg away from your target, <br>
                             and <strong>{{ weight|sub:weight_rec }}</strong> kg away from the recommended metrics <br>
                             Keep Going! <i class="fa-solid fa-person-running"></i>
                         </p>
+                        {% endif %}
                         {% endif %}
                     </div>
                 </div>
@@ -90,7 +99,7 @@
                     {% else %}
                     {% if weight is None %}
                     <a href="{% url 'profile' %}" class="btn btn-md btn--size btn-primary m-1" role="button"> Update Profile </a>
-                    <button type="button" class="btn btn-update btn-md btn--size btn-success m-1 d-none" aria-label="Create"> Create Metrics </button>
+                    <button type="button" class="btn btn-update btn-md btn--size btn-success m-1" aria-label="Create"> Create Metrics </button>
                     {% else %}
                     <a href="{% url 'profile' %}" class="btn btn-md btn--size btn-primary m-1" role="button"> View Details </a>
                     <button type="button" class="btn btn-update btn-md btn--size btn-success m-1" aria-label="Update"> Update Metrics </button>
