@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator, MinValueValidator
 from cloudinary.models import CloudinaryField
 
 # Create your models here.
@@ -44,9 +45,21 @@ class Profile(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="user_profile"
         )
-    height = models.FloatField()
-    weight = models.FloatField(null=True)
-    weight_target = models.FloatField(null=True)
+    height = models.FloatField(
+        validators=[
+            MaxValueValidator(999),
+            MinValueValidator(1)
+        ])
+    weight = models.FloatField(null=True,
+        validators=[
+                MaxValueValidator(999),
+                MinValueValidator(1)
+        ])
+    weight_target = models.FloatField(null=True,
+            validators=[
+                MaxValueValidator(999),
+                MinValueValidator(1)
+        ])
     profile_image = CloudinaryField('image', default="placeholder")
     updated_on = models.DateTimeField(auto_now=True)
     birthdate = models.DateField()
