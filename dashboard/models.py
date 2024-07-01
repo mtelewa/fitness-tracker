@@ -41,6 +41,7 @@ class Feedback(models.Model):
     review = models.TextField()
     approved = models.BooleanField(default=False)
 
+
 class Profile(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="user_profile"
@@ -60,7 +61,7 @@ class Profile(models.Model):
                 MaxValueValidator(999),
                 MinValueValidator(1)
         ])
-    profile_image = CloudinaryField('image', default="placeholder")
+    profile_image = CloudinaryField('image', default="placeholder", null=True, blank=True)
     updated_on = models.DateTimeField(auto_now=True)
     birthdate = models.DateField()
 
