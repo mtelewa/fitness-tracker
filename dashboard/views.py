@@ -38,6 +38,7 @@ def dashboard(request):
             height = user_last_profile.height
             birthdate = user_last_profile.birthdate
             weight_target = user_last_profile.weight_target
+            profile_image = user_last_profile.profile_image
 
             metrics_form = MetricsForm()
 
@@ -95,6 +96,7 @@ def dashboard(request):
                     'weight_target': weight_target,
                     'classification': classification,
                     'classification_target': classification_target,
+                    'profile_image': profile_image,
                     'metrics_form': metrics_form,
                 })
 

@@ -85,7 +85,12 @@
       </ul>
       <div class="dropdown border-top">
         <a href="#" class="d-flex align-items-center text-white justify-content-center p-3 text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="https://github.com/mdo.png" alt="mdo" width="24" height="24" class="rounded-circle">
+          {% if "placeholder" in profile_image.url %}
+          <img src="{% static 'images/nobody.jpg' %}" width="24" height="24" class="rounded-circle me-2"  alt="profile-image">
+          {% else %}
+          {% load cloudinary %}      
+          {% cloudinary profile_image format="jpg" width="24" height="24" class="rounded-circle me-2" %}
+          {% endif %}
         </a>
         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser3">
           <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
@@ -137,7 +142,12 @@
       <hr>
       <div class="dropdown">
         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+          {% if "placeholder" in profile_image.url %}
+          <img src="{% static 'images/nobody.jpg' %}" width="32" height="32" class="rounded-circle me-2"  alt="profile-image">
+          {% else %}
+          {% load cloudinary %}      
+          {% cloudinary profile_image format="jpg" width="32" height="32" class="rounded-circle me-2" %}
+          {% endif %}
           <strong>{{ user }}</strong>
         </a>
         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
