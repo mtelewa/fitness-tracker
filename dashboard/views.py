@@ -8,13 +8,11 @@ from datetime import date, timedelta
 import numpy as np
 
 from .models import Activity, Profile
-from .forms import MetricsForm, ProfileForm
-
-from pprint import pprint
+from .forms import MetricsForm, ProfileForm, FullForm
 
 # Create your views here.
 
-def profile(request):
+def dashboard(request):
     """
     Display an individual :model:`dashboard.Profile`.
 
@@ -29,7 +27,6 @@ def profile(request):
     """
 
     if request.user.is_authenticated:
-
         user_profiles = Profile.objects.filter(user=request.user)
         print('USER PROFILES: ', user_profiles)
 
@@ -38,19 +35,16 @@ def profile(request):
             user_last_profile =  user_profiles.latest('updated_on')
             username = user_last_profile.user
             print('USER: ', username)
-            height = user_last_profile.height
             weight = user_last_profile.weight
-            print(weight)
+            height = user_last_profile.height
+            birthdate = user_last_profile.birthdate
             weight_target = user_last_profile.weight_target
-            birthdate = user_last_profile.birthdate   
 
             metrics_form = MetricsForm()
-            profile_form = ProfileForm()
 
             # If the user updates the values
             if request.method == "POST":
                 metrics_form = MetricsForm(data=request.POST)
-                profile_form = ProfileForm(data=request.POST)
 
                 # If user updates metrics form
                 if metrics_form.is_valid() and username == request.user:
@@ -68,22 +62,6 @@ def profile(request):
                         request, messages.SUCCESS,
                         'Your data has been updated!'
                         )
-                
-                if profile_form.is_valid() and username == request.user:
-                    profile = profile_form.save(commit=False)
-                    height = profile_form.cleaned_data.get('height')
-                    birthdate = profile_form.cleaned_data.get('birthdate')
-
-                    profile = Profile(height=height, weight=weight, 
-                                birthdate=birthdate, weight_target=weight_target)
-
-                    profile.save()
-                    print('profile form saved')
-
-                    messages.add_message(
-                        request, messages.SUCCESS,
-                        'Your data has been updated!'
-                    )
 
             # Body Mass Index (BMI)
             bmi = np.round(weight / (height/100)**2, 2) # kg/m2
@@ -104,8 +82,7 @@ def profile(request):
             bmr = np.round(13.397 * weight + 4.799 * height - 5.677 * age + 88.362)
             bmr_rec = np.round(13.397 * weight_rec + 4.799 * height - 5.677 * age + 88.362)
             bmr_target = np.round(13.397 * weight_target + 4.799 * height - 5.677 * age + 88.362)
-
-
+                
             return render(
                 request,
                 "dashboard/index.html",
@@ -124,10 +101,15 @@ def profile(request):
                     'height': height,
                     'age': age,
                     'birthdate': birthdate,
-                    'profile_form': profile_form,
                     'metrics_form': metrics_form,
                 })
 
+        else:
+            dict = profile_create(request)
+            return render(
+                request,
+                "dashboard/profile_create.html",
+                dict)
 
     else:
         return render(
@@ -136,59 +118,109 @@ def profile(request):
         )
 
 
-def create_profile(request):
-    # New users with no profiles
-    profile_form = ProfileForm()
-    height = age = birthdate = None
+def profile_create(request):
+    
+    full_form = FullForm()
+    height = age = weight = weight_target = birthdate = None
 
     if request.method == "POST":
-        profile_form = ProfileForm(data=request.POST)
+        full_form = FullForm(data=request.POST)
 
-        if profile_form.is_valid():
-            profile = profile_form.save(commit=False)
-            profile.user_id = request.user.id
-            height = profile_form.cleaned_data.get('height')
-            birthdate = profile_form.cleaned_data.get('birthdate')
+        if full_form.is_valid():
+            profile = full_form.save(commit=False)
+            height = full_form.cleaned_data.get('height')
+            birthdate = full_form.cleaned_data.get('birthdate')
+            weight = full_form.cleaned_data.get('weight')
+            weight_target = full_form.cleaned_data.get('weight_target')
+                
+            profile = Profile.objects.create(user=request.user, height=height, weight=weight, 
+                                birthdate=birthdate, weight_target=weight_target)
 
-            profile = Profile(height=height, weight=None, 
-                        birthdate=birthdate, weight_target=None)
-
-            profile.save()
-            print('profile form saved')
+            age = (date.today() - birthdate) // timedelta(days=365.2425)
+            print('full form saved')
 
             messages.add_message(
                 request, messages.SUCCESS,
                 'Your data has been created!'
             )
 
-        age = (date.today() - birthdate) // timedelta(days=365.2425)
+    dict = {
+            'height': height,
+            'age': age,
+            'full_form': full_form,
+            }
 
-        bmi = bmi_target = bmi_rec = weight_rec \
-            = classification = classification_target \
-            = bmr = bmr_rec = bmr_target = None
-
-    return render(
-    request,
-    "dashboard/profile.html",
-    {
-        'height': height,
-        'age': age,
-        'birthdate': birthdate,
-        'profile_form': profile_form,
-    })
+    return dict
 
 
-# def profile_details(request):
+def profile_update(request):
+
+    if request.user.is_authenticated:
+        user_profiles = Profile.objects.filter(user=request.user)
+
+        # If user has profiles (existing user)
+        if user_profiles.exists():
+            user_last_profile =  user_profiles.latest('updated_on')
+            username = user_last_profile.user
+            height = user_last_profile.height
+            birthdate = user_last_profile.birthdate
+            age = (date.today() - birthdate) // timedelta(days=365.2425)
+
+            profile_form = ProfileForm()
+
+            # If the user updates the values
+            if request.method == "POST":
+                profile_form = ProfileForm(data=request.POST)
+
+                if profile_form.is_valid() and username == request.user:
+                    profile = profile_form.save(commit=False)
+                    profile.user_id = request.user.id
+                    # get data from the form
+                    user_last_profile.height = profile_form.cleaned_data.get('height')
+                    user_last_profile.birthdate = profile_form.cleaned_data.get('birthdate')
+                    height, age = user_last_profile.height, (date.today() - user_last_profile.birthdate) // timedelta(days=365.2425)
+                    # commit changes
+                    user_last_profile.save() 
+                    print('profile form saved')
+
+                    messages.add_message(
+                        request, messages.SUCCESS,
+                        'Your data has been updated!'
+                        )
+            
+        return render(
+            request,
+            "dashboard/profile.html",
+            {
+                'height': height,
+                'age': age,
+                'profile_form': profile_form,
+            })
     
-#     # Filter by user
-#     user_profiles = Profile.objects.filter(user=request.user)
+    else:
+        return render(
+            request,
+            "dashboard/index.html",
+        )
+
+
+
+
+# def profile(request):
+#     # New users with no profiles
+#     profile_form = ProfileForm()
+#     height = age = birthdate = None
+#     if request.method == "POST":
+#         profile_form = ProfileForm(data=request.POST)
+
+#             profile = Profile(height=height, weight=None, 
+#                         birthdate=birthdate, weight_target=None)
+
+
+
 #     # profile = Profile.objects.get(pk=1)
 #     # profile = get_object_or_404(user_profiles, pk=1)
 
-#     return render(
-#         request,
-#         "dashboard/profile.html",
-#         )
 
 
 def calendar(request):
