@@ -2,7 +2,6 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from django.conf import settings
-# from django.core.exceptions import ObjectDoesNotExist
 
 from datetime import date, timedelta
 import numpy as np
@@ -128,7 +127,7 @@ def profile_create(request):
             weight = full_form.cleaned_data.get('weight')
             weight_target = full_form.cleaned_data.get('weight_target')
                 
-            profile = Profile.objects.create(user=request.user, height=height, weight=weight, 
+            Profile.objects.create(user=request.user, height=height, weight=weight, 
                                 birthdate=birthdate, weight_target=weight_target)
 
             age = (date.today() - birthdate) // timedelta(days=365.2425)
@@ -160,30 +159,29 @@ def profile_update(request):
             username = user_last_profile.user
             height = user_last_profile.height
             birthdate = user_last_profile.birthdate
-            weight = user_last_profile.weight
             age = (date.today() - birthdate) // timedelta(days=365.2425)
+            weight = user_last_profile.weight
             profile_image = user_last_profile.profile_image
-
 
             profile_form = ProfileForm()
 
             # If the user updates the values
             if request.method == "POST":
-                profile_form = ProfileForm(data=request.POST, files=request.FILES)
+                profile_form = ProfileForm(data=request.POST, files=request.FILES, instance=user_last_profile)
 
                 if profile_form.is_valid() and username == request.user:
                     profile = profile_form.save(commit=False)
+
                     profile.user_id = request.user.id
                     # get data from the form
                     user_last_profile.height = profile_form.cleaned_data.get('height')
-                    user_last_profile.birthdate = profile_form.cleaned_data.get('birthdate')
-                    user_last_profile.profile_image = profile_form.cleaned_data.get('profile_image')
                     height = user_last_profile.height
-                    profile_image = user_last_profile.profile_image
 
-                    print(profile_form.cleaned_data.get('profile_image'))
-
+                    user_last_profile.birthdate = profile_form.cleaned_data.get('birthdate')
                     age = (date.today() - user_last_profile.birthdate) // timedelta(days=365.2425)
+
+                    user_last_profile.profile_image = profile_form.cleaned_data.get('profile_image')
+                    profile_image = user_last_profile.profile_image
 
                     # commit changes
                     user_last_profile.save() 
