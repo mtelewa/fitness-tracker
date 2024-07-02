@@ -62,27 +62,22 @@ def dashboard(request):
                         request, messages.SUCCESS,
                         'Your data has been updated!'
                         )
+            
+            weight_rec = get_metrics(height,weight,birthdate)['weight_rec']
 
-            # Body Mass Index (BMI)
-            bmi = np.round(weight / (height/100)**2, 2) # kg/m2
-            bmi_target = np.round(weight_target/ (height/100)**2, 2) # kg/m2
-            bmi_rec = 24
+            bmi, bmi_target, bmi_rec =  \
+                        get_metrics(height,weight,birthdate)['bmi'], \
+                        get_metrics(height,weight_target,birthdate)['bmi'], 24
+            
+            bmr, bmr_target, bmr_rec =  \
+                        get_metrics(height,weight,birthdate)['bmr'], \
+                        get_metrics(height,weight_target,birthdate)['bmr'], \
+                        get_metrics(height,weight_rec,birthdate)['bmr']
 
-            weight_rec =  np.round(bmi_rec * (height/100)**2)
-
-            # Classification
-            classification = get_classification(bmi)
-            classification_target = get_classification(bmi_target)
-
-            # Age
-            age = (date.today() - birthdate) // timedelta(days=365.2425)
-
-            # Basal Metabolic Rate (BMR)
-            # Revised Harris-Benedict Equation (for Men - just for illustration)
-            bmr = np.round(13.397 * weight + 4.799 * height - 5.677 * age + 88.362)
-            bmr_rec = np.round(13.397 * weight_rec + 4.799 * height - 5.677 * age + 88.362)
-            bmr_target = np.round(13.397 * weight_target + 4.799 * height - 5.677 * age + 88.362)
-                
+            classification, classification_target = \
+                        get_metrics(height,weight,birthdate)['classification'], \
+                        get_metrics(height,weight_target,birthdate)['classification']
+            
             return render(
                 request,
                 "dashboard/index.html",
@@ -98,9 +93,6 @@ def dashboard(request):
                     'weight_target': weight_target,
                     'classification': classification,
                     'classification_target': classification_target,
-                    'height': height,
-                    'age': age,
-                    'birthdate': birthdate,
                     'metrics_form': metrics_form,
                 })
 
@@ -204,25 +196,6 @@ def profile_update(request):
         )
 
 
-
-
-# def profile(request):
-#     # New users with no profiles
-#     profile_form = ProfileForm()
-#     height = age = birthdate = None
-#     if request.method == "POST":
-#         profile_form = ProfileForm(data=request.POST)
-
-#             profile = Profile(height=height, weight=None, 
-#                         birthdate=birthdate, weight_target=None)
-
-
-
-#     # profile = Profile.objects.get(pk=1)
-#     # profile = get_object_or_404(user_profiles, pk=1)
-
-
-
 def calendar(request):
     """
     Display an individual :model:`dashboard.Profile`.
@@ -247,7 +220,20 @@ def calendar(request):
         })
 
 
-def get_classification(bmi):
+def get_metrics(height, weight, birthdate):
+
+    # Body Mass Index (BMI)
+    bmi = np.round(weight / (height/100)**2, 2) # kg/m2
+
+    # recommended weight
+    weight_rec =  np.round(24 * (height/100)**2)
+
+    # Age
+    age = (date.today() - birthdate) // timedelta(days=365.2425)
+
+    # Basal Metabolic Rate (BMR)
+    # Revised Harris-Benedict Equation (for Men - just for illustration)
+    bmr = np.round(13.397 * weight + 4.799 * height - 5.677 * age + 88.362)
 
     if bmi < 16:
         classification = 'Severe Thinness'
@@ -266,5 +252,10 @@ def get_classification(bmi):
     else:
         classification = 'Obese Class III'
     
-    return classification
+    return {
+            'bmi': bmi,
+            'bmr': bmr,
+            'weight_rec': weight_rec,
+            'classification': classification
+            }
         
