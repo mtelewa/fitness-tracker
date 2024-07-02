@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from django.conf import settings
@@ -54,6 +54,7 @@ def dashboard(request):
                     user_last_profile.weight = metrics_form.cleaned_data.get('weight')
                     user_last_profile.weight_target = metrics_form.cleaned_data.get('weight_target')
                     weight, weight_target = user_last_profile.weight, user_last_profile.weight_target
+
                     # commit changes
                     user_last_profile.save() 
                     print('metrics form saved')
@@ -62,6 +63,8 @@ def dashboard(request):
                         request, messages.SUCCESS,
                         'Your data has been updated!'
                         )
+                    
+                    return redirect('home')
             
             weight_rec = get_metrics(height,weight,birthdate)['weight_rec']
 
@@ -159,12 +162,14 @@ def profile_update(request):
             birthdate = user_last_profile.birthdate
             weight = user_last_profile.weight
             age = (date.today() - birthdate) // timedelta(days=365.2425)
+            profile_image = user_last_profile.profile_image
+
 
             profile_form = ProfileForm()
 
             # If the user updates the values
             if request.method == "POST":
-                profile_form = ProfileForm(data=request.POST)
+                profile_form = ProfileForm(data=request.POST, files=request.FILES)
 
                 if profile_form.is_valid() and username == request.user:
                     profile = profile_form.save(commit=False)
@@ -172,8 +177,14 @@ def profile_update(request):
                     # get data from the form
                     user_last_profile.height = profile_form.cleaned_data.get('height')
                     user_last_profile.birthdate = profile_form.cleaned_data.get('birthdate')
-                    height, age = user_last_profile.height, (date.today() - user_last_profile.birthdate) // timedelta(days=365.2425)
-                    
+                    user_last_profile.profile_image = profile_form.cleaned_data.get('profile_image')
+                    height = user_last_profile.height
+                    profile_image = user_last_profile.profile_image
+
+                    print(profile_form.cleaned_data.get('profile_image'))
+
+                    age = (date.today() - user_last_profile.birthdate) // timedelta(days=365.2425)
+
                     # commit changes
                     user_last_profile.save() 
                     print('profile form saved')
@@ -182,6 +193,8 @@ def profile_update(request):
                         request, messages.SUCCESS,
                         'Your data has been updated!'
                         )
+
+                    return redirect('profile')
         
             return render(
                 request,
@@ -190,6 +203,7 @@ def profile_update(request):
                     'height': height,
                     'weight': weight,
                     'age': age,
+                    'profile_image': profile_image,
                     'profile_form': profile_form,
                 })
         
