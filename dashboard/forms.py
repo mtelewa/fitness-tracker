@@ -6,23 +6,21 @@ from .models import Profile
 
 class MetricsForm(forms.ModelForm):
 
-    weight_target = forms.FloatField(
-        label = "Target Weight",
-        required = True,
-        )
-
     class Meta:
         model = Profile
-        fields = ('weight',)
+        fields = ('weight','weight_target')
+        labels = {
+            'weight': 'Weight (Kg)',
+            'weight_target': 'Target Weight (Kg)',
+        }
 
     # helper form
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.form_method = 'post'
-        self.helper.form_class = 'forms'
         
-        self.helper.add_input(Submit('submit', 'Submit', css_class='btn-success'))
+        self.helper.add_input(Submit('submitMetrics', 'Submit', css_class='btn-success'))
         self.helper.add_input(Button('cancel', 'Cancel', css_class='btn-secondary',
             onclick="window.location.href = '{}';".format(reverse('home'))))
 
@@ -32,7 +30,10 @@ class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ('height', 'profile_image', )
+        fields = ('height', 'profile_image')
+        labels = {
+            'height': 'Height (cm)',
+        }
 
     # helper form
     def __init__(self, *args, **kwargs):
@@ -40,6 +41,29 @@ class ProfileForm(forms.ModelForm):
         self.helper = FormHelper(self)
         self.helper.form_method = 'post'
         
-        self.helper.add_input(Submit('submit', 'Submit', css_class='btn-success'))
+        self.helper.add_input(Submit('submitProfile', 'Submit', css_class='btn-success'))
         self.helper.add_input(Button('cancel', 'Cancel', css_class='btn-secondary',
             onclick="window.location.href = '{}';".format(reverse('profile'))))
+
+
+class FullForm(forms.ModelForm):
+    birthdate = forms.DateField(input_formats=['%d-%m-%Y'])
+
+    class Meta:
+        model = Profile
+        fields = ('height', 'weight', 'weight_target', 'birthdate', 'profile_image')
+        labels = {
+            'height': 'Height (cm)',
+            'weight': 'Weight (Kg)',
+            'weight_target': 'Target Weight (Kg)',
+        }
+
+    # helper form
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_method = 'post'
+        
+        self.helper.add_input(Submit('submitFull', 'Submit', css_class='btn-success'))
+        self.helper.add_input(Button('cancel', 'Cancel', css_class='btn-secondary',
+            onclick="window.location.href = '{}';".format(reverse('home'))))
