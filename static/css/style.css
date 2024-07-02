@@ -223,7 +223,8 @@ hr.h-divider {
     min-width: 220px;
 }
 
-#submit-id-submitprofile, 
+#submit-id-submitprofile,
+#submit-id-submitfull, 
 #button-id-cancel {
     margin-top: 25px;
 }
