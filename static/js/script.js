@@ -44,7 +44,14 @@ $(document).ready(function(){
     heightText.val(height.text());
 
     let birthdate = $('#birthdate-val');
-    birthdateText.val($.datepicker.formatDate('dd-mm-yy', new Date(birthdate.text())));
+
+    // if profile is created, show the user's bd
+    // else show today's date
+    if (isValidDate(new Date(birthdate.text()))){
+      birthdateText.val($.datepicker.formatDate('dd-mm-yy', new Date(birthdate.text())));
+    } else{
+      birthdateText.val($.datepicker.formatDate('dd-mm-yy', new Date()));
+    }
 
   });
 
@@ -52,6 +59,11 @@ $(document).ready(function(){
   $( function() {
     birthdateText.datepicker({ dateFormat: 'dd-mm-yy' });
   } );
+
+  // Date validation
+  function isValidDate(d) {
+    return d instanceof Date && !isNaN(d);
+  };
 
   // For new users with no previous records, show --
   ddash.text('--');
