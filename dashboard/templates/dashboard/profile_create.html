@@ -37,9 +37,15 @@
                 <p class="card-text"> 
                     <span class="show-hide"> Username: </span> 
                     <span class="show-hide fw-bold">{{ user }}</span> <br>
+                    <span class="show-hide"> Age: </span> 
+                    <span class="show-hide fw-bold {% if age is None %} ddash {% endif %}">{{ age }}</span> <br>
 
+                    <span class="show-hide"> Height: </span> 
+                    <span class="show-hide fw-bold {% if height is None %} ddash {% endif %}" id="height-val">{{ height }}</span>
+                    <span class="d-none" id="birthdate-val">{{ birthdate }}</span> <br>
                 </p>
-                <p class="card-text text-danger hide-show">
+
+                <p class="card-text text-danger {% if height is not None %} d-none {% endif %}">
                     <strong>
                     You have no entries yet! <br>
                     Please create your profile first!
