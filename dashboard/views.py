@@ -113,7 +113,7 @@ def dashboard(request):
 def profile_create(request):
     
     full_form = FullForm()
-    height = age = weight = weight_target = birthdate = None
+    height = age = weight = weight_target = None
 
     if request.method == "POST":
         full_form = FullForm(data=request.POST)
@@ -138,6 +138,7 @@ def profile_create(request):
 
     dict = {
             'height': height,
+            'weight': weight,
             'age': age,
             'full_form': full_form,
             }
@@ -156,6 +157,7 @@ def profile_update(request):
             username = user_last_profile.user
             height = user_last_profile.height
             birthdate = user_last_profile.birthdate
+            weight = user_last_profile.weight
             age = (date.today() - birthdate) // timedelta(days=365.2425)
 
             profile_form = ProfileForm()
@@ -171,6 +173,7 @@ def profile_update(request):
                     user_last_profile.height = profile_form.cleaned_data.get('height')
                     user_last_profile.birthdate = profile_form.cleaned_data.get('birthdate')
                     height, age = user_last_profile.height, (date.today() - user_last_profile.birthdate) // timedelta(days=365.2425)
+                    
                     # commit changes
                     user_last_profile.save() 
                     print('profile form saved')
@@ -179,15 +182,23 @@ def profile_update(request):
                         request, messages.SUCCESS,
                         'Your data has been updated!'
                         )
-            
-        return render(
-            request,
-            "dashboard/profile.html",
-            {
-                'height': height,
-                'age': age,
-                'profile_form': profile_form,
-            })
+        
+            return render(
+                request,
+                "dashboard/profile.html",
+                {
+                    'height': height,
+                    'weight': weight,
+                    'age': age,
+                    'profile_form': profile_form,
+                })
+        
+        else:
+            dict = profile_create(request)
+            return render(
+                request,
+                "dashboard/profile_create.html",
+                dict)
     
     else:
         return render(
