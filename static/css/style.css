@@ -224,7 +224,25 @@ hr.h-divider {
 }
 
 #submit-id-submitprofile,
-#submit-id-submitfull, 
+#submit-id-submitfull,
+#submit-id-submitmetrics, 
 #button-id-cancel {
     margin-top: 25px;
+}
+
+
+/* profile image */
+.image-container {
+    width: 50vw;
+    height: 50vw;
+    /* margin: 20px auto; */
+    /* Makes the square image into a circle */
+    /* border-radius: 50%; */
+    max-height: 150px;
+    max-width: 150px;
+}
+
+.profile-image {
+    width: 100%;
+    height: 100%;
 }
