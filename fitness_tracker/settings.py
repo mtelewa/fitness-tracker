@@ -28,7 +28,7 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # Google API key and clien ID
-API_KEY = os.environ.get("API_KEY")
+GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
 CLIENT_ID = os.environ.get("CLIENT_ID")
 
 # SECURITY WARNING: don't run with debug turned on in production!
