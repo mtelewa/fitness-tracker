@@ -8,12 +8,20 @@ from cloudinary.models import CloudinaryField
 STARS = ((1, "Very Poor"), (2, "Poor"), (3, "Good"), (4, "Very Good"), (5, "Excellent"))
 
 class Activity(models.Model):
-    activity_type = models.CharField(max_length=200, unique=True)
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="user_activity"
         )
-    distance = models.FloatField()
-    duration = models.FloatField()
+    activity_type = models.CharField(max_length=200, unique=True)
+    distance = models.FloatField(
+                validators=[
+                MaxValueValidator(999),
+                MinValueValidator(1)
+                ])
+    duration = models.FloatField(
+                    validators=[
+                    MaxValueValidator(999),
+                    MinValueValidator(1)
+                ])
     activity_on = models.DateTimeField(auto_now=True)
 
     class Meta:
