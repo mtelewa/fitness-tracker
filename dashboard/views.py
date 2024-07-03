@@ -5,9 +5,11 @@ from django.conf import settings
 
 from datetime import date, timedelta
 import numpy as np
+from pprint import pprint
+import requests
 
 from .models import Activity, Profile
-from .forms import MetricsForm, ProfileForm, FullForm
+from .forms import MetricsForm, ProfileForm, FullForm, ActivityForm
 
 # Create your views here.
 
@@ -27,23 +29,32 @@ def dashboard(request):
 
     if request.user.is_authenticated:
         user_profiles = Profile.objects.filter(user=request.user)
-        print('USER PROFILES: ', user_profiles)
+        # print('USER PROFILES: ', user_profiles)
+
+        user_activities = Activity.objects.filter(user=request.user)
+        # print('USER Activities: ', user_activities)
 
         # If user has profiles (existing user)
         if user_profiles.exists():
+            # Profile card
             user_last_profile =  user_profiles.latest('updated_on')
             username = user_last_profile.user
-            print('USER: ', username)
             weight = user_last_profile.weight
             height = user_last_profile.height
             birthdate = user_last_profile.birthdate
             weight_target = user_last_profile.weight_target
             profile_image = user_last_profile.profile_image
 
+            # Activity card
+            user_last_activity = user_activities.latest('activity_on')
+            activity_type = user_last_activity.activity_type
+            distance = user_last_activity.distance
+            duration = user_last_activity.duration
+
             metrics_form = MetricsForm()
 
             # If the user updates the values
-            if request.method == "POST":
+            if request.method == "POST" and 'submitMetrics' in request.POST:
                 metrics_form = MetricsForm(data=request.POST)
 
                 # If user updates metrics form
@@ -65,6 +76,74 @@ def dashboard(request):
                         )
                     
                     return redirect('home')
+
+            metrics_form = MetricsForm()
+
+            # If the user updates the values
+            if request.method == "POST" and 'submitMetrics' in request.POST:
+                metrics_form = MetricsForm(data=request.POST)
+
+                # If user updates metrics form
+                if metrics_form.is_valid() and username == request.user:
+                    metrics = metrics_form.save(commit=False)
+                    metrics.user_id = request.user.id
+                    # get data from the form
+                    user_last_profile.weight = metrics_form.cleaned_data.get('weight')
+                    user_last_profile.weight_target = metrics_form.cleaned_data.get('weight_target')
+                    weight, weight_target = user_last_profile.weight, user_last_profile.weight_target
+
+                    # commit changes
+                    user_last_profile.save() 
+                    print('metrics form saved')
+
+                    messages.add_message(
+                        request, messages.SUCCESS,
+                        'Your data has been updated!'
+                        )
+                    
+                    return redirect('home')
+
+            # Calories Burnt API
+            api_url = f'https://api.api-ninjas.com/v1/caloriesburned?activity={activity_type}'
+            response = requests.get(api_url, headers={'X-Api-Key': settings.CAL_BURN_API_KEY})
+            if response.status_code == requests.codes.ok:
+                activity_list = response.json()
+                activities = [d['name'] for d in activity_list if 'name' in d]
+            else:
+                print("Error:", response.status_code, response.text)
+
+            activity_form = ActivityForm()
+
+            # If the user updates the values
+            if request.method == "POST" and 'submitActivity' in request.POST:
+                print('POST is executed')
+                activity_form = ActivityForm(data=request.POST)
+
+                # If user updates activity form
+                if activity_form.is_valid() and username == request.user:
+                    activity = activity_form.save(commit=False)
+                    activity.user_id = request.user.id
+
+                    # get data from the form
+                    user_last_activity.activity_type = activity_form.cleaned_data.get('activity_type')
+                    user_last_activity.duration = activity_form.cleaned_data.get('duration')
+                    user_last_activity.distance = activity_form.cleaned_data.get('distance')
+                    activity_type, duration, distance = user_last_activity.activity_type, \
+                                                   user_last_activity.activity_duration, \
+                                                   user_last_activity.activity_distance,
+
+                    # commit changes
+                    user_last_activity.save() 
+                    print('activity form saved')
+
+                    messages.add_message(
+                        request, messages.SUCCESS,
+                        'Your data has been updated!'
+                        )
+                    
+                    return redirect('home')            
+
+
             
             weight_rec = get_metrics(height,weight,birthdate)['weight_rec']
 
@@ -80,7 +159,8 @@ def dashboard(request):
             classification, classification_target = \
                         get_metrics(height,weight,birthdate)['classification'], \
                         get_metrics(height,weight_target,birthdate)['classification']
-            
+
+
             return render(
                 request,
                 "dashboard/index.html",
@@ -98,6 +178,10 @@ def dashboard(request):
                     'classification_target': classification_target,
                     'profile_image': profile_image,
                     'metrics_form': metrics_form,
+                    'activity': activity_type,
+                    'duration': duration,
+                    'distance': distance,
+                    'activity_form': activity_form,
                 })
 
         else:
