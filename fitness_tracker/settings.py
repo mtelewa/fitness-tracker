@@ -31,6 +31,9 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
 CLIENT_ID = os.environ.get("CLIENT_ID")
 
+# Calories Burnt API key
+CAL_BURN_API_KEY = os.environ.get("CAL_BURN_API_KEY")
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
