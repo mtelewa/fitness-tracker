@@ -2,7 +2,8 @@ from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Button
 from django.shortcuts import reverse
-from .models import Profile
+from .models import Profile, Activity
+
 
 class MetricsForm(forms.ModelForm):
 
@@ -35,7 +36,6 @@ class ProfileForm(forms.ModelForm):
             'height': 'Height (cm)',
         }
 
-    # helper form
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
@@ -58,7 +58,6 @@ class FullForm(forms.ModelForm):
             'weight_target': 'Target Weight (Kg)',
         }
 
-    # helper form
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
@@ -67,3 +66,29 @@ class FullForm(forms.ModelForm):
         self.helper.add_input(Submit('submitFull', 'Submit', css_class='btn-success'))
         self.helper.add_input(Button('cancel', 'Cancel', css_class='btn-secondary',
             onclick="window.location.href = '{}';".format(reverse('home'))))
+
+
+class ActivityForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        # activities = kwargs.pop('activities', [])
+        super().__init__(*args, **kwargs)
+        # self.fields['activity_type'].choices = [(count, activity) for count, activity in enumerate(activities)]
+        self.helper = FormHelper(self)
+        
+        self.helper.add_input(Submit('submitActivity', 'Submit', css_class='btn-success submit'))
+        self.helper.add_input(Button('cancel', 'Cancel', css_class='btn-secondary',
+            onclick="window.location.href = '{}';".format(reverse('home'))))
+
+    class Meta:
+        model = Activity
+        fields = ('activity_type', 'distance', 'duration')
+        labels = {
+            'activity_type': 'Activity',
+            'distance': 'Distance (km)',
+            'duration': 'Duration (min)',
+        }
+        # widgets = {
+        #     'activity_type': forms.Select(),
+        # }
+
