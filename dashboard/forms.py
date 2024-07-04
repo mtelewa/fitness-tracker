@@ -1,6 +1,6 @@
 from django import forms
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Button
+from crispy_forms.layout import Layout, Submit, Button, Field, MultiField, Div
 from django.shortcuts import reverse
 from .models import Profile, Activity
 
@@ -79,6 +79,12 @@ class ActivityForm(forms.ModelForm):
         self.helper.add_input(Submit('submitActivity', 'Submit', css_class='btn-success submit'))
         self.helper.add_input(Button('cancel', 'Cancel', css_class='btn-secondary',
             onclick="window.location.href = '{}';".format(reverse('home'))))
+        
+        self.helper.layout = Layout(
+            Field('activity_type', oninput="fetchCaloriesBurnt()",),
+            Div(css_class="mb-3", css_id="activity_list"),
+            ('distance'), ('duration')
+            )
 
     class Meta:
         model = Activity
@@ -88,7 +94,4 @@ class ActivityForm(forms.ModelForm):
             'distance': 'Distance (km)',
             'duration': 'Duration (min)',
         }
-        # widgets = {
-        #     'activity_type': forms.Select(),
-        # }
 
