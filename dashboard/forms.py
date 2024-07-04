@@ -83,7 +83,7 @@ class ActivityForm(forms.ModelForm):
         self.helper.layout = Layout(
             Field('activity_type', oninput="fetchCaloriesBurnt()",),
             Div(css_class="mb-3", css_id="activity_list"),
-            ('distance'), ('duration')
+            ('duration'), ('distance')
             )
 
     class Meta:
@@ -91,7 +91,7 @@ class ActivityForm(forms.ModelForm):
         fields = ('activity_type', 'distance', 'duration')
         labels = {
             'activity_type': 'Activity',
-            'distance': 'Distance (km)',
             'duration': 'Duration (min)',
+            'distance': 'Distance (km)',
         }
 
