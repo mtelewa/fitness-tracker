@@ -86,7 +86,7 @@
       </ul>
       <div class="dropdown border-top">
         <a href="#" class="d-flex align-items-center text-white justify-content-center p-3 text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
-          {% if "placeholder" in profile_image.url %}
+          {% if "placeholder" in profile_image.url or profile_image is None %}
           <img src="{% static 'images/nobody.jpg' %}" width="24" height="24" class="rounded-circle me-2"  alt="profile-image">
           {% else %}
           {% load cloudinary %}      
@@ -95,7 +95,6 @@
         </a>
         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser3">
           <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
-          <li><a class="dropdown-item" href="#">New Session</a></li>
           <li><hr class="dropdown-divider"></li>
           <li><a class="dropdown-item" href="{% url 'account_logout' %}"> <i class="fa-solid fa-arrow-right-from-bracket"></i> Log out</a></li>
         </ul>
@@ -143,7 +142,7 @@
       <hr>
       <div class="dropdown">
         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-          {% if "placeholder" in profile_image.url %}
+          {% if "placeholder" in profile_image.url or profile_image is None %}
           <img src="{% static 'images/nobody.jpg' %}" width="32" height="32" class="rounded-circle me-2"  alt="profile-image">
           {% else %}
           {% load cloudinary %}      
@@ -153,7 +152,6 @@
         </a>
         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
           <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
-          <li><a class="dropdown-item" href="#">New Session</a></li>
           <li><hr class="dropdown-divider"></li>
           <li><a class="dropdown-item" href="{% url 'account_logout' %}"> <i class="fa-solid fa-arrow-right-from-bracket"></i> Log out</a></li>
         </ul>
