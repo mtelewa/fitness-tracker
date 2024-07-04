@@ -3,6 +3,7 @@
 
 {% url 'home' as home_url %}
 {% url 'profile' as profile_url %}
+{% url 'activity' as activity_url %}
 {% url 'account_login' as login_url %}
 {% url 'account_signup' as signup_url %}
 {% url 'account_logout' as logout_url %}
@@ -63,7 +64,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link py-3 border-bottom text-white" title="Activity" data-bs-toggle="tooltip" data-bs-placement="right">
+          <a href="{% url 'activity' %}" class="nav-link py-3 border-bottom text-white" title="Activity" data-bs-toggle="tooltip" data-bs-placement="right">
             <i class="fa-solid fa-person-running fa-lg"></i>
           </a>
         </li>
@@ -119,7 +120,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link text-white">
+          <a href="{% url 'activity' %}" class="nav-link text-white">
             <i class="fa-solid fa-person-running"></i> &nbsp; Activity
           </a>
         </li>

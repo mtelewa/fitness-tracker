@@ -79,7 +79,6 @@ def dashboard(request):
                     return redirect('home')
 
             # Profile Form
-
             metrics_form = MetricsForm()
 
             # If the user updates the values
@@ -107,7 +106,6 @@ def dashboard(request):
                     return redirect('home')
 
             # Activity Form
-
             activity_form = ActivityForm()
 
             # If the user updates the values
@@ -243,7 +241,7 @@ def profile_create(request):
     return dict
 
 
-def profile_update(request):
+def profile_details(request):
 
     if request.user.is_authenticated:
         user_profiles = Profile.objects.filter(user=request.user)
@@ -298,6 +296,42 @@ def profile_update(request):
                     'age': age,
                     'profile_image': profile_image,
                     'profile_form': profile_form,
+                })
+        
+        else:
+            dict = profile_create(request)
+            return render(
+                request,
+                "dashboard/profile_create.html",
+                dict)
+    
+    else:
+        return render(
+            request,
+            "dashboard/index.html",
+        )
+
+
+def activity_history(request):
+
+    if request.user.is_authenticated:
+        user_activities = Activity.objects.filter(user=request.user)
+        user_profiles = Profile.objects.filter(user=request.user)
+
+        # If user has profiles (existing user)
+        if user_profiles.exists():
+            user_last_activity =  user_activities.latest('activity_on')
+            user_last_profile =  user_profiles.latest('updated_on')
+            
+            activity = user_last_activity.activity_type
+            profile_image = user_last_profile.profile_image
+        
+            return render(
+                request,
+                "dashboard/activity.html",
+                {
+                    'activity': activity,
+                    'profile_image': profile_image,
                 })
         
         else:

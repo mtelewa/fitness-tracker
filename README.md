@@ -28,3 +28,19 @@ https://stackoverflow.com/questions/46314246/how-to-update-a-foreign-key-field-i
 
 https://jqueryui.com/datepicker/
 https://stackoverflow.com/questions/5250244/jquery-date-formatting
+
+
+https://stackoverflow.com/questions/1353684/detecting-an-invalid-date-date-instance-in-javascript
+
+
+https://stackoverflow.com/questions/25632918/django-crispy-forms-file-upload
+
+
+https://api.jquery.com/jQuery.ajax/
+
+
+https://stackoverflow.com/questions/72529252/how-to-get-select-option-value-in-views-django
+
+
+API
+https://api-ninjas.com/api/caloriesburned
