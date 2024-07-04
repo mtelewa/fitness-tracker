@@ -355,6 +355,31 @@ def activity_history(request):
         )
 
 
+def nutrition_history(request):
+    """
+    Display an individual :model:`dashboard.Nutrition`.
+
+    **Context**
+
+    ``profile``
+        An instance of :model:`dashboard.Nutrition`.
+
+    **Template:**
+
+    :template:`dashboard/profile_details.html`
+    """
+
+
+    return render(
+        request,
+        "dashboard/nutrition.html",
+        {
+            'NUTRI_CLIENT_ID': settings.NUTRI_CLIENT_ID,
+            'NUTRI_CLIENT_SECRET': settings.NUTRI_CLIENT_SECRET,
+        })
+
+
+
 def calendar(request):
     """
     Display an individual :model:`dashboard.Profile`.
@@ -380,7 +405,9 @@ def calendar(request):
 
 
 def get_metrics(height, weight, birthdate):
-
+    """
+    Calculate Metrics to display on the dashboard
+    """
     # Body Mass Index (BMI)
     bmi = np.round(weight / (height/100)**2, 2) # kg/m2
 
@@ -420,7 +447,9 @@ def get_metrics(height, weight, birthdate):
         
 
 def get_calories_burnt(activity, duration):
-    # Fetch API to get caloroies for the activity
+    """
+    Fetch API to get caloroies for the activity
+    """
     api_url = f'https://api.api-ninjas.com/v1/caloriesburned?activity={activity}'
     response = requests.get(api_url, headers={'X-Api-Key': settings.CAL_BURN_API_KEY})
     if response.status_code == requests.codes.ok:
