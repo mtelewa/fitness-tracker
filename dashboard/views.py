@@ -34,7 +34,7 @@ def dashboard(request):
         user_activities = Activity.objects.filter(user=request.user)
         # print('USER Activities: ', user_activities)
 
-        # If user has profiles (existing user)
+        # Display values - if user has profiles (existing user)
         if user_profiles.exists():
             # Profile card
             user_last_profile =  user_profiles.latest('updated_on')
@@ -50,6 +50,7 @@ def dashboard(request):
             activity_type = user_last_activity.activity_type
             distance = user_last_activity.distance
             duration = user_last_activity.duration
+            calories_burnt = user_last_activity.calories_burnt
 
             metrics_form = MetricsForm()
 
@@ -77,6 +78,8 @@ def dashboard(request):
                     
                     return redirect('home')
 
+            # Profile Form
+
             metrics_form = MetricsForm()
 
             # If the user updates the values
@@ -103,14 +106,7 @@ def dashboard(request):
                     
                     return redirect('home')
 
-            # Calories Burnt API
-            api_url = f'https://api.api-ninjas.com/v1/caloriesburned?activity={activity_type}'
-            response = requests.get(api_url, headers={'X-Api-Key': settings.CAL_BURN_API_KEY})
-            if response.status_code == requests.codes.ok:
-                activity_list = response.json()
-                activities = [d['name'] for d in activity_list if 'name' in d]
-            else:
-                print("Error:", response.status_code, response.text)
+            # Activity Form
 
             activity_form = ActivityForm()
 
@@ -125,12 +121,23 @@ def dashboard(request):
                     activity.user_id = request.user.id
 
                     # get data from the form
-                    user_last_activity.activity_type = activity_form.cleaned_data.get('activity_type')
+                    user_last_activity.activity_type = request.POST.get('select-value')
                     user_last_activity.duration = activity_form.cleaned_data.get('duration')
                     user_last_activity.distance = activity_form.cleaned_data.get('distance')
+
+                    # Fetch API to get caloroies for the activity
+                    api_url = f'https://api.api-ninjas.com/v1/caloriesburned?activity={user_last_activity.activity_type}'
+                    response = requests.get(api_url, headers={'X-Api-Key': settings.CAL_BURN_API_KEY})
+                    if response.status_code == requests.codes.ok:
+                        activity = response.json()
+                        calories_burnt = activity[0]['total_calories'] * duration / 60
+                    else:
+                        print("Error:", response.status_code, response.text)
+
+                    user_last_activity.calories_burnt = calories_burnt
                     activity_type, duration, distance = user_last_activity.activity_type, \
-                                                   user_last_activity.activity_duration, \
-                                                   user_last_activity.activity_distance,
+                                                        user_last_activity.duration, \
+                                                        user_last_activity.distance
 
                     # commit changes
                     user_last_activity.save() 
@@ -140,11 +147,11 @@ def dashboard(request):
                         request, messages.SUCCESS,
                         'Your data has been updated!'
                         )
-                    
-                    return redirect('home')            
 
+                    return redirect('home')         
 
-            
+            # Profile Variables
+
             weight_rec = get_metrics(height,weight,birthdate)['weight_rec']
 
             bmi, bmi_target, bmi_rec =  \
@@ -181,7 +188,9 @@ def dashboard(request):
                     'activity': activity_type,
                     'duration': duration,
                     'distance': distance,
+                    'calories_burnt': calories_burnt,
                     'activity_form': activity_form,
+                    'CAL_BURN_API_KEY': settings.CAL_BURN_API_KEY,
                 })
 
         else:

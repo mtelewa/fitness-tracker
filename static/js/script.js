@@ -104,9 +104,6 @@ function fetchCaloriesBurnt(event) {
           </select>
           `
         )
-
-      // activityType.val($('#select-value').val())
-    
     },
     error: function(xhr, status, error) {
         console.log("Error:", xhr.status, xhr.responseText);
