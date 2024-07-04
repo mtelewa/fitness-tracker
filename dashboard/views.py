@@ -375,7 +375,7 @@ def calendar(request):
         "dashboard/calendar.html",
         {
             'GOOGLE_API_KEY': settings.GOOGLE_API_KEY,
-            'CLIENT_ID': settings.CLIENT_ID,
+            'GOOGLE_CLIENT_ID': settings.GOOGLE_CLIENT_ID,
         })
 
 
