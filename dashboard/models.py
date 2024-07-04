@@ -12,7 +12,7 @@ class Activity(models.Model):
         User, on_delete=models.CASCADE, related_name="user_activity"
         )
     activity_type = models.CharField(max_length=200, unique=True)
-    distance = models.FloatField(
+    distance = models.FloatField(blank=True,
                 validators=[
                 MaxValueValidator(999),
                 MinValueValidator(1)
@@ -22,6 +22,7 @@ class Activity(models.Model):
                     MaxValueValidator(999),
                     MinValueValidator(1)
                 ])
+    calories_burnt = models.FloatField()
     activity_on = models.DateTimeField(auto_now=True)
 
     class Meta:
