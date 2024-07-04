@@ -94,7 +94,6 @@ class NutritionForm(forms.ModelForm):
         fields = ('food_item',)
         labels = {
             'food_item': 'Food',
-
         }
 
 
