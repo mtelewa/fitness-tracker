@@ -4,6 +4,7 @@
 
 {% load crispy_forms_tags %}
 {% crispy metrics_form metrics_form.helper %}
+{% crispy activity_form activity_form.helper %}
 
 {% if user.is_authenticated %}
 
@@ -28,6 +29,7 @@
     <h1 class="p-5"> Your Summary</h1>
     <div id="dashboard" class="container-fluid d-flex flex-row justify-content-center dashboard-border--shadow dashboard--bg-color p-3 p-lg-5 mx-auto">
         <div class="row gy-4">
+            <!-- Profile Card -->
             <div class="card col-md-12 col-lg-6 dashboard-item-border--shadow bg-light" >
                 <div class="card-body row">
                     <h3 class="card-title">Profile</h3>
@@ -39,21 +41,21 @@
                         </form>
                         <p class="card-text"> 
                             <span class="show-hide"> Weight: </span> 
-                            <span class="show-hide text-primary fw-bold {% if weight is None %} ddash {% endif %}" id="weight-val">{{ weight }}</span>
-                            <span class="show-hide text-primary fw-bold {% if weight is None %} d-none {% endif %}"> kg </span> <br>
-                            <span> BMI: </span> <span class="text-primary fw-bold {% if bmi is None %} ddash {% endif %}"> {{ bmi }} </span> <br>
-                            <span> BMR: </span> <span class="text-primary fw-bold {% if bmr is None %} ddash {% endif %}"> {{ bmr }} Cal/day </span> <br>
-                            <span> Classification: </span> <span class="text-primary fw-bold {% if classification is None %} ddash {% endif %}"> {{ classification }} </span>
+                            <span class="show-hide text-primary fw-bold" id="weight-val">{{ weight }}</span>
+                            <span class="show-hide text-primary fw-bold"> kg </span> <br>
+                            <span> BMI: </span> <span class="text-primary fw-bold"> {{ bmi }} </span> <br>
+                            <span> BMR: </span> <span class="text-primary fw-bold"> {{ bmr }} Cal/day </span> <br>
+                            <span> Classification: </span> <span class="text-primary fw-bold"> {{ classification }} </span>
                         </p>
                         <hr class="h-divider h-divider--orange">
                         <h5> Recommended Metrics </h5>
                         <p class="card-text"> 
                             <span> Weight: </span> 
-                            <span class="fw-bold {% if weight_rec is None %} ddash {% endif %}">{{ weight_rec }}</span>
-                            <span class="fw-bold {% if weight_rec is None %} d-none {% endif %}"> kg </span>  <br>
-                            <span> BMI: </span> <span class="fw-bold {% if bmi_rec is None %} ddash {% endif %}"> {{ bmi_rec }} </span> <br>
-                            <span> BMR: </span> <span class="fw-bold {% if bmr_rec is None %} ddash {% endif %}"> {{ bmr_rec }} Cal/day </span> <br>
-                            <span> Classification: </span> <span class="fw-bold {% if weight_rec is None %} ddash {% endif %}"> Normal </span>
+                            <span class="fw-bold">{{ weight_rec }}</span>
+                            <span class="fw-bold"> kg </span>  <br>
+                            <span> BMI: </span> <span class="fw-bold"> {{ bmi_rec }} </span> <br>
+                            <span> BMR: </span> <span class="fw-bold"> {{ bmr_rec }} Cal/day </span> <br>
+                            <span> Classification: </span> <span class="fw-bold"> Normal </span>
                         </p>
                     </div>
                     <div class="col-lg-6">
@@ -61,55 +63,28 @@
                         <h5> Target Metrics </h5>
                         <p class="card-text"> 
                             <span class="show-hide"> Weight: </span> 
-                            <span class="show-hide text-success fw-bold {% if weight_target is None %} ddash {% endif %}" id="weight-target-val">{{ weight_target }}</span>
-                            <span class="show-hide text-success fw-bold {% if weight_target is None %} d-none {% endif %}"> kg </span>  <br>
-                            <span> BMI: </span> <span class="text-success fw-bold {% if bmi_target is None %} ddash {% endif %}"> {{ bmi_target }} </span> <br>
-                            <span> BMR: </span> <span class="text-success fw-bold {% if bmr_target is None %} ddash {% endif %}"> {{ bmr_target }} Cal/day </span> <br>
-                            <span> Classification: </span> <span class="text-success fw-bold {% if classification_target is None %} ddash {% endif %}"> {{ classification_target }} </span>
+                            <span class="show-hide text-success fw-bold" id="weight-target-val">{{ weight_target }}</span>
+                            <span class="show-hide text-success fw-bold"> kg </span>  <br>
+                            <span> BMI: </span> <span class="text-success fw-bold"> {{ bmi_target }} </span> <br>
+                            <span> BMR: </span> <span class="text-success fw-bold"> {{ bmr_target }} Cal/day </span> <br>
+                            <span> Classification: </span> <span class="text-success fw-bold"> {{ classification_target }} </span>
                         </p>
                         <hr class="h-divider h-divider--orange">
-                        {% if height is None %}
-                        <p class="card-text">
-                            <strong>
-                            You have no entries yet! <br>
-                            Please create your profile first!
-                            </strong>
-                        </p>
-                        {% else %}
-                        {% if weight is None %}
-                        <p class="card-text">
-                            <strong>
-                            You have created a profile! <br>
-                            Please create metrics now!
-                            </strong>
-                        </p>                        
-                        {% else %}
+
                         <p class="card-text"> 
                             You are <strong>{{ weight|sub:weight_target }}</strong> kg away from your target, <br>
                             and <strong>{{ weight|sub:weight_rec }}</strong> kg away from the recommended metrics <br>
                             Keep Going! <i class="fa-solid fa-person-running"></i>
                         </p>
-                        {% endif %}
-                        {% endif %}
                     </div>
                 </div>
                 <div class="align-self-end pb-3 hide-show">
-                    {% if height is None %}
-                    <a href="{% url 'profile' %}" class="btn btn-md btn--size btn-primary m-1" role="button"> Create Profile </a>
-                    {% else %}
-                    {% if weight is None %}
-                    <a href="{% url 'profile' %}" class="btn btn-md btn--size btn-primary m-1" role="button"> Update Profile </a>
-                    <button type="button" class="btn btn-update btn-md btn--size btn-success m-1" aria-label="Create"> Create Metrics </button>
-                    {% else %}
                     <a href="{% url 'profile' %}" class="btn btn-md btn--size btn-primary m-1" role="button"> View Details </a>
                     <button type="button" class="btn btn-update btn-md btn--size btn-success m-1" aria-label="Update"> Update Metrics </button>
-                    {% endif %}
-                    {% endif %}
-
                 </div>
             </div>
 
-            
+            <!-- Calendar Card -->
             <div class="card col-md-12 col-lg-6 bg-light dashboard-item-border--shadow" >
                 <div class="card-body">
                     <h5 class="card-title">Calendar</h5>
@@ -120,17 +95,42 @@
                     <a href="#" class="card-link">Card link</a>
                 </div>
             </div>
-            <div class="card col-md-12 col-lg-6 bg-light dashboard-item-border--shadow" >
-                <div class="card-body">
-                    <h5 class="card-title">Activity</h5>
-                    <p class="card-text">
-                        Some quick example text to build on the card title and make up the bulk of the card's content.
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit, explicabo a. Voluptates, quam commodi provident asperiores ipsam odio magnam necessitatibus laborum amet soluta architecto saepe, dignissimos sit vitae, unde similique?
-                    </p>
-                    <a href="#" class="card-link">Card link</a>
+
+            <!-- Activity Card -->
+            <div class="card col-md-12 col-lg-6 dashboard-item-border--shadow bg-light" >
+                <div class="card-body row">
+                    <h3 class="card-title">Activity</h3>
+                    <div class="col-lg-6">
+                        <h5> Last Activity </h5>
+                        <form class="hide-show d-none" method="post">
+                            {% crispy activity_form %}
+                            {% csrf_token %}
+                        </form>
+                        {{ CAL_BURN_API_KEY|json_script:"calBurnAPI" }}
+                        <p class="card-text"> 
+                            <span class="show-hide"> Activity: </span> 
+                            <span class="show-hide text-primary fw-bold">{{ activity }}</span> <br>
+                            <span class="show-hide"> Duration: </span>
+                            <span class="show-hide text-primary fw-bold"> {{ duration }} </span> <br>
+                            <span class="show-hide"> Distance: </span>
+                            <span class="show-hide text-primary fw-bold"> {{ distance }} </span> <br>
+                        </p>
+                    </div>
+                    <div class="col-lg-6">
+                        <hr class="h-divider h-divider--orange d-lg-none">
+                        <h5> You burnt </h5>
+                        <span class="text-primary text-xl-start fw-bold"> {{ cal_burnt }}</span> <br>
+                        <span class="text-primary fw-bold"> Calories </span>
+                    </div>
+                </div>
+                <div class="align-self-end pb-3 hide-show">
+                    <a href="{% url 'profile' %}" class="btn btn-md btn--size btn-primary m-1" role="button"> View History </a>
+                    <button type="button" class="btn btn-update btn-md btn--size btn-success m-1" aria-label="Update"> New Session </button>
                 </div>
             </div>
-            <div class="card col-md-12 col-lg-6 bg-light dashboard-item-border--shadow" >
+
+             <!-- Nutrition Card -->
+            <div class="card col-md-12 col-lg-6 dashboard-item-border--shadow bg-light" >
                 <div class="card-body">
                     <h5 class="card-title">Nutrition</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
