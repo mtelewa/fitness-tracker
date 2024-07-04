@@ -207,8 +207,10 @@ hr.h-divider {
 
 #div_id_weight,
 #div_id_weight_target,
-#div_id_height {
-    width: 25%;
+#div_id_height,
+#div_id_distance,
+#div_id_duration {
+    width: 50%;
     min-width: 75px;
 }
 
@@ -225,7 +227,8 @@ hr.h-divider {
 
 #submit-id-submitprofile,
 #submit-id-submitfull,
-#submit-id-submitmetrics, 
+#submit-id-submitmetrics,
+#submit-id-submitactivity,
 #button-id-cancel {
     margin-top: 25px;
 }
@@ -235,9 +238,6 @@ hr.h-divider {
 .image-container {
     width: 50vw;
     height: 50vw;
-    /* margin: 20px auto; */
-    /* Makes the square image into a circle */
-    /* border-radius: 50%; */
     max-height: 150px;
     max-width: 150px;
 }
