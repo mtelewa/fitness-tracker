@@ -5,8 +5,6 @@ from cloudinary.models import CloudinaryField
 
 # Create your models here.
 
-STARS = ((1, "Very Poor"), (2, "Poor"), (3, "Good"), (4, "Very Good"), (5, "Excellent"))
-
 class Activity(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="user_activity"
@@ -35,20 +33,11 @@ class Activity(models.Model):
 
 class Nutrition(models.Model):
     food_item = models.CharField(max_length=200, unique=True)
+    calories_intake = models.IntegerField()
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="user_nutrition"
         )
     nutrition_on = models.DateTimeField(auto_now=True)
-
-
-class Feedback(models.Model):
-    message = models.TextField()
-    user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="user_review"
-        )
-    stars = models.IntegerField(choices=STARS, default=0)
-    review = models.TextField()
-    approved = models.BooleanField(default=False)
 
 
 class Profile(models.Model):
