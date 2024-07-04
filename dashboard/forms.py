@@ -2,17 +2,9 @@ from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Button, Field, MultiField, Div
 from django.shortcuts import reverse
-from .models import Profile, Activity
+from .models import Profile, Activity, Nutrition
 
 class MetricsForm(forms.ModelForm):
-
-    class Meta:
-        model = Profile
-        fields = ('weight','weight_target')
-        labels = {
-            'weight': 'Weight (Kg)',
-            'weight_target': 'Target Weight (Kg)',
-        }
 
     # helper form
     def __init__(self, *args, **kwargs):
@@ -22,16 +14,20 @@ class MetricsForm(forms.ModelForm):
         self.helper.add_input(Button('cancel', 'Cancel', css_class='btn-secondary',
             onclick="window.location.href = '{}';".format(reverse('home'))))
 
-
-class ProfileForm(forms.ModelForm):
-    birthdate = forms.DateField(input_formats=['%d-%m-%Y'])
-
     class Meta:
         model = Profile
-        fields = ('height', 'profile_image')
+        fields = ('weight','weight_target')
         labels = {
-            'height': 'Height (cm)',
+            'weight': 'Weight (Kg)',
+            'weight_target': 'Target Weight (Kg)',
         }
+
+
+class ProfileForm(forms.ModelForm):
+    """
+    Form based on the profile custom model
+    """
+    birthdate = forms.DateField(input_formats=['%d-%m-%Y'])
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -40,33 +36,20 @@ class ProfileForm(forms.ModelForm):
         self.helper.add_input(Button('cancel', 'Cancel', css_class='btn-secondary',
             onclick="window.location.href = '{}';".format(reverse('profile'))))
 
-
-# class FullForm(forms.ModelForm):
-#     birthdate = forms.DateField(input_formats=['%d-%m-%Y'])
-
-#     class Meta:
-#         model = Profile
-#         fields = ('height', 'weight', 'weight_target', 'birthdate', 'profile_image')
-#         labels = {
-#             'height': 'Height (cm)',
-#             'weight': 'Weight (Kg)',
-#             'weight_target': 'Target Weight (Kg)',
-#         }
-
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-#         self.helper = FormHelper(self)
-#         self.helper.add_input(Submit('submitFull', 'Submit', css_class='btn-success'))
-#         self.helper.add_input(Button('cancel', 'Cancel', css_class='btn-secondary',
-#             onclick="window.location.href = '{}';".format(reverse('home'))))
+    class Meta:
+        model = Profile
+        fields = ('height', 'profile_image')
+        labels = {
+            'height': 'Height (cm)',
+        }
 
 
 class ActivityForm(forms.ModelForm):
-
+    """
+    Form based on the activity custom model
+    """
     def __init__(self, *args, **kwargs):
-        # activities = kwargs.pop('activities', [])
         super().__init__(*args, **kwargs)
-        # self.fields['activity_type'].choices = [(count, activity) for count, activity in enumerate(activities)]
         self.helper = FormHelper(self)
         
         self.helper.layout = Layout(
@@ -89,9 +72,37 @@ class ActivityForm(forms.ModelForm):
         }
 
 
+class NutritionForm(forms.ModelForm):
+    """
+    Form based on the activity custom model
+    """
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        
+        self.helper.layout = Layout(
+            Field('food_item', oninput="fetchNutritionDetails()",),
+            Div(css_class="mb-3", css_id="food_list"),
+            )
+
+        self.helper.add_input(Submit('submitNutrition', 'Submit', css_class='btn-success submit'))
+        self.helper.add_input(Button('cancel', 'Cancel', css_class='btn-secondary',
+            onclick="window.location.href = '{}';".format(reverse('home'))))
+
+    class Meta:
+        model = Nutrition
+        fields = ('food_item',)
+        labels = {
+            'food_item': 'Food',
+
+        }
+
 
 class FullForm(forms.Form):
-    
+    """
+    Form that contains fields from several models
+    for the user to fill out after signing up
+    """
     height = forms.FloatField(
         label = "Height (cm)",
         required = True,
@@ -141,15 +152,15 @@ class FullForm(forms.Form):
         self.fields['distance'].widget.attrs['min'], \
             self.fields['distance'].widget.attrs['max']  = 1, 999
 
-
+        # Layout
         self.helper.layout = Layout(
             ('height'), ('weight'), ('weight_target'), ('birthdate'),
             Field('activity_type', oninput="fetchCaloriesBurnt()",),
             Div(css_class="mb-3", css_id="activity_list"),
             ('duration'), ('distance')
             )
-
         
+        # Buttons
         self.helper.add_input(Submit('submitFull', 'Submit', css_class='btn-success'))
         self.helper.add_input(Button('cancel', 'Cancel', css_class='btn-secondary',
             onclick="window.location.href = '{}';".format(reverse('home'))))
