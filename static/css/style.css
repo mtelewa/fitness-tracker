@@ -209,18 +209,22 @@ hr.h-divider {
 #div_id_weight_target,
 #div_id_height,
 #div_id_distance,
-#div_id_duration {
-    width: 50%;
-    min-width: 75px;
+#div_id_duration,
+#div_id_height,
+#div_id_birthdate,
+#div_id_activity_type,
+#activity_list {
+    width: 25%;
+    min-width: 170px;
 }
 
-#div_id_height {
+ /* {
     width: 25%;
     max-width: 170px;
-}
+} */
 
-#div_id_profile_image,
-#div_id_birthdate {
+#div_id_profile_image
+ {
     width: 30%;
     min-width: 220px;
 }
@@ -246,3 +250,7 @@ hr.h-divider {
     width: 100%;
     height: 100%;
 }
+
+/* #activity_list {
+    width: 100%
+} */

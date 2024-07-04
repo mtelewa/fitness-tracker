@@ -123,14 +123,7 @@ def dashboard(request):
                     user_last_activity.duration = activity_form.cleaned_data.get('duration')
                     user_last_activity.distance = activity_form.cleaned_data.get('distance')
 
-                    # Fetch API to get caloroies for the activity
-                    api_url = f'https://api.api-ninjas.com/v1/caloriesburned?activity={user_last_activity.activity_type}'
-                    response = requests.get(api_url, headers={'X-Api-Key': settings.CAL_BURN_API_KEY})
-                    if response.status_code == requests.codes.ok:
-                        activity = response.json()
-                        calories_burnt = activity[0]['total_calories'] * duration / 60
-                    else:
-                        print("Error:", response.status_code, response.text)
+                    calories_burnt = get_calories_burnt(user_last_activity.activity_type, duration)
 
                     user_last_activity.calories_burnt = calories_burnt
                     activity_type, duration, distance = user_last_activity.activity_type, \
@@ -208,22 +201,34 @@ def dashboard(request):
 def profile_create(request):
     
     full_form = FullForm()
-    height = age = weight = weight_target = None
+    height = age = weight = weight_target = profile_image = None
 
     if request.method == "POST":
         full_form = FullForm(data=request.POST)
 
         if full_form.is_valid():
-            profile = full_form.save(commit=False)
+            # Create Profile
             height = full_form.cleaned_data.get('height')
-            birthdate = full_form.cleaned_data.get('birthdate')
             weight = full_form.cleaned_data.get('weight')
             weight_target = full_form.cleaned_data.get('weight_target')
-                
+            birthdate = full_form.cleaned_data.get('birthdate')
+            age = (date.today() - birthdate) // timedelta(days=365.2425)
+
             Profile.objects.create(user=request.user, height=height, weight=weight, 
                                 birthdate=birthdate, weight_target=weight_target)
 
-            age = (date.today() - birthdate) // timedelta(days=365.2425)
+            # Create Activity
+            activity_type = request.POST.get('select-value')
+            duration = full_form.cleaned_data.get('duration')
+            distance = full_form.cleaned_data.get('distance')
+
+            calories_burnt = get_calories_burnt(activity_type, duration)
+            
+            Activity.objects.create(user=request.user, activity_type=activity_type,
+                                duration=duration, distance=distance,
+                                calories_burnt = calories_burnt)
+
+
             print('full form saved')
 
             messages.add_message(
@@ -235,6 +240,8 @@ def profile_create(request):
             'height': height,
             'weight': weight,
             'age': age,
+            'profile_image': profile_image,
+            'CAL_BURN_API_KEY': settings.CAL_BURN_API_KEY,
             'full_form': full_form,
             }
 
@@ -411,3 +418,15 @@ def get_metrics(height, weight, birthdate):
             'classification': classification
             }
         
+
+def get_calories_burnt(activity, duration):
+    # Fetch API to get caloroies for the activity
+    api_url = f'https://api.api-ninjas.com/v1/caloriesburned?activity={activity}'
+    response = requests.get(api_url, headers={'X-Api-Key': settings.CAL_BURN_API_KEY})
+    if response.status_code == requests.codes.ok:
+        activity = response.json()
+        calories_burnt = activity[0]['total_calories'] * duration / 60
+    else:
+        print("Error:", response.status_code, response.text)
+
+    return calories_burnt

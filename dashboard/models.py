@@ -11,7 +11,7 @@ class Activity(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="user_activity"
         )
-    activity_type = models.CharField(max_length=200, unique=True)
+    activity_type = models.CharField(max_length=200)
     distance = models.FloatField(blank=True, null=True,
                 validators=[
                 MaxValueValidator(999),

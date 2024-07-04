@@ -33,6 +33,7 @@
                     {% crispy full_form %}
                     {% csrf_token %}
                 </form>
+                {{ CAL_BURN_API_KEY|json_script:"calBurnAPI" }}
                 <p class="card-text"> 
                     <span class="show-hide"> Username: </span> 
                     <span class="show-hide text-primary fw-bold">{{ user }}</span> <br>
