@@ -111,16 +111,19 @@
                             <span class="show-hide"> Activity: </span> 
                             <span class="show-hide text-primary fw-bold">{{ activity }}</span> <br>
                             <span class="show-hide"> Duration: </span>
-                            <span class="show-hide text-primary fw-bold"> {{ duration }} </span> <br>
+                            <span class="show-hide text-primary fw-bold"> {{ duration }} </span> 
+                            <span class="show-hide text-primary fw-bold"> min </span> <br>
                             <span class="show-hide"> Distance: </span>
-                            <span class="show-hide text-primary fw-bold"> {{ distance }} </span> <br>
+                            <span class="show-hide text-primary fw-bold {% if distance is None %} ddash {% endif %}"> {{ distance }} </span> 
+                            <span class="show-hide text-primary fw-bold"> km </span> <br>
                         </p>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-6 d-flex flex-column">
                         <hr class="h-divider h-divider--orange d-lg-none">
-                        <h5> You burnt </h5>
-                        <span class="text-primary text-xl-start fw-bold"> {{ cal_burnt }}</span> <br>
-                        <span class="text-primary fw-bold"> Calories </span>
+                        <h5 class="mx-auto show-hide"> You burnt </h5>
+
+                        <span class="text-success fw-bold mx-auto show-hide"><h3> {{ calories_burnt }} </h3></span>
+                        <span class="text-success fw-bold mx-auto show-hide"> Calories </span>
                     </div>
                 </div>
                 <div class="align-self-end pb-3 hide-show">
