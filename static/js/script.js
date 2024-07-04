@@ -45,7 +45,7 @@ $(document).ready(function(){
 
     let birthdate = $('#birthdate-val');
 
-    // if profile is created, show the user's bd
+    // if profile is created, show the user's birthdate
     // else show today's date
     if (isValidDate(new Date(birthdate.text()))){
       birthdateText.val($.datepicker.formatDate('dd-mm-yy', new Date(birthdate.text())));
@@ -65,7 +65,51 @@ $(document).ready(function(){
     return d instanceof Date && !isNaN(d);
   };
 
-  // For new users with no previous records, show --
+  // For new users with no previous records, show -- for None entries
   ddash.text('--');
 
 });
+
+
+
+function fetchCaloriesBurnt(event) {
+
+  var activityTypeValue = $('#id_activity_type').val();
+
+  CAL_BURN_API_KEY = JSON.parse($('#calBurnAPI').text());
+
+  // Perform an asynchronous HTTP (Ajax) request
+  $.ajax({
+    url: `https://api.api-ninjas.com/v1/caloriesburned?activity=${activityTypeValue}`,
+    headers: { 'X-Api-Key': CAL_BURN_API_KEY },
+    method: 'GET',
+    success: function(response) {
+        var activity_list = response;
+        var activities = [];
+        for (var i = 0; i < activity_list.length; i++) {
+            if (activity_list[i].hasOwnProperty('name')) {
+                activities.push(activity_list[i]['name']);
+            }
+        }
+
+        // Show activities list in the select menu
+        var str = ""
+        for (let i of activities) {
+            str += `<option value="${i}">${i}</option>`
+        }
+        $('#activity_list').html(
+          `
+          <select class="form-select" name="select-value" aria-label="select activity">
+            ${str}
+          </select>
+          `
+        )
+
+      // activityType.val($('#select-value').val())
+    
+    },
+    error: function(xhr, status, error) {
+        console.log("Error:", xhr.status, xhr.responseText);
+    }
+  });
+}
