@@ -81,6 +81,7 @@
                 <div class="align-self-end pb-3 hide-show">
                     <a href="{% url 'profile' %}" class="btn btn-md btn--size btn-primary m-1" role="button"> View Details </a>
                     <button type="button" class="btn btn-update btn-md btn--size btn-success m-1" aria-label="Update"> Update Metrics </button>
+                    <button type="button" class="btn btn-delete btn-md btn--size btn-danger m-1" aria-label="Delete">Delete</button>
                 </div>
             </div>
 
@@ -129,16 +130,46 @@
                 <div class="align-self-end pb-3 hide-show">
                     <a href="{% url 'activity' %}" class="btn btn-md btn--size btn-primary m-1" role="button"> View History </a>
                     <button type="button" class="btn btn-update btn-md btn--size btn-success m-1" aria-label="Update"> New Session </button>
+                    <button type="button" class="btn btn-delete btn-md btn--size btn-danger m-1" aria-label="Delete">Delete</button>
                 </div>
             </div>
 
              <!-- Nutrition Card -->
-            <div class="card col-md-12 col-lg-6 dashboard-item-border--shadow bg-light" >
-                <div class="card-body">
-                    <h5 class="card-title">Nutrition</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <button class="btn btn-md btn-primary"> View History </button>
-                    <button class="btn btn-md btn-success"> New Session </button>
+             <div class="card col-md-12 col-lg-6 dashboard-item-border--shadow bg-light" >
+                <div class="card-body row">
+                    <h3 class="card-title">Nutrition</h3>
+                    <div class="col-lg-6">
+                        <h5> Last Meal </h5>
+                        <!-- Form here -->
+                        <p class="card-text"> 
+                            <span class="show-hide"> Food: </span> 
+                            <span class="show-hide text-primary fw-bold">{{ food }}</span> <br>
+                            <span class="show-hide"> Serving: </span>
+                            <span class="show-hide text-primary fw-bold"> {{ serving }} </span> 
+                            <span class="show-hide text-primary fw-bold"> min </span> <br>
+                            <span class="show-hide"> Protein: </span>
+                            <span class="show-hide text-primary fw-bold"> {{ protein }} </span> 
+                            <span class="show-hide text-primary fw-bold"> g </span> <br>
+                            <span class="show-hide"> Carbohydrate: </span>
+                            <span class="show-hide text-primary fw-bold"> {{ carbs }} </span> 
+                            <span class="show-hide text-primary fw-bold"> g </span> <br>
+                            <span class="show-hide"> Fats: </span>
+                            <span class="show-hide text-primary fw-bold"> {{ fats }} </span> 
+                            <span class="show-hide text-primary fw-bold"> g </span> <br>
+                        </p>
+                    </div>
+                    <div class="col-lg-6 d-flex flex-column">
+                        <hr class="h-divider h-divider--orange d-lg-none">
+                        <h5 class="mx-auto show-hide"> Your intake </h5>
+
+                        <span class="text-success fw-bold mx-auto show-hide"><h3> {{ calories_intake }} </h3></span>
+                        <span class="text-success fw-bold mx-auto show-hide"> Calories </span>
+                    </div>
+                </div>
+                <div class="align-self-end pb-3 hide-show">
+                    <a href="{% url 'activity' %}" class="btn btn-md btn--size btn-primary m-1" role="button"> View History </a>
+                    <button type="button" class="btn btn-update btn-md btn--size btn-success m-1" aria-label="Update"> New Session </button>
+                    <button type="button" class="btn btn-delete btn-md btn--size btn-danger m-1" aria-label="Delete">Delete</button>
                 </div>
             </div>
         </div>
