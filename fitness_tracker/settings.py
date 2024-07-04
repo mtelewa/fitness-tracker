@@ -27,12 +27,16 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
-# Google API key and clien ID
+# Google API key and client ID
 GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
 GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID")
 
 # Calories Burnt API key
 CAL_BURN_API_KEY = os.environ.get("CAL_BURN_API_KEY")
+
+# Nutrition client ID and client secret
+NUTRI_CLIENT_ID = os.environ.get("NUTRI_CLIENT_ID")
+NUTRI_CLIENT_SECRET = os.environ.get("NUTRI_CLIENT_SECRET")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
