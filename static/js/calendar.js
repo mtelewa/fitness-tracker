@@ -42,7 +42,7 @@ maybeEnableButtons();
  */
 function gisLoaded() {
 tokenClient = google.accounts.oauth2.initTokenClient({
-    client_id: CLIENT_ID,
+    client_id: GOOGLE_CLIENT_ID,
     scope: SCOPES,
     callback: '', // defined later
 });
