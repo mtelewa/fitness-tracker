@@ -11,6 +11,7 @@
 
 
 const updateButton = $('.btn-update');
+const deleteButton = $('.btn-delete');
 const cardText = $('.card-text');
 const weightText = $('#id_weight');
 const targetWeightText = $('#id_weight_target');
@@ -21,7 +22,6 @@ const ddash = $('.ddash')
 $(document).ready(function(){
   /**
    * Upon clicking update, crispy form appears
-   * 
    */
   updateButton.click(function() {
     let showHide = $('.show-hide');
@@ -31,7 +31,7 @@ $(document).ready(function(){
     // toggle class to display and hide form
     hideShow.toggleClass('hide-show d-none')
     hideShow.toggleClass('hide-show d-block')
-    // remove y-margin from the
+    // remove y-margin
     cardText.addClass('my-0');
 
     let weight = $('#weight-val');
@@ -54,6 +54,12 @@ $(document).ready(function(){
     }
 
   });
+
+
+  // show modal when delete button is pressed
+  // deleteButton.addEventListener("click", (e) => {
+  //   deleteModal.show();
+  // });
 
   // Date Picker
   $( function() {
@@ -99,7 +105,7 @@ function fetchCaloriesBurnt(event) {
         }
         $('#activity_list').html(
           `
-          <select class="form-select" name="select-value" aria-label="select activity">
+          <select class="form-select" name="select-activity" aria-label="select activity">
             ${str}
           </select>
           `
@@ -110,3 +116,50 @@ function fetchCaloriesBurnt(event) {
     }
   });
 }
+
+
+
+async function fetchNutritionDetails(event) {
+  
+  var foodItem = $('#id_food_item').val();
+
+  CAL_BURN_API_KEY = JSON.parse($('#calBurnAPI').text());
+
+  // Perform an asynchronous HTTP (Ajax) request
+  $.ajax({
+    url: `https://api.api-ninjas.com/v1/nutrition?query=${foodItem}`,
+    headers: { 'X-Api-Key': CAL_BURN_API_KEY },
+    method: 'GET',
+    success: function(response) {
+        var food_list = response;
+        var foods = [];
+        for (var i = 0; i < food_list.length; i++) {
+            if (food_list[i].hasOwnProperty('name')) {
+                foods.push(food_list[i]['name']);
+            }
+        }
+
+        // Show activities list in the select menu
+        // var str = ""
+        // for (let i of activities) {
+        //     str += `<option value="${i}">${i}</option>`
+        // }
+        // $('#activity_list').html(
+        //   `
+        //   <select class="form-select" name="select-activity" aria-label="select activity">
+        //     ${str}
+        //   </select>
+        //   `
+        // )
+    },
+    error: function(xhr, status, error) {
+        console.log("Error:", xhr.status, xhr.responseText);
+    }
+  });
+
+}
+
+
+
+
+
