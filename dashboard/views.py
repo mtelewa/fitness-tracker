@@ -258,7 +258,7 @@ def profile_create(request):
                                 birthdate=birthdate, weight_target=weight_target)
 
             # Create Activity
-            activity_type = request.POST.get('select-value')
+            activity_type = request.POST.get('select-activity')
             duration = full_form.cleaned_data.get('duration')
             distance = full_form.cleaned_data.get('distance')
 

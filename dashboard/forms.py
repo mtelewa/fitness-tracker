@@ -114,11 +114,13 @@ class FullForm(forms.Form):
         )
         
     birthdate = forms.DateField(
+        label = "Birth Date",
         input_formats=['%d-%m-%Y'],
         required = True,
         )
     
     activity_type = forms.CharField(
+        label = "Last Activity",
         max_length = 200,
         required = True,
         )
@@ -134,7 +136,7 @@ class FullForm(forms.Form):
         )
     
     food_item = forms.CharField(
-        label = "Food",
+        label = "Last meal",
         required = True,
         )
 
@@ -165,7 +167,7 @@ class FullForm(forms.Form):
             ('height'), ('weight'), ('weight_target'), ('birthdate'),
             Field('activity_type', oninput="fetchCaloriesBurnt()",),
             Div(css_class="mb-3", css_id="activity_list"),
-            ('duration'), ('distance'), (food_item), (portion),
+            ('duration'), ('distance'), ('food_item'), ('portion'),
             )
         
         # Buttons
