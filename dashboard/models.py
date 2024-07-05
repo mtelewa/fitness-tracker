@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from cloudinary.models import CloudinaryField
+from django.core.validators import RegexValidator
+
+alpha = RegexValidator(r'^[a-zA-Z]+$', 'Only alphabetical characters are allowed.')
 
 # Create your models here.
 
@@ -12,11 +15,11 @@ class Activity(models.Model):
     activity_type = models.CharField(max_length=200)
     distance = models.FloatField(blank=True, null=True,
                 validators=[
-                MaxValueValidator(999),
-                MinValueValidator(1)
+                    MaxValueValidator(999),
+                    MinValueValidator(1)
                 ])
-    duration = models.FloatField(
-                    validators=[
+    duration = models.IntegerField(
+                validators=[
                     MaxValueValidator(999),
                     MinValueValidator(1)
                 ])
@@ -32,8 +35,13 @@ class Activity(models.Model):
 
 
 class Nutrition(models.Model):
-    food_item = models.CharField(max_length=200)
-    portion = models.CharField(max_length=200)
+    food_item = models.CharField(max_length=200,
+                 validators=[alpha])
+    portion = models.IntegerField(
+                validators=[
+                    MaxValueValidator(999),
+                    MinValueValidator(1)
+                ])
     protein = models.IntegerField()
     carbs = models.IntegerField()
     fats = models.IntegerField()
@@ -49,20 +57,20 @@ class Profile(models.Model):
         User, on_delete=models.CASCADE, related_name="user_profile"
         )
     height = models.FloatField(
-        validators=[
-            MaxValueValidator(999),
-            MinValueValidator(1)
-        ])
+                validators=[
+                    MaxValueValidator(999),
+                    MinValueValidator(1)
+                ])
     weight = models.FloatField(null=True,
-        validators=[
-                MaxValueValidator(999),
-                MinValueValidator(1)
-        ])
+                validators=[
+                    MaxValueValidator(999),
+                    MinValueValidator(1)
+                ])
     weight_target = models.FloatField(null=True,
-            validators=[
-                MaxValueValidator(999),
-                MinValueValidator(1)
-        ])
+                validators=[
+                    MaxValueValidator(999),
+                    MinValueValidator(1)
+                ])
     profile_image = CloudinaryField('image', default="placeholder", null=True, blank=True)
     updated_on = models.DateTimeField(auto_now=True)
     birthdate = models.DateField()
