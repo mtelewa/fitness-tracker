@@ -53,9 +53,15 @@
                     </strong>
                 </p>
             </div>
+            {% if height is None %}
             <div class="align-self-end pb-3 hide-show">
                 <button type="button" class="btn btn-update btn-md btn--size btn-success m-1" aria-label="Create"> Create Profile </button>
             </div>
+            {% else %}
+            <div class="align-self-end pb-3 hide-show">
+                <a href="{% url 'home' %}" class="btn btn-md btn--size btn-primary m-1" role="button"> Home </a>
+            </div>          
+            {% endif %}
         </div>
     </div>
 </div>

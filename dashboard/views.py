@@ -160,7 +160,7 @@ def dashboard(request):
                         'Your data has been updated!'
                         )
 
-                    return redirect('home') 
+                    return redirect('home')
          
 
             # Profile Variables
