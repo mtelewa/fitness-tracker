@@ -8,14 +8,17 @@ import numpy as np
 from pprint import pprint
 import requests
 
-from .models import Activity, Profile
-from .forms import MetricsForm, ProfileForm, FullForm, ActivityForm
+from .models import Activity, Profile, Nutrition
+from .forms import MetricsForm, ProfileForm, FullForm, ActivityForm, NutritionForm
 
 # Create your views here.
 
 def dashboard(request):
     """
-    Display an individual :model:`dashboard.Profile`.
+    Display the custom models
+         :model:`dashboard.Profile`
+         :model:`dashboard.Activity`
+         :model:`dashboard.Nutrition`
 
     **Context**
 
@@ -33,6 +36,9 @@ def dashboard(request):
 
         user_activities = Activity.objects.filter(user=request.user)
         # print('USER Activities: ', user_activities)
+
+        user_nutritions = Nutrition.objects.filter(user=request.user)
+        # print('USER Nutritions: ', user_nutritions)
 
         # Display values - if user has profiles (existing user)
         if user_profiles.exists():
@@ -52,6 +58,15 @@ def dashboard(request):
             duration = user_last_activity.duration
             calories_burnt = user_last_activity.calories_burnt
 
+            # Nutrition card
+            user_last_nutrition = user_nutritions.latest('nutrition_on')
+            food_item = user_last_nutrition.food_item
+            serving = user_last_nutrition.serving
+            protein = user_last_nutrition.protein
+            carbs = user_last_nutrition.carbs
+            fats = user_last_nutrition.fats
+
+            # Metrics form
             metrics_form = MetricsForm()
 
             # If the user updates the values
@@ -119,7 +134,7 @@ def dashboard(request):
                     activity.user_id = request.user.id
 
                     # get data from the form
-                    user_last_activity.activity_type = request.POST.get('select-value')
+                    user_last_activity.activity_type = request.POST.get('select-activity')
                     user_last_activity.duration = activity_form.cleaned_data.get('duration')
                     user_last_activity.distance = activity_form.cleaned_data.get('distance')
 
@@ -141,8 +156,48 @@ def dashboard(request):
 
                     return redirect('home')         
 
-            # Profile Variables
+            # Nutrition Form
+            nutrition_form = NutritionForm()
 
+            # If the user updates the values
+            if request.method == "POST" and 'submitNutrition' in request.POST:
+                print('POST is executed')
+                nutrition_form = NutritionForm(data=request.POST)
+
+                # If user updates activity form
+                if nutrition_form.is_valid() and username == request.user:
+                    nutrition = nutrition_form.save(commit=False)
+                    nutrition.user_id = request.user.id
+
+                    # get data from the form
+                    user_last_nutrition.food_item = request.POST.get('select-nutrition')
+
+                    food_item = user_last_nutrition.food_item
+                    serving = user_last_nutrition.serving
+                    protein = user_last_nutrition.protein
+                    carbs = user_last_nutrition.carbs
+                    fats = user_last_nutrition.fats
+
+                    user_last_nutrition.food_item = nutrition_form.cleaned_data.get('food_item')
+                    user_last_nutrition.serving = nutrition_form.cleaned_data.get('serving')
+
+                    calories_intake = get_calories_burnt(user_last_activity.activity_type, duration)
+
+                    # user_last_activity.calories_burnt = calories_burnt
+                    food_item, serving = user_last_nutrition.food_item, \
+                                         user_last_nutrition.serving
+                    # commit changes
+                    user_last_nutrition.save() 
+                    print('nutrition form saved')
+
+                    messages.add_message(
+                        request, messages.SUCCESS,
+                        'Your data has been updated!'
+                        )
+
+                    return redirect('home') 
+
+            # Profile Variables
             weight_rec = get_metrics(height,weight,birthdate)['weight_rec']
 
             bmi, bmi_target, bmi_rec =  \
@@ -182,6 +237,7 @@ def dashboard(request):
                     'calories_burnt': calories_burnt,
                     'activity_form': activity_form,
                     'CAL_BURN_API_KEY': settings.CAL_BURN_API_KEY,
+                    'nutrition_form': nutrition_form,
                 })
 
         else:
@@ -218,7 +274,7 @@ def profile_create(request):
                                 birthdate=birthdate, weight_target=weight_target)
 
             # Create Activity
-            activity_type = request.POST.get('select-value')
+            activity_type = request.POST.get('select-activity')
             duration = full_form.cleaned_data.get('duration')
             distance = full_form.cleaned_data.get('distance')
 
