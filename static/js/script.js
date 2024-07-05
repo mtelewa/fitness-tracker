@@ -110,5 +110,3 @@ function fetchCaloriesBurnt(event) {
     }
   });
 }
-
-

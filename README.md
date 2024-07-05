@@ -44,3 +44,8 @@ https://stackoverflow.com/questions/72529252/how-to-get-select-option-value-in-v
 
 API
 https://api-ninjas.com/api/caloriesburned
+
+
+https://stackoverflow.com/questions/17165147/how-can-i-make-a-django-form-field-contain-only-alphanumeric-characters
+
+https://stackoverflow.com/questions/3617797/regex-to-match-only-letters

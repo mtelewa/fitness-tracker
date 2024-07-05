@@ -39,7 +39,7 @@ class Nutrition(models.Model):
                  validators=[alpha])
     portion = models.IntegerField(
                 validators=[
-                    MaxValueValidator(999),
+                    MaxValueValidator(2999),
                     MinValueValidator(1)
                 ])
     protein = models.IntegerField()

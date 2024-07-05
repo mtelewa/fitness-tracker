@@ -4,6 +4,7 @@
 {% url 'home' as home_url %}
 {% url 'profile' as profile_url %}
 {% url 'activity' as activity_url %}
+{% url 'nutririon' as nutrition_url %}
 {% url 'account_login' as login_url %}
 {% url 'account_signup' as signup_url %}
 {% url 'account_logout' as logout_url %}
@@ -69,7 +70,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link py-3 border-bottom text-white" title="Nutririon" data-bs-toggle="tooltip" data-bs-placement="right">
+          <a href="{% url 'nutrition' %}" class="nav-link py-3 border-bottom text-white" title="Nutririon" data-bs-toggle="tooltip" data-bs-placement="right">
             <i class="fa-solid fa-seedling fa-lg"></i>
           </a>
         </li>
@@ -119,7 +120,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link text-white">
+          <a href="{% url 'nutrition' %}" class="nav-link text-white">
             <i class="fa-solid fa-seedling"></i> &nbsp; Nutrition
           </a>
         </li>

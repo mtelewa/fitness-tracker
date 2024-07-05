@@ -89,7 +89,7 @@ class NutritionForm(forms.ModelForm):
         fields = ('food_item', 'portion')
         labels = {
             'food_item': 'Food',
-            'portion': 'Serving',
+            'portion': 'Serving (g)',
         }
 
 
@@ -132,27 +132,40 @@ class FullForm(forms.Form):
         label = "Distance (km)",
         required = False,
         )
+    
+    food_item = forms.CharField(
+        label = "Food",
+        required = True,
+        )
+
+    portion = forms.IntegerField(
+        label = "Serving (g)",
+        required = True,
+        )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.fields['height'].widget.attrs['min'], \
-            self.fields['height'].widget.attrs['max']  = 1, 999
+            self.fields['height'].widget.attrs['max'] = 1, 999
         self.fields['weight'].widget.attrs['min'], \
-            self.fields['weight'].widget.attrs['max']  = 1, 999
+            self.fields['weight'].widget.attrs['max'] = 1, 999
         self.fields['weight_target'].widget.attrs['min'], \
-            self.fields['weight_target'].widget.attrs['max']  = 1, 999
+            self.fields['weight_target'].widget.attrs['max'] = 1, 999
         self.fields['duration'].widget.attrs['min'], \
-            self.fields['duration'].widget.attrs['max']  = 1, 999
+            self.fields['duration'].widget.attrs['max'] = 1, 999
         self.fields['distance'].widget.attrs['min'], \
-            self.fields['distance'].widget.attrs['max']  = 1, 999
+            self.fields['distance'].widget.attrs['max'] = 1, 999
+        self.fields['food_item'].widget.attrs['patern'] = '^[a-zA-Z]+$'
+        self.fields['portion'].widget.attrs['min'], \
+            self.fields['portion'].widget.attrs['max'] = 1, 2999
 
         # Layout
         self.helper.layout = Layout(
             ('height'), ('weight'), ('weight_target'), ('birthdate'),
             Field('activity_type', oninput="fetchCaloriesBurnt()",),
             Div(css_class="mb-3", css_id="activity_list"),
-            ('duration'), ('distance')
+            ('duration'), ('distance'), (food_item), (portion),
             )
         
         # Buttons

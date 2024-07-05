@@ -28,16 +28,12 @@ def dashboard(request):
     """
 
     if request.user.is_authenticated:
+        # Call the objects filtered by the user
         user_profiles = Profile.objects.filter(user=request.user)
-        # print('USER PROFILES: ', user_profiles)
-
         user_activities = Activity.objects.filter(user=request.user)
-        # print('USER Activities: ', user_activities)
-
         user_nutritions = Nutrition.objects.filter(user=request.user)
-        # print('USER Nutritions: ', user_nutritions)
 
-        # Display values - if user has profiles (existing user)
+        # Display attributes - if user has profiles (existing user)
         if user_profiles.exists():
             # Profile card
             user_last_profile =  user_profiles.latest('updated_on')
@@ -168,7 +164,6 @@ def dashboard(request):
          
 
             # Profile Variables
-
             weight_rec = get_metrics(height,weight,birthdate)['weight_rec']
 
             bmi, bmi_target, bmi_rec =  \
@@ -232,7 +227,19 @@ def dashboard(request):
 
 
 def profile_create(request):
-    
+    """
+    Display an individual :model:`dashboard.Nutrition`.
+
+    **Context**
+
+    ``profile``
+        An instance of :model:`dashboard.Nutrition`.
+
+    **Template:**
+
+    :template:`dashboard/profile_details.html`
+    """
+
     full_form = FullForm()
     height = age = weight = weight_target = profile_image = None
 
@@ -261,6 +268,16 @@ def profile_create(request):
                                 duration=duration, distance=distance,
                                 calories_burnt = calories_burnt)
 
+            # Create Nutrition
+            food_item = full_form.cleaned_data.get('food_item')
+            portion = full_form.cleaned_data.get('portion')
+
+            calories_intake, fats, protein, carbs = \
+                    get_macronutrients(food_item, portion)
+
+            Nutrition.objects.create(user=request.user, food_item=food_item,
+                                portion=portion, calories_intake=calories_intake,
+                                fats=fats, protein=protein, carbs=carbs)
 
             print('full form saved')
 
@@ -282,6 +299,18 @@ def profile_create(request):
 
 
 def profile_details(request):
+    """
+    Display an individual :model:`dashboard.Nutrition`.
+
+    **Context**
+
+    ``profile``
+        An instance of :model:`dashboard.Nutrition`.
+
+    **Template:**
+
+    :template:`dashboard/profile_details.html`
+    """
 
     if request.user.is_authenticated:
         user_profiles = Profile.objects.filter(user=request.user)
@@ -353,6 +382,18 @@ def profile_details(request):
 
 
 def activity_history(request):
+    """
+    Display an individual :model:`dashboard.Nutrition`.
+
+    **Context**
+
+    ``profile``
+        An instance of :model:`dashboard.Nutrition`.
+
+    **Template:**
+
+    :template:`dashboard/profile_details.html`
+    """
 
     if request.user.is_authenticated:
         user_activities = Activity.objects.filter(user=request.user)
@@ -402,15 +443,38 @@ def nutrition_history(request):
     :template:`dashboard/profile_details.html`
     """
 
+    if request.user.is_authenticated:
+        user_nutritions = Nutrition.objects.filter(user=request.user)
+        user_profiles = Profile.objects.filter(user=request.user)
 
-    return render(
-        request,
-        "dashboard/nutrition.html",
-        {
-            'NUTRI_CLIENT_ID': settings.NUTRI_CLIENT_ID,
-            'NUTRI_CLIENT_SECRET': settings.NUTRI_CLIENT_SECRET,
-        })
-
+        # If user has profiles (existing user)
+        if user_profiles.exists():
+            user_last_nutrition =  user_nutritions.latest('nutrition_on')
+            user_last_profile =  user_profiles.latest('updated_on')
+            
+            food_item = user_last_nutrition.food_item
+            profile_image = user_last_profile.profile_image
+        
+            return render(
+                request,
+                "dashboard/nutrition.html",
+                {
+                    'food_item': food_item,
+                    'profile_image': profile_image,
+                })
+        
+        else:
+            dict = profile_create(request)
+            return render(
+                request,
+                "dashboard/profile_create.html",
+                dict)
+    
+    else:
+        return render(
+            request,
+            "dashboard/index.html",
+        )
 
 
 def calendar(request):
@@ -427,7 +491,6 @@ def calendar(request):
     :template:`dashboard/profile_details.html`
     """
 
-
     return render(
         request,
         "dashboard/calendar.html",
@@ -441,6 +504,7 @@ def get_metrics(height, weight, birthdate):
     """
     Calculate Metrics to display on the dashboard
     """
+
     # Body Mass Index (BMI)
     bmi = np.round(weight / (height/100)**2, 2) # kg/m2
 
@@ -481,8 +545,9 @@ def get_metrics(height, weight, birthdate):
 
 def get_calories_burnt(activity, duration):
     """
-    Fetch API to get caloroies for the activity
+    Fetch API to get caloroies for a certain activity and duration
     """
+
     api_url = f'https://api.api-ninjas.com/v1/caloriesburned?activity={activity}'
     response = requests.get(api_url, headers={'X-Api-Key': settings.CAL_BURN_API_KEY})
     if response.status_code == requests.codes.ok:
@@ -497,19 +562,17 @@ def get_calories_burnt(activity, duration):
 
 def get_macronutrients(food, serving):
     """
-    Fetch API to get caloroies for a certain food
+    Fetch API to get caloroies for a certain food and serving
     """
-    api_url = f'https://api.api-ninjas.com/v1/nutrition?query={serving} {food}'
+
+    api_url = f'https://api.api-ninjas.com/v1/nutrition?query={serving}g {food}'
     response = requests.get(api_url, headers={'X-Api-Key': settings.CAL_BURN_API_KEY})
     if response.status_code == requests.codes.ok:
         macronutrients = response.json()[0]
-        
         calories_intake = macronutrients['calories']
         fats = macronutrients['fat_total_g']
         protein = macronutrients['protein_g']
         carbs = macronutrients['carbohydrates_total_g']
-
-        print(response.json()[0])
     else:
         print("Error:", response.status_code, response.text)
 
