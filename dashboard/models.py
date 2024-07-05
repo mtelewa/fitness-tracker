@@ -33,7 +33,7 @@ class Activity(models.Model):
 
 class Nutrition(models.Model):
     food_item = models.CharField(max_length=200)
-    portion = models.CharField(max_length=200)
+    serving = models.CharField(max_length=200)
     protein = models.IntegerField()
     carbs = models.IntegerField()
     fats = models.IntegerField()
