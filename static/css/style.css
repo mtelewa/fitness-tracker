@@ -213,7 +213,9 @@ hr.h-divider {
 #div_id_height,
 #div_id_birthdate,
 #div_id_activity_type,
-#activity_list {
+#activity_list,
+#div_id_food_item,
+#div_id_portion {
     width: 25%;
     min-width: 170px;
 }
