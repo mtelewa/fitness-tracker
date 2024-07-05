@@ -94,7 +94,7 @@ class NutritionForm(forms.ModelForm):
         fields = ('food_item', 'portion')
         labels = {
             'food_item': 'Food',
-            'portion': 'portion',
+            'portion': 'Serving',
         }
 
 

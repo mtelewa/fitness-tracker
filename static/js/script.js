@@ -110,3 +110,44 @@ function fetchCaloriesBurnt(event) {
     }
   });
 }
+
+
+function fetchNutritionDetails(event) {
+
+  var activityTypeValue = $('#id_activity_type').val();
+
+  CAL_BURN_API_KEY = JSON.parse($('#calBurnAPI').text());
+
+  // Perform an asynchronous HTTP (Ajax) request
+  $.ajax({
+    url: `https://api.api-ninjas.com/v1/caloriesburned?activity=${activityTypeValue}`,
+    headers: { 'X-Api-Key': CAL_BURN_API_KEY },
+    method: 'GET',
+    success: function(response) {
+        var activity_list = response;
+        var activities = [];
+        for (var i = 0; i < activity_list.length; i++) {
+            if (activity_list[i].hasOwnProperty('name')) {
+                activities.push(activity_list[i]['name']);
+            }
+        }
+
+        // Show activities list in the select menu
+        var str = ""
+        for (let i of activities) {
+            str += `<option value="${i}">${i}</option>`
+        }
+        $('#activity_list').html(
+          `
+          <select class="form-select" name="select-value" aria-label="select activity">
+            ${str}
+          </select>
+          `
+        )
+    },
+    error: function(xhr, status, error) {
+        console.log("Error:", xhr.status, xhr.responseText);
+    }
+  });
+}
+

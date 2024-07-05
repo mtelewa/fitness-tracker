@@ -8,8 +8,8 @@ import numpy as np
 from pprint import pprint
 import requests
 
-from .models import Activity, Profile
-from .forms import MetricsForm, ProfileForm, FullForm, ActivityForm
+from .models import Activity, Profile, Nutrition
+from .forms import MetricsForm, ProfileForm, FullForm, ActivityForm, NutritionForm
 
 # Create your views here.
 
@@ -34,6 +34,9 @@ def dashboard(request):
         user_activities = Activity.objects.filter(user=request.user)
         # print('USER Activities: ', user_activities)
 
+        user_nutritions = Nutrition.objects.filter(user=request.user)
+        # print('USER Nutritions: ', user_nutritions)
+
         # Display values - if user has profiles (existing user)
         if user_profiles.exists():
             # Profile card
@@ -52,33 +55,15 @@ def dashboard(request):
             duration = user_last_activity.duration
             calories_burnt = user_last_activity.calories_burnt
 
-            metrics_form = MetricsForm()
+            # Nutrition card
+            user_last_nutrition = user_nutritions.latest('nutrition_on')
+            food_item = user_last_nutrition.food_item
+            portion = user_last_nutrition.portion
+            protein = user_last_nutrition.protein
+            carbs = user_last_nutrition.carbs
+            fats = user_last_nutrition.fats
 
-            # If the user updates the values
-            if request.method == "POST" and 'submitMetrics' in request.POST:
-                metrics_form = MetricsForm(data=request.POST)
-
-                # If user updates metrics form
-                if metrics_form.is_valid() and username == request.user:
-                    metrics = metrics_form.save(commit=False)
-                    metrics.user_id = request.user.id
-                    # get data from the form
-                    user_last_profile.weight = metrics_form.cleaned_data.get('weight')
-                    user_last_profile.weight_target = metrics_form.cleaned_data.get('weight_target')
-                    weight, weight_target = user_last_profile.weight, user_last_profile.weight_target
-
-                    # commit changes
-                    user_last_profile.save() 
-                    print('metrics form saved')
-
-                    messages.add_message(
-                        request, messages.SUCCESS,
-                        'Your data has been updated!'
-                        )
-                    
-                    return redirect('home')
-
-            # Profile Form
+            # Metrics form
             metrics_form = MetricsForm()
 
             # If the user updates the values
@@ -139,7 +124,49 @@ def dashboard(request):
                         'Your data has been updated!'
                         )
 
-                    return redirect('home')         
+                    return redirect('home')
+
+            # Nutrition Form
+            nutrition_form = NutritionForm()
+
+            # If the user updates the values
+            if request.method == "POST" and 'submitNutrition' in request.POST:
+                print('POST is executed')
+                nutrition_form = NutritionForm(data=request.POST)
+
+                # If user updates activity form
+                if nutrition_form.is_valid() and username == request.user:
+                    nutrition = nutrition_form.save(commit=False)
+                    nutrition.user_id = request.user.id
+
+                    # get data from the form
+                    user_last_nutrition.food_item = request.POST.get('select-nutrition')
+
+                    food_item = user_last_nutrition.food_item
+                    portion = user_last_nutrition.portion
+                    protein = user_last_nutrition.protein
+                    carbs = user_last_nutrition.carbs
+                    fats = user_last_nutrition.fats
+
+                    user_last_nutrition.food_item = nutrition_form.cleaned_data.get('food_item')
+                    user_last_nutrition.portion = nutrition_form.cleaned_data.get('portion')
+
+                    calories_intake = get_calories_burnt(user_last_activity.activity_type, duration)
+
+                    # user_last_activity.calories_burnt = calories_burnt
+                    food_item, portion = user_last_nutrition.food_item, \
+                                         user_last_nutrition.portion
+                    # commit changes
+                    user_last_nutrition.save() 
+                    print('nutrition form saved')
+
+                    messages.add_message(
+                        request, messages.SUCCESS,
+                        'Your data has been updated!'
+                        )
+
+                    return redirect('home') 
+         
 
             # Profile Variables
 
@@ -182,6 +209,12 @@ def dashboard(request):
                     'calories_burnt': calories_burnt,
                     'activity_form': activity_form,
                     'CAL_BURN_API_KEY': settings.CAL_BURN_API_KEY,
+                    'food_item': food_item,
+                    'portion': portion,
+                    'protein': protein,
+                    'carbs': carbs,
+                    'fats': fats,
+                    'nutrition_form': nutrition_form,
                 })
 
         else:

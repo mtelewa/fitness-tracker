@@ -5,6 +5,7 @@
 {% load crispy_forms_tags %}
 {% crispy metrics_form metrics_form.helper %}
 {% crispy activity_form activity_form.helper %}
+{% crispy nutrition_form nutrition_form.helper %}
 
 {% if user.is_authenticated %}
 
@@ -140,15 +141,15 @@
                     <h3 class="card-title">Nutrition</h3>
                     <div class="col-lg-6">
                         <h5> Last Meal </h5>
-                        <!-- Form here -->
-                        {{ NUTRI_CLIENT_ID|json_script:"nutriClientId" }}
-                        {{ NUTRI_CLIENT_SECRET|json_script:"nutriClientSecret" }}
+                        <form class="hide-show d-none" method="post">
+                            {% crispy nutrition_form %}
+                            {% csrf_token %}
+                        </form>
                         <p class="card-text"> 
                             <span class="show-hide"> Food: </span> 
-                            <span class="show-hide text-primary fw-bold">{{ food }}</span> <br>
+                            <span class="show-hide text-primary fw-bold">{{ food_item }}</span> <br>
                             <span class="show-hide"> Serving: </span>
-                            <span class="show-hide text-primary fw-bold"> {{ serving }} </span> 
-                            <span class="show-hide text-primary fw-bold"> min </span> <br>
+                            <span class="show-hide text-primary fw-bold"> {{ portion }} </span> <br>
                             <span class="show-hide"> Protein: </span>
                             <span class="show-hide text-primary fw-bold"> {{ protein }} </span> 
                             <span class="show-hide text-primary fw-bold"> g </span> <br>

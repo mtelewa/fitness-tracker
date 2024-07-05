@@ -34,10 +34,6 @@ GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID")
 # Calories Burnt API key
 CAL_BURN_API_KEY = os.environ.get("CAL_BURN_API_KEY")
 
-# Nutrition client ID and client secret
-NUTRI_CLIENT_ID = os.environ.get("NUTRI_CLIENT_ID")
-NUTRI_CLIENT_SECRET = os.environ.get("NUTRI_CLIENT_SECRET")
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
