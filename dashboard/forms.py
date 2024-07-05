@@ -82,7 +82,7 @@ class NutritionForm(forms.ModelForm):
         
         self.helper.layout = Layout(
             Field('food_item', oninput="fetchNutritionDetails()",),
-            Div(css_class="mb-3", css_id="food_list"),
+            Div(css_class="mb-3", css_id="food_list"), ('portion'),
             )
 
         self.helper.add_input(Submit('submitNutrition', 'Submit', css_class='btn-success submit'))
@@ -91,9 +91,10 @@ class NutritionForm(forms.ModelForm):
 
     class Meta:
         model = Nutrition
-        fields = ('food_item',)
+        fields = ('food_item', 'portion')
         labels = {
             'food_item': 'Food',
+            'portion': 'portion',
         }
 
 
