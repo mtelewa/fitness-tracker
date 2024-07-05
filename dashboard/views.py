@@ -1,8 +1,8 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.http import HttpResponse
 from django.contrib import messages
 from django.conf import settings
-
+from django.http import HttpResponseRedirect
 from datetime import date, timedelta
 import numpy as np
 from pprint import pprint
@@ -213,10 +213,10 @@ def dashboard(request):
                 })
 
         else:
-            dict = profile_create(request)
+            dict = entry_create(request)
             return render(
                 request,
-                "dashboard/profile_create.html",
+                "dashboard/entry_create.html",
                 dict)
 
     else:
@@ -224,78 +224,6 @@ def dashboard(request):
             request,
             "dashboard/index.html",
         )
-
-
-def profile_create(request):
-    """
-    Display an individual :model:`dashboard.Nutrition`.
-
-    **Context**
-
-    ``profile``
-        An instance of :model:`dashboard.Nutrition`.
-
-    **Template:**
-
-    :template:`dashboard/profile_details.html`
-    """
-
-    full_form = FullForm()
-    height = age = weight = weight_target = profile_image = None
-
-    if request.method == "POST":
-        full_form = FullForm(data=request.POST)
-
-        if full_form.is_valid():
-            # Create Profile
-            height = full_form.cleaned_data.get('height')
-            weight = full_form.cleaned_data.get('weight')
-            weight_target = full_form.cleaned_data.get('weight_target')
-            birthdate = full_form.cleaned_data.get('birthdate')
-            age = (date.today() - birthdate) // timedelta(days=365.2425)
-
-            Profile.objects.create(user=request.user, height=height, weight=weight, 
-                                birthdate=birthdate, weight_target=weight_target)
-
-            # Create Activity
-            activity_type = request.POST.get('select-activity')
-            duration = full_form.cleaned_data.get('duration')
-            distance = full_form.cleaned_data.get('distance')
-
-            calories_burnt = get_calories_burnt(activity_type, duration)
-            
-            Activity.objects.create(user=request.user, activity_type=activity_type,
-                                duration=duration, distance=distance,
-                                calories_burnt = calories_burnt)
-
-            # Create Nutrition
-            food_item = full_form.cleaned_data.get('food_item')
-            portion = full_form.cleaned_data.get('portion')
-
-            calories_intake, fats, protein, carbs = \
-                    get_macronutrients(food_item, portion)
-
-            Nutrition.objects.create(user=request.user, food_item=food_item,
-                                portion=portion, calories_intake=calories_intake,
-                                fats=fats, protein=protein, carbs=carbs)
-
-            print('full form saved')
-
-            messages.add_message(
-                request, messages.SUCCESS,
-                'Your data has been created!'
-            )
-
-    dict = {
-            'height': height,
-            'weight': weight,
-            'age': age,
-            'profile_image': profile_image,
-            'CAL_BURN_API_KEY': settings.CAL_BURN_API_KEY,
-            'full_form': full_form,
-            }
-
-    return dict
 
 
 def profile_details(request):
@@ -368,10 +296,10 @@ def profile_details(request):
                 })
         
         else:
-            dict = profile_create(request)
+            dict = entry_create(request)
             return render(
                 request,
-                "dashboard/profile_create.html",
+                "dashboard/entry_create.html",
                 dict)
     
     else:
@@ -416,10 +344,10 @@ def activity_history(request):
                 })
         
         else:
-            dict = profile_create(request)
+            dict = entry_create(request)
             return render(
                 request,
-                "dashboard/profile_create.html",
+                "dashboard/entry_create.html",
                 dict)
     
     else:
@@ -464,10 +392,10 @@ def nutrition_history(request):
                 })
         
         else:
-            dict = profile_create(request)
+            dict = entry_create(request)
             return render(
                 request,
-                "dashboard/profile_create.html",
+                "dashboard/entry_create.html",
                 dict)
     
     else:
@@ -498,6 +426,126 @@ def calendar(request):
             'GOOGLE_API_KEY': settings.GOOGLE_API_KEY,
             'GOOGLE_CLIENT_ID': settings.GOOGLE_CLIENT_ID,
         })
+
+
+def entry_create(request):
+    """
+    Display an individual :model:`dashboard.Nutrition`.
+
+    **Context**
+
+    ``profile``
+        An instance of :model:`dashboard.Nutrition`.
+
+    **Template:**
+
+    :template:`dashboard/profile_details.html`
+    """
+
+    full_form = FullForm()
+    height = age = weight = weight_target = profile_image = None
+
+    if request.method == "POST":
+        full_form = FullForm(data=request.POST)
+
+        if full_form.is_valid():
+            # Create Profile
+            height = full_form.cleaned_data.get('height')
+            weight = full_form.cleaned_data.get('weight')
+            weight_target = full_form.cleaned_data.get('weight_target')
+            birthdate = full_form.cleaned_data.get('birthdate')
+            age = (date.today() - birthdate) // timedelta(days=365.2425)
+
+            Profile.objects.create(user=request.user, height=height, weight=weight, 
+                                birthdate=birthdate, weight_target=weight_target)
+
+            # Create Activity
+            activity_type = request.POST.get('select-activity')
+            duration = full_form.cleaned_data.get('duration')
+            distance = full_form.cleaned_data.get('distance')
+
+            calories_burnt = get_calories_burnt(activity_type, duration)
+            
+            Activity.objects.create(user=request.user, activity_type=activity_type,
+                                duration=duration, distance=distance,
+                                calories_burnt = calories_burnt)
+
+            # Create Nutrition
+            food_item = full_form.cleaned_data.get('food_item')
+            portion = full_form.cleaned_data.get('portion')
+
+            calories_intake, fats, protein, carbs = \
+                    get_macronutrients(food_item, portion)
+
+            Nutrition.objects.create(user=request.user, food_item=food_item,
+                                portion=portion, calories_intake=calories_intake,
+                                fats=fats, protein=protein, carbs=carbs)
+
+            print('full form saved')
+
+            messages.add_message(
+                request, messages.SUCCESS,
+                'Your data has been created!'
+            )
+
+    dict = {
+            'height': height,
+            'weight': weight,
+            'age': age,
+            'profile_image': profile_image,
+            'CAL_BURN_API_KEY': settings.CAL_BURN_API_KEY,
+            'full_form': full_form,
+            }
+
+    return dict
+
+
+def entry_delete(request):
+    """
+    Display an individual :model:`dashboard.Nutrition`.
+
+    **Context**
+
+    ``profile``
+        An instance of :model:`dashboard.Nutrition`.
+
+    **Template:**
+
+    :template:`dashboard/profile_details.html`
+    """
+    
+    request_url = request.build_absolute_uri()
+    profiles = Profile.objects.filter(user=request.user)
+    activities = Activity.objects.filter(user=request.user)
+    nutritions = Nutrition.objects.filter(user=request.user)
+
+    if 'profile' in request_url:
+        if len(profiles) == 1:
+            messages.add_message(request, messages.ERROR, 
+                'You can not delete your first profile!')
+        else:
+            profiles.latest('updated_on').delete()
+            messages.add_message(request, messages.SUCCESS,
+                'Your last entry has been deleted!')
+    if 'activity' in request_url:
+        if len(activities) == 1:
+            messages.add_message(request, messages.ERROR, 
+                'You can not delete your first activity entry!')
+        else:
+            activities.latest('activity_on').delete()
+            messages.add_message(request, messages.SUCCESS,
+                'Your last entry has been deleted!')
+    if 'nutrition' in request_url:
+        if len(nutritions) == 1:
+            messages.add_message(request, messages.ERROR, 
+            'You can not delete your first nutrition entry!')
+        else:
+            nutritions.latest('nutrition_on').delete()
+            messages.add_message(request, messages.SUCCESS,
+                'Your last entry has been deleted!')             
+
+    return HttpResponseRedirect(reverse('home'))
+
 
 
 def get_metrics(height, weight, birthdate):

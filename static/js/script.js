@@ -11,6 +11,10 @@
 
 
 const updateButton = $('.btn-update');
+const deleteNutritionButton = $('#btn-delete-nutrition');
+const deleteActivityButton = $('#btn-delete-activity');
+const deleteProfileButton = $('#btn-delete-profile');
+const deleteModal = new bootstrap.Modal($('#deleteModal'));
 const cardText = $('.card-text');
 const weightText = $('#id_weight');
 const targetWeightText = $('#id_weight_target');
@@ -110,3 +114,21 @@ function fetchCaloriesBurnt(event) {
     }
   });
 }
+
+// Delete nutrition entries
+deleteNutritionButton.on("click", function() {
+  deleteConfirm.href = 'nutrition_delete/';
+  deleteModal.show();
+});
+
+// Delete profile entries
+deleteProfileButton.on("click", function() {
+  deleteConfirm.href = 'profile_delete/';
+  deleteModal.show();
+});
+
+// Delete activity entries
+deleteActivityButton.on("click", function() {
+  deleteConfirm.href = 'activity_delete/';
+  deleteModal.show();
+});

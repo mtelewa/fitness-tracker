@@ -82,7 +82,7 @@
                 <div class="align-self-end pb-3 hide-show">
                     <a href="{% url 'profile' %}" class="btn btn-md btn--size btn-primary m-1" role="button"> View Details </a>
                     <button type="button" class="btn btn-update btn-md btn--size btn-success m-1" aria-label="Update"> Update Metrics </button>
-                    <button type="button" class="btn btn-delete btn-md btn--size btn-danger m-1" aria-label="Delete">Delete</button>
+                    <button type="button" class="btn btn-delete btn-md btn--size btn-danger m-1" id="btn-delete-profile" aria-label="Delete">Delete</button>
                 </div>
             </div>
 
@@ -130,7 +130,7 @@
                 <div class="align-self-end pb-3 hide-show">
                     <a href="{% url 'activity' %}" class="btn btn-md btn--size btn-primary m-1" role="button"> View History </a>
                     <button type="button" class="btn btn-update btn-md btn--size btn-success m-1" aria-label="Update"> New Session </button>
-                    <button type="button" class="btn btn-delete btn-md btn--size btn-danger m-1" aria-label="Delete">Delete</button>
+                    <button type="button" class="btn btn-delete btn-md btn--size btn-danger m-1" id="btn-delete-activity" aria-label="Delete">Delete</button>
                 </div>
             </div>
 
@@ -171,7 +171,28 @@
                 <div class="align-self-end pb-3 hide-show">
                     <a href="{% url 'nutrition' %}" class="btn btn-md btn--size btn-primary m-1" role="button"> View History </a>
                     <button type="button" class="btn btn-update btn-md btn--size btn-success m-1" aria-label="Update"> New Session </button>
-                    <button type="button" class="btn btn-delete btn-md btn--size btn-danger m-1" aria-label="Delete">Delete</button>
+                    <button type="button" class="btn btn-delete btn-md btn--size btn-danger m-1" id="btn-delete-nutrition" aria-label="Delete">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete confirmation modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1"
+    aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete entry?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this entry?
+                    This action cannot be undone.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a id="deleteConfirm" href="#" class="btn btn-danger">Delete</a>
                 </div>
             </div>
         </div>
@@ -179,11 +200,8 @@
 </div>
 
 
-
 {% endblock %}
-
 {% else %}
-
 {% block content %}
 
 <!-- Signup -->
@@ -216,7 +234,6 @@
 <!-- Features -->
 <section>
     <div class="container-fluid mt-3">
-
         <div class="row">
             <div class="col-md-6 col-sm-12 text-center my-auto">
                 <h2 class="text-uppercase "> Set Goals <br> Log Activity & Nutrition <br> Stay on track </h2>
@@ -230,6 +247,5 @@
 </section>
 
 {% endblock %}
-
 {% endif %}
 
