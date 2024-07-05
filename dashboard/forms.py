@@ -79,11 +79,6 @@ class NutritionForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
-        
-        self.helper.layout = Layout(
-            Field('food_item', oninput="fetchNutritionDetails()",),
-            Div(css_class="mb-3", css_id="food_list"), ('portion'),
-            )
 
         self.helper.add_input(Submit('submitNutrition', 'Submit', css_class='btn-success submit'))
         self.helper.add_input(Button('cancel', 'Cancel', css_class='btn-secondary',

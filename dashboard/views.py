@@ -62,6 +62,7 @@ def dashboard(request):
             protein = user_last_nutrition.protein
             carbs = user_last_nutrition.carbs
             fats = user_last_nutrition.fats
+            calories_intake = user_last_nutrition.calories_intake
 
             # Metrics form
             metrics_form = MetricsForm()
@@ -104,7 +105,7 @@ def dashboard(request):
                     activity.user_id = request.user.id
 
                     # get data from the form
-                    user_last_activity.activity_type = request.POST.get('select-value')
+                    user_last_activity.activity_type = request.POST.get('select-activity')
                     user_last_activity.duration = activity_form.cleaned_data.get('duration')
                     user_last_activity.distance = activity_form.cleaned_data.get('distance')
 
@@ -140,22 +141,20 @@ def dashboard(request):
                     nutrition.user_id = request.user.id
 
                     # get data from the form
-                    user_last_nutrition.food_item = request.POST.get('select-nutrition')
-
-                    food_item = user_last_nutrition.food_item
-                    portion = user_last_nutrition.portion
-                    protein = user_last_nutrition.protein
-                    carbs = user_last_nutrition.carbs
-                    fats = user_last_nutrition.fats
-
                     user_last_nutrition.food_item = nutrition_form.cleaned_data.get('food_item')
                     user_last_nutrition.portion = nutrition_form.cleaned_data.get('portion')
 
-                    calories_intake = get_calories_burnt(user_last_activity.activity_type, duration)
+                    food_item = user_last_nutrition.food_item
+                    portion = user_last_nutrition.portion
 
-                    # user_last_activity.calories_burnt = calories_burnt
-                    food_item, portion = user_last_nutrition.food_item, \
-                                         user_last_nutrition.portion
+                    user_last_nutrition.calories_intake, user_last_nutrition.fats, \
+                         user_last_nutrition.protein, user_last_nutrition.carbs = \
+                         get_macronutrients(food_item, portion)
+
+                    calories_intake, fats, protein, carbs = \
+                        user_last_nutrition.calories_intake, user_last_nutrition.fats, \
+                        user_last_nutrition.protein, user_last_nutrition.carbs
+
                     # commit changes
                     user_last_nutrition.save() 
                     print('nutrition form saved')
@@ -214,6 +213,7 @@ def dashboard(request):
                     'protein': protein,
                     'carbs': carbs,
                     'fats': fats,
+                    'calories_intake': calories_intake,
                     'nutrition_form': nutrition_form,
                 })
 
@@ -492,3 +492,25 @@ def get_calories_burnt(activity, duration):
         print("Error:", response.status_code, response.text)
 
     return calories_burnt
+
+
+
+def get_macronutrients(food, serving):
+    """
+    Fetch API to get caloroies for a certain food
+    """
+    api_url = f'https://api.api-ninjas.com/v1/nutrition?query={serving} {food}'
+    response = requests.get(api_url, headers={'X-Api-Key': settings.CAL_BURN_API_KEY})
+    if response.status_code == requests.codes.ok:
+        macronutrients = response.json()[0]
+        
+        calories_intake = macronutrients['calories']
+        fats = macronutrients['fat_total_g']
+        protein = macronutrients['protein_g']
+        carbs = macronutrients['carbohydrates_total_g']
+
+        print(response.json()[0])
+    else:
+        print("Error:", response.status_code, response.text)
+
+    return calories_intake, fats, protein, carbs
