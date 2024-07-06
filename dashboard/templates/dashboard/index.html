@@ -73,8 +73,16 @@
                         <hr class="h-divider h-divider--orange">
 
                         <p class="card-text"> 
+                            {% if weight|sub:weight_target > 0 %}
                             You are <strong>{{ weight|sub:weight_target }}</strong> kg away from your target, <br>
+                            {% else %}
+                            You are <strong>{{ weight|sub:weight_target|abs }}</strong> kg ahead of your target, <br>
+                            {% endif %}
+                            {% if weight|sub:weight_rec > 0 %}
                             and <strong>{{ weight|sub:weight_rec }}</strong> kg away from the recommended metrics <br>
+                            {% else %}
+                            and <strong>{{ weight|sub:weight_rec|abs }}</strong> kg ahead of the recommended metrics <br>
+                            {% endif %}
                             Keep Going! <i class="fa-solid fa-person-running"></i>
                         </p>
                     </div>

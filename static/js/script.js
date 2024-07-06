@@ -10,7 +10,7 @@
 })()
 
 
-const updateButton = $('.btn-update');
+const updateButtons = $('.btn-update');
 const deleteNutritionButton = $('#btn-delete-nutrition');
 const deleteActivityButton = $('#btn-delete-activity');
 const deleteProfileButton = $('#btn-delete-profile');
@@ -25,9 +25,10 @@ const ddash = $('.ddash')
 $(document).ready(function(){
   /**
    * Upon clicking update, crispy form appears
-   * 
+   * and old data disappears
    */
-  updateButton.click(function() {
+
+  updateButtons.click(function() {
     let showHide = $('.show-hide');
     let hideShow = $('.hide-show');
     // toggle class to hide displayed text
@@ -37,27 +38,24 @@ $(document).ready(function(){
     hideShow.toggleClass('hide-show d-block')
     // remove y-margin from the
     cardText.addClass('my-0');
-
-    let weight = $('#weight-val');
-    weightText.val(weight.text());
-
-    let targetWeight = $('#weight-target-val');
-    targetWeightText.val(targetWeight.text());
-
-    let height = $('#height-val');
-    heightText.val(height.text());
-
-    let birthdate = $('#birthdate-val');
-
-    // if profile is created, show the user's birthdate
-    // else show today's date
-    if (isValidDate(new Date(birthdate.text()))){
-      birthdateText.val($.datepicker.formatDate('dd-mm-yy', new Date(birthdate.text())));
-    } else{
-      birthdateText.val($.datepicker.formatDate('dd-mm-yy', new Date()));
-    }
-
   });
+
+
+  // show default values
+  let weight = $('#weight-val');
+  weightText.val(weight.text());
+  let targetWeight = $('#weight-target-val');
+  targetWeightText.val(targetWeight.text());
+  let height = $('#height-val');
+  heightText.val(height.text());
+  let birthdate = $('#birthdate-val');
+  // if profile is created, show the user's birthdate
+  // else show today's date
+  if (isValidDate(new Date(birthdate.text()))){
+    birthdateText.val($.datepicker.formatDate('dd-mm-yy', new Date(birthdate.text())));
+  } else{
+    birthdateText.val($.datepicker.formatDate('dd-mm-yy', new Date()));
+  }
 
   // Date Picker
   $( function() {
@@ -72,15 +70,36 @@ $(document).ready(function(){
   // For new users with no previous records, show -- for None entries
   ddash.text('--');
 
+
+  // Delete nutrition entries
+  deleteNutritionButton.click(function() {
+    deleteConfirm.href = 'nutrition_delete/';
+    deleteModal.show();
+  });
+
+  // Delete profile entries
+  deleteProfileButton.click(function() {
+    deleteConfirm.href = 'profile_delete/';
+    deleteModal.show();
+  });
+
+  // Delete activity entries
+  deleteActivityButton.click(function() {
+    deleteConfirm.href = 'activity_delete/';
+    deleteModal.show();
+  });
+
 });
 
 
-
+/**
+ * Fetch Json data from the Calories burnt API
+ * and display it as a selection in Bootstrap
+ */
 function fetchCaloriesBurnt(event) {
 
   var activityTypeValue = $('#id_activity_type').val();
-
-  CAL_BURN_API_KEY = JSON.parse($('#calBurnAPI').text());
+  const CAL_BURN_API_KEY = JSON.parse($('#calBurnAPI').text());
 
   // Perform an asynchronous HTTP (Ajax) request
   $.ajax({
@@ -95,7 +114,6 @@ function fetchCaloriesBurnt(event) {
                 activities.push(activity_list[i]['name']);
             }
         }
-
         // Show activities list in the select menu
         var str = ""
         for (let i of activities) {
@@ -109,26 +127,8 @@ function fetchCaloriesBurnt(event) {
           `
         )
     },
-    error: function(xhr, status, error) {
+    error: function(xhr) {
         console.log("Error:", xhr.status, xhr.responseText);
     }
   });
 }
-
-// Delete nutrition entries
-deleteNutritionButton.on("click", function() {
-  deleteConfirm.href = 'nutrition_delete/';
-  deleteModal.show();
-});
-
-// Delete profile entries
-deleteProfileButton.on("click", function() {
-  deleteConfirm.href = 'profile_delete/';
-  deleteModal.show();
-});
-
-// Delete activity entries
-deleteActivityButton.on("click", function() {
-  deleteConfirm.href = 'activity_delete/';
-  deleteModal.show();
-});
