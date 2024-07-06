@@ -27,6 +27,7 @@
             </div>
         </div>
     </div>
+
     <h1 class="p-5"> Your Summary</h1>
     <div id="dashboard" class="container-fluid d-flex flex-row justify-content-center dashboard-border--shadow dashboard--bg-color p-3 p-lg-5 mx-auto">
         <div class="row gy-4">
@@ -96,14 +97,8 @@
 
             <!-- Calendar Card -->
             <div class="card col-md-12 col-lg-6 bg-light dashboard-item-border--shadow" >
-                <div class="card-body">
-                    <h5 class="card-title">Calendar</h5>
-                    <p class="card-text">
-                        Some quick example text to build on the card title and make up the bulk of the card's content.
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit, explicabo a. Voluptates, quam commodi provident asperiores ipsam odio magnam necessitatibus laborum amet soluta architecto saepe, dignissimos sit vitae, unde similique?
-                    </p>
-                    <a href="#" class="card-link">Card link</a>
-                </div>
+                <iframe src="https://calendar.google.com/calendar/embed?src=usertesting573%40gmail.com&ctz=Europe%2FBerlin"
+                    style="border: 0" width="100%" height="100%" frameborder="0" scrolling="no"></iframe>
             </div>
 
             <!-- Activity Card -->
@@ -256,3 +251,15 @@
 {% endblock %}
 {% endif %}
 
+
+{% block scripts %}
+
+<script type="text/javascript">
+  const GOOGLE_CLIENT_ID = "{{ GOOGLE_CLIENT_ID }}";
+  const GOOGLE_API_KEY = "{{ GOOGLE_API_KEY }}";
+</script>
+<script type="text/javascript" src="{% static 'js/calendar.js' %}"></script>
+<script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+<script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
+
+{% endblock %}

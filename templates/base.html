@@ -5,6 +5,7 @@
 {% url 'profile' as profile_url %}
 {% url 'activity' as activity_url %}
 {% url 'nutrition' as nutrition_url %}
+{% url 'calendar' as calendar_url %}
 {% url 'account_login' as login_url %}
 {% url 'account_signup' as signup_url %}
 {% url 'account_logout' as logout_url %}
@@ -75,7 +76,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link py-3 border-bottom text-white" title="Calendar" data-bs-toggle="tooltip" data-bs-placement="right">
+          <a href="{% url 'calendar' %}" class="nav-link py-3 {% if request.path == calendar_url %}active aria-current=page {% endif %} border-bottom text-white" title="Calendar" data-bs-toggle="tooltip" data-bs-placement="right">
             <i class="fa-regular fa-calendar-days fa-lg"></i>
           </a>
         </li>
@@ -125,7 +126,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link text-white">
+          <a href="{% url 'calendar' %}" class="nav-link {% if request.path == calendar_url %}active aria-current=page {% endif %} text-white">
             <i class="fa-regular fa-calendar-days"></i> &nbsp; Calendar
           </a>
         </li>
@@ -216,6 +217,9 @@
   <script src="https://kit.fontawesome.com/b39b74480d.js" crossorigin="anonymous"></script>
   <!-- Local Script -->
   <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+  
+  {% block scripts %}
+  {% endblock %}
 
 </body>
 </html>

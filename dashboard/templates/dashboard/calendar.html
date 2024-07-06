@@ -1,27 +1,35 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Google Calendar API Quickstart</title>
-    <meta charset="utf-8" />
-  </head>
-  <body>
-    <p>Google Calendar API Quickstart</p>
+{% if user.is_authenticated %}
 
-    <!--Add buttons to initiate auth sequence and sign out-->
-    <button id="authorize_button" onclick="handleAuthClick()">Authorize</button>
-    <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
+{% block dashboard %}
 
-    <pre id="content" style="white-space: pre-wrap;"></pre>
+<div class="container-fluid">
+    <h1 class="p-5"> Your Calendar</h1>
+      <div id="dashboard" class="d-flex flex-row justify-content-center dashboard-border--shadow dashboard--bg-color p-3 p-lg-5 mx-auto">
+          <!--Add buttons to initiate auth sequence and sign out-->
+          <div id="calendar-container">
+              <button id="authorize_button" onclick="handleAuthClick()">Authorize</button>
+              <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
+              <iframe src="https://calendar.google.com/calendar/embed?src=usertesting573%40gmail.com&ctz=Europe%2FBerlin"
+                  style="border: 0" frameborder="0" width="800" height="600" scrolling="no"></iframe>
+              <pre id="content" style="white-space: pre-wrap;"></pre>
+        </div>
+    </div>
+</div>
 
-    <script type="text/javascript">
-      const GOOGLE_CLIENT_ID = "{{ GOOGLE_CLIENT_ID }}";
-      const GOOGLE_API_KEY = "{{ GOOGLE_API_KEY }}";
-    </script>
-    <script type="text/javascript" src="{% static 'js/calendar.js' %}"></script>
-    <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
-    <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
+{% endblock %}
+{% endif %}
 
-  </body>
-</html>
+{% block scripts %}
+
+<script type="text/javascript">
+    const GOOGLE_CLIENT_ID = "{{ GOOGLE_CLIENT_ID }}";
+    const GOOGLE_API_KEY = "{{ GOOGLE_API_KEY }}";
+</script>
+<script type="text/javascript" src="{% static 'js/calendar.js' %}"></script>
+<script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+<script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
+
+{% endblock %}
