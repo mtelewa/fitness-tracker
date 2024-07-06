@@ -14,7 +14,11 @@ const updateButtons = $('.btn-update');
 const deleteNutritionButton = $('#btn-delete-nutrition');
 const deleteActivityButton = $('#btn-delete-activity');
 const deleteProfileButton = $('#btn-delete-profile');
-const deleteModal = new bootstrap.Modal($('#deleteModal'));
+const deleteModalElement = $('#deleteModal')
+if (deleteModalElement.length) {
+  // Initialize the Bootstrap modal
+  const deleteModal = new bootstrap.Modal($('#deleteModal'));
+}
 const cardText = $('.card-text');
 const weightText = $('#id_weight');
 const targetWeightText = $('#id_weight_target');
@@ -29,8 +33,19 @@ $(document).ready(function(){
    */
 
   updateButtons.click(function() {
-    let showHide = $('.show-hide');
-    let hideShow = $('.hide-show');
+    if (this.id == 'btn-update-metrics') {
+      var showHide = $('.show-hide-metrics');
+      var hideShow = $('.hide-show-metrics');
+    } else if (this.id == 'btn-update-activity') {
+      var showHide = $('.show-hide-activity');
+      var hideShow = $('.hide-show-activity');
+    } else if (this.id == 'btn-update-nutrition') {
+      var showHide = $('.show-hide-nutrition');
+      var hideShow = $('.hide-show-nutrition');
+    } else if (this.id == 'btn-update-profile') {
+      var showHide = $('.show-hide-profile');
+      var hideShow = $('.hide-show-profile');
+    } 
     // toggle class to hide displayed text
     showHide.toggleClass('d-none position-absolute');
     // toggle class to display and hide form

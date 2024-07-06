@@ -29,24 +29,24 @@
         <div class="card container-fluid dashboard-item-border--shadow bg-light" >
             <div class="card-body d-flex flex-column">
                 <h3 class="card-title mb-3">Create Profile</h3>
-                <form class="hide-show d-none mt-3" method="post">
+                <form class="hide-show-metrics d-none mt-3" method="post">
                     {% crispy full_form %}
                     {% csrf_token %}
                 </form>
                 {{ CAL_BURN_API_KEY|json_script:"calBurnAPI" }}
-                <p class="card-text mt-3"> 
-                    <span class="show-hide"> Username: </span> 
-                    <span class="show-hide text-primary fw-bold">{{ user }}</span> <br>
-                    <span class="show-hide"> Age: </span> 
-                    <span class="show-hide text-primary fw-bold {% if age is None %} ddash {% endif %}">{{ age }}</span>
+                <p class="show-hide-metrics card-text mt-3"> 
+                    <span class=""> Username: </span> 
+                    <span class="text-primary fw-bold">{{ user }}</span> <br>
+                    <span> Age: </span> 
+                    <span class="text-primary fw-bold {% if age is None %} ddash {% endif %}">{{ age }}</span>
                     <span class="d-none" id="birthdate-val">{{ birthdate }}</span> <br>
-                    <span class="show-hide"> Height: </span> 
-                    <span class="show-hide text-primary fw-bold {% if height is None %} ddash {% endif %}" id="height-val">{{ height }}</span> <br>
-                    <span class="show-hide"> Weight: </span> 
-                    <span class="show-hide text-primary fw-bold {% if height is None %} ddash {% endif %}" id="weight-val">{{ weight }}</span> <br>
+                    <span> Height: </span> 
+                    <span class="text-primary fw-bold {% if height is None %} ddash {% endif %}" id="height-val">{{ height }}</span> <br>
+                    <span> Weight: </span> 
+                    <span class="text-primary fw-bold {% if height is None %} ddash {% endif %}" id="weight-val">{{ weight }}</span> <br>
                 </p>
 
-                <p class="card-text text-danger show-hide {% if height is not None %} d-none {% endif %}">
+                <p class="card-text text-danger show-hide-metrics {% if height is not None %} d-none {% endif %}">
                     <strong>
                     You have no entries yet! <br>
                     Please create your profile first!
@@ -54,11 +54,11 @@
                 </p>
             </div>
             {% if height is None %}
-            <div class="align-self-end pb-3 hide-show">
-                <button type="button" class="btn btn-update btn-md btn--size btn-success m-1" aria-label="Create"> Create Profile </button>
+            <div class="align-self-end pb-3 show-hide-metrics">
+                <button type="button" class="btn btn-update btn-md btn--size btn-success m-1" id="btn-update-metrics" aria-label="Create"> Create Profile </button>
             </div>
             {% else %}
-            <div class="align-self-end pb-3 hide-show">
+            <div class="align-self-end pb-3 show-hide-metrics">
                 <a href="{% url 'home' %}" class="btn btn-md btn--size btn-primary m-1" role="button"> Home </a>
             </div>          
             {% endif %}

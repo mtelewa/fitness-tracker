@@ -215,20 +215,10 @@ hr.h-divider {
 #div_id_activity_type,
 #activity_list,
 #div_id_food_item,
-#div_id_portion {
+#div_id_portion,
+#div_id_profile_image {
     width: 25%;
     min-width: 170px;
-}
-
- /* {
-    width: 25%;
-    max-width: 170px;
-} */
-
-#div_id_profile_image
- {
-    width: 30%;
-    min-width: 220px;
 }
 
 #submit-id-submitprofile,

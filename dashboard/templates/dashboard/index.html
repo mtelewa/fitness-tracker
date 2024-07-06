@@ -36,14 +36,14 @@
                     <h3 class="card-title">Profile</h3>
                     <div class="col-lg-6">
                         <h5> Current Metrics </h5>
-                        <form class="hide-show d-none" method="post">
+                        <form class="hide-show-metrics d-none" method="post">
                             {% crispy metrics_form %}
                             {% csrf_token %}
                         </form>
                         <p class="card-text"> 
-                            <span class="show-hide"> Weight: </span> 
-                            <span class="show-hide text-primary fw-bold" id="weight-val">{{ weight }}</span>
-                            <span class="show-hide text-primary fw-bold"> kg </span> <br>
+                            <span class="show-hide-metrics"> Weight: </span> 
+                            <span class="show-hide-metrics text-primary fw-bold" id="weight-val">{{ weight }}</span>
+                            <span class="show-hide-metrics text-primary fw-bold"> kg </span> <br>
                             <span> BMI: </span> <span class="text-primary fw-bold"> {{ bmi }} </span> <br>
                             <span> BMR: </span> <span class="text-primary fw-bold"> {{ bmr }} Cal/day </span> <br>
                             <span> Classification: </span> <span class="text-primary fw-bold"> {{ classification }} </span>
@@ -63,9 +63,9 @@
                         <hr class="h-divider h-divider--orange d-lg-none">
                         <h5> Target Metrics </h5>
                         <p class="card-text"> 
-                            <span class="show-hide"> Weight: </span> 
-                            <span class="show-hide text-success fw-bold" id="weight-target-val">{{ weight_target }}</span>
-                            <span class="show-hide text-success fw-bold"> kg </span>  <br>
+                            <span class="show-hide-metrics"> Weight: </span> 
+                            <span class="show-hide-metrics text-success fw-bold" id="weight-target-val">{{ weight_target }}</span>
+                            <span class="show-hide-metrics text-success fw-bold"> kg </span>  <br>
                             <span> BMI: </span> <span class="text-success fw-bold"> {{ bmi_target }} </span> <br>
                             <span> BMR: </span> <span class="text-success fw-bold"> {{ bmr_target }} Cal/day </span> <br>
                             <span> Classification: </span> <span class="text-success fw-bold"> {{ classification_target }} </span>
@@ -87,9 +87,9 @@
                         </p>
                     </div>
                 </div>
-                <div class="align-self-end pb-3 hide-show">
+                <div class="align-self-end pb-3 show-hide-metrics">
                     <a href="{% url 'profile' %}" class="btn btn-md btn--size btn-primary m-1" role="button"> View Details </a>
-                    <button type="button" class="btn btn-update btn-md btn--size btn-success m-1" aria-label="Update"> Update Metrics </button>
+                    <button type="button" class="btn btn-update btn-md btn--size btn-success m-1" id="btn-update-metrics" aria-label="Update"> Update Metrics </button>
                     <button type="button" class="btn btn-delete btn-md btn--size btn-danger m-1" id="btn-delete-profile" aria-label="Delete">Delete</button>
                 </div>
             </div>
@@ -112,32 +112,32 @@
                     <h3 class="card-title">Activity</h3>
                     <div class="col-lg-6">
                         <h5> Last Activity </h5>
-                        <form class="hide-show d-none" method="post">
+                        <form class="hide-show-activity d-none" method="post">
                             {% crispy activity_form %}
                             {% csrf_token %}
                         </form>
                         {{ CAL_BURN_API_KEY|json_script:"calBurnAPI" }}
-                        <p class="card-text"> 
-                            <span class="show-hide"> Activity: </span> 
-                            <span class="show-hide text-primary fw-bold">{{ activity }}</span> <br>
-                            <span class="show-hide"> Duration: </span>
-                            <span class="show-hide text-primary fw-bold"> {{ duration }} </span> 
-                            <span class="show-hide text-primary fw-bold"> min </span> <br>
-                            <span class="show-hide"> Distance: </span>
-                            <span class="show-hide text-primary fw-bold {% if distance is None %} ddash {% endif %}"> {{ distance }} </span> 
-                            <span class="show-hide text-primary fw-bold"> km </span> <br>
+                        <p class="card-text show-hide-activity"> 
+                            <span> Activity: </span> 
+                            <span class="text-primary fw-bold">{{ activity }}</span> <br>
+                            <span> Duration: </span>
+                            <span class="text-primary fw-bold"> {{ duration }} </span> 
+                            <span class="text-primary fw-bold"> min </span> <br>
+                            <span> Distance: </span>
+                            <span class="text-primary fw-bold {% if distance is None %} ddash {% endif %}"> {{ distance }} </span> 
+                            <span class="text-primary fw-bold"> km </span> <br>
                         </p>
                     </div>
                     <div class="col-lg-6 d-flex flex-column">
                         <hr class="h-divider h-divider--orange d-lg-none">
-                        <h5 class="mx-auto show-hide"> You burnt </h5>
-                        <span class="text-success fw-bold mx-auto show-hide"><h3> {{ calories_burnt }} </h3></span>
-                        <span class="text-success fw-bold mx-auto show-hide"> Calories </span>
+                        <h5 class="mx-auto show-hide-activity"> You burnt </h5>
+                        <span class="text-success fw-bold mx-auto show-hide-activity"><h3> {{ calories_burnt }} </h3></span>
+                        <span class="text-success fw-bold mx-auto show-hide-activity"> Calories </span>
                     </div>
                 </div>
-                <div class="align-self-end pb-3 hide-show">
+                <div class="align-self-end pb-3 show-hide-activity">
                     <a href="{% url 'activity' %}" class="btn btn-md btn--size btn-primary m-1" role="button"> View History </a>
-                    <button type="button" class="btn btn-update btn-md btn--size btn-success m-1" aria-label="Update"> New Session </button>
+                    <button type="button" class="btn btn-update btn-md btn--size btn-success m-1" id="btn-update-activity" aria-label="Update"> New Session </button>
                     <button type="button" class="btn btn-delete btn-md btn--size btn-danger m-1" id="btn-delete-activity" aria-label="Delete">Delete</button>
                 </div>
             </div>
@@ -148,37 +148,37 @@
                     <h3 class="card-title">Nutrition</h3>
                     <div class="col-lg-6">
                         <h5> Last Meal </h5>
-                        <form class="hide-show d-none" method="post">
+                        <form class="hide-show-nutrition d-none" method="post">
                             {% crispy nutrition_form %}
                             {% csrf_token %}
                         </form>
-                        <p class="card-text"> 
-                            <span class="show-hide"> Food: </span> 
-                            <span class="show-hide text-primary fw-bold">{{ food_item }}</span> <br>
-                            <span class="show-hide"> Serving: </span>
-                            <span class="show-hide text-primary fw-bold"> {{ portion }} </span>
-                            <span class="show-hide text-primary fw-bold"> g </span> <br>
-                            <span class="show-hide"> Protein: </span>
-                            <span class="show-hide text-primary fw-bold"> {{ protein }} </span> 
-                            <span class="show-hide text-primary fw-bold"> g </span> <br>
-                            <span class="show-hide"> Carbohydrate: </span>
-                            <span class="show-hide text-primary fw-bold"> {{ carbs }} </span> 
-                            <span class="show-hide text-primary fw-bold"> g </span> <br>
-                            <span class="show-hide"> Fats: </span>
-                            <span class="show-hide text-primary fw-bold"> {{ fats }} </span> 
-                            <span class="show-hide text-primary fw-bold"> g </span> <br>
+                        <p class="card-text show-hide-nutrition"> 
+                            <span> Food: </span> 
+                            <span class="text-primary fw-bold">{{ food_item }}</span> <br>
+                            <span> Serving: </span>
+                            <span class="text-primary fw-bold"> {{ portion }} </span>
+                            <span class="text-primary fw-bold"> g </span> <br>
+                            <span> Protein: </span>
+                            <span class="text-primary fw-bold"> {{ protein }} </span> 
+                            <span class="text-primary fw-bold"> g </span> <br>
+                            <span> Carbohydrate: </span>
+                            <span class="text-primary fw-bold"> {{ carbs }} </span> 
+                            <span class="text-primary fw-bold"> g </span> <br>
+                            <span> Fats: </span>
+                            <span class="text-primary fw-bold"> {{ fats }} </span> 
+                            <span class="text-primary fw-bold"> g </span> <br>
                         </p>
                     </div>
                     <div class="col-lg-6 d-flex flex-column">
                         <hr class="h-divider h-divider--orange d-lg-none">
-                        <h5 class="mx-auto show-hide"> Your intake </h5>
-                        <span class="text-danger fw-bold mx-auto show-hide"><h3> {{ calories_intake }} </h3></span>
-                        <span class="text-danger fw-bold mx-auto show-hide"> Calories </span>
+                        <h5 class="mx-auto show-hide-nutrition"> Your intake </h5>
+                        <span class="text-danger fw-bold mx-auto show-hide-nutrition"><h3> {{ calories_intake }} </h3></span>
+                        <span class="text-danger fw-bold mx-auto show-hide-nutrition"> Calories </span>
                     </div>
                 </div>
-                <div class="align-self-end pb-3 hide-show">
+                <div class="align-self-end pb-3 show-hide-nutrition">
                     <a href="{% url 'nutrition' %}" class="btn btn-md btn--size btn-primary m-1" role="button"> View History </a>
-                    <button type="button" class="btn btn-update btn-md btn--size btn-success m-1" aria-label="Update"> New Session </button>
+                    <button type="button" class="btn btn-update btn-md btn--size btn-success m-1" id="btn-update-nutrition" aria-label="Update"> New Session </button>
                     <button type="button" class="btn btn-delete btn-md btn--size btn-danger m-1" id="btn-delete-nutrition" aria-label="Delete">Delete</button>
                 </div>
             </div>
@@ -186,8 +186,7 @@
     </div>
 
     <!-- Delete confirmation modal -->
-    <div class="modal fade" id="deleteModal" tabindex="-1"
-    aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
