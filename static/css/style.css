@@ -203,7 +203,7 @@ hr.h-divider {
 }
 
 
-/* Form input */
+/* Form inputs and submits */
 
 #div_id_weight,
 #div_id_weight_target,
@@ -221,12 +221,8 @@ hr.h-divider {
     min-width: 170px;
 }
 
-#submit-id-submitprofile,
-#submit-id-submitfull,
-#submit-id-submitmetrics,
-#submit-id-submitactivity,
-#submit-id-submitnutrition,
-#button-id-cancel {
+.btn-submit,
+.btn-cancel {
     margin-top: 25px;
 }
 
