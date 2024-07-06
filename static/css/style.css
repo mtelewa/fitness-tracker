@@ -59,8 +59,6 @@ html, body {
     background: radial-gradient(1000px at left, rgba(34,193,195,1) 0%, rgba(237,183,0,1) 100%);
 }
 
-
-
 /* Images */
 
 .skewed {
@@ -115,6 +113,20 @@ html, body {
 
 /* Sidebar */
 
+.bi {
+    vertical-align: -.125em;
+    pointer-events: none;
+    fill: currentColor;
+}
+  
+.dropdown-toggle {
+     outline: 0; 
+}
+  
+.nav-flush .nav-link {
+    border-radius: 0;
+}
+
 .sidebar {
     max-width: 250px;
     min-height: 100vh;
@@ -123,6 +135,12 @@ html, body {
 .sidebar--sticky {
     position: sticky;
     top: 0;
+}
+
+.nav-item:hover {
+    background-color: #f05f40;
+    border-color: #f05f40;
+    border-radius: 5px; 
 }
 
 /* Buttons */
@@ -153,12 +171,10 @@ html, body {
     color: white;
 }
 
-/* Stars rating */
-
-.checked {
-    color: orange;
-  }
-
+.btn-submit,
+.btn-cancel {
+    margin-top: 25px;
+}
 
 /* footer container */
 
@@ -168,7 +184,6 @@ html, body {
     padding: 10px 15px;
     color: white;
 }
-
 
 /* Borders */
 
@@ -188,7 +203,6 @@ html, body {
     min-height: 80vh;
 }
 
-
 /* Block dividers */
 
 hr.h-divider {
@@ -202,8 +216,7 @@ hr.h-divider {
     opacity: 0.75
 }
 
-
-/* Form inputs and submits */
+/* Form inputs */
 
 #div_id_weight,
 #div_id_weight_target,
@@ -221,13 +234,8 @@ hr.h-divider {
     min-width: 170px;
 }
 
-.btn-submit,
-.btn-cancel {
-    margin-top: 25px;
-}
-
-
 /* profile image */
+
 .image-container {
     width: 50vw;
     height: 50vw;
@@ -239,7 +247,3 @@ hr.h-divider {
     width: 100%;
     height: 100%;
 }
-
-/* #activity_list {
-    width: 100%
-} */
