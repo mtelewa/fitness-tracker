@@ -10,6 +10,7 @@ import seaborn as sns
 from io import StringIO
 import numpy as np
 import requests
+import os
 # Own modules
 from .models import Activity, Profile, Nutrition
 from .forms import MetricsForm, ProfileForm, FullForm, ActivityForm, NutritionForm
@@ -403,13 +404,13 @@ def nutrition_history(request):
             profile_image = user_last_profile.profile_image
 
             all_objects = user_nutritions.all()
+
+            time, calories_intake = [], []
             for i in all_objects:
-                print(i)
-                print(i.nutrition_on)
-            
+                time.append(i.nutrition_on)
+                calories_intake.append(i.calories_intake)
 
-
-            # graph = plot_graph()
+            graph = plot_graph(time, calories_intake, "Calories")
         
             return render(
                 request,
@@ -591,18 +592,20 @@ def entry_delete(request):
     return HttpResponseRedirect(reverse('home'))
 
 
-def plot_graph():
+def plot_graph(x, y, ylabel):
 
-    x = np.arange(0,np.pi*3,.1)
-    y = np.sin(x)
+    plt.style.use('static/python/custom.mplstyle')
 
-    fig = plt.figure()
-    plt.plot(x,y)
+    fig, ax = plt.subplots(nrows=1, ncols=1, sharex=True)
+    ax.plot(x,y, marker="x", linewidth=3, markersize=12)
 
-    plt.figure(figsize=(16,10), dpi= 80)
+    ax.tick_params(axis='x', labelrotation=60)
+    ax.set_xlabel('Time')
+    ax.set_ylabel(ylabel)
+    ax.grid()
 
     imgdata = StringIO()
-    fig.savefig(imgdata, format='svg')
+    fig.savefig(imgdata, format='svg', bbox_inches='tight', dpi=100)
     imgdata.seek(0)
 
     data = imgdata.getvalue()
