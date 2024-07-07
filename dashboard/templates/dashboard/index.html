@@ -17,12 +17,16 @@
         <div class="row">
             <div class="col-md-8 offset-md-2">
                 {% for message in messages %}
+                <!-- Don't display signed in and out messages -->
+                {% if "signed" in message|safe %} 
+                {% else %}
                 <div class="alert {{ message.tags }} alert-dismissible
                 fade show" id="msg" role="alert">
                 {{ message | safe }}
                 <button type="button" class="btn-close"
                     data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
+                {% endif %}
                 {% endfor %}
             </div>
         </div>
@@ -76,13 +80,17 @@
                         <p class="card-text"> 
                             {% if weight|sub:weight_target > 0 %}
                             You are <strong>{{ weight|sub:weight_target }}</strong> kg away from your target, <br>
-                            {% else %}
+                            {% elif weight|sub:weight_target < 0 %}
                             You are <strong>{{ weight|sub:weight_target|abs }}</strong> kg ahead of your target, <br>
+                            {% else %}
+                            <strong> You reached your target. Congratulations! </strong> <br>
                             {% endif %}
                             {% if weight|sub:weight_rec > 0 %}
                             and <strong>{{ weight|sub:weight_rec }}</strong> kg away from the recommended metrics <br>
-                            {% else %}
+                            {% elif weight|sub:weight_rec < 0 %}
                             and <strong>{{ weight|sub:weight_rec|abs }}</strong> kg ahead of the recommended metrics <br>
+                            {% else %}
+                            <strong> You reached the recommended metrics. Congratulations! </strong> <br>
                             {% endif %}
                             Keep Going! <i class="fa-solid fa-person-running"></i>
                         </p>
