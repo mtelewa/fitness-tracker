@@ -5,6 +5,9 @@ from django.contrib import messages
 from django.conf import settings
 # Other external modules
 from datetime import date, timedelta
+import matplotlib.pyplot as plt
+import seaborn as sns
+from io import StringIO
 import numpy as np
 import requests
 # Own modules
@@ -35,7 +38,7 @@ def dashboard(request):
         # Display attributes - if user has profiles (existing user)
         if user_profiles.exists():
             # Profile card
-            user_last_profile =  user_profiles.latest('updated_on')
+            user_last_profile = user_profiles.latest('updated_on')
             username = user_last_profile.user
             weight = user_last_profile.weight
             height = user_last_profile.height
@@ -71,12 +74,15 @@ def dashboard(request):
                     metrics = metrics_form.save(commit=False)
                     metrics.user_id = request.user.id
                     # get data from the form
-                    user_last_profile.weight = metrics_form.cleaned_data.get('weight')
-                    user_last_profile.weight_target = metrics_form.cleaned_data.get('weight_target')
-                    weight, weight_target = user_last_profile.weight, user_last_profile.weight_target
+                    metrics.weight = metrics_form.cleaned_data.get('weight')
+                    metrics.weight_target = metrics_form.cleaned_data.get('weight_target')
+                    weight, weight_target = metrics.weight, metrics.weight_target
+                    metrics.height = user_last_profile.height
+                    metrics.birthdate = user_last_profile.birthdate
+                    metrics.profile_image = user_last_profile.profile_image
 
                     # commit changes
-                    user_last_profile.save() 
+                    metrics.save() 
                     print('metrics form saved')
 
                     messages.add_message(
@@ -100,19 +106,19 @@ def dashboard(request):
                     activity.user_id = request.user.id
 
                     # get data from the form
-                    user_last_activity.activity_type = request.POST.get('select-activity')
-                    user_last_activity.duration = activity_form.cleaned_data.get('duration')
-                    user_last_activity.distance = activity_form.cleaned_data.get('distance')
+                    activity.activity_type = request.POST.get('select-activity')
+                    activity.duration = activity_form.cleaned_data.get('duration')
+                    activity.distance = activity_form.cleaned_data.get('distance')
 
-                    calories_burnt = get_calories_burnt(user_last_activity.activity_type, duration)
+                    calories_burnt = get_calories_burnt(activity.activity_type, duration)
 
-                    user_last_activity.calories_burnt = calories_burnt
-                    activity_type, duration, distance = user_last_activity.activity_type, \
-                                                        user_last_activity.duration, \
-                                                        user_last_activity.distance
+                    activity.calories_burnt = calories_burnt
+                    activity_type, duration, distance = activity.activity_type, \
+                                                        activity.duration, \
+                                                        activity.distance
 
                     # commit changes
-                    user_last_activity.save() 
+                    activity.save() 
                     print('activity form saved')
 
                     messages.add_message(
@@ -136,22 +142,22 @@ def dashboard(request):
                     nutrition.user_id = request.user.id
 
                     # get data from the form
-                    user_last_nutrition.food_item = nutrition_form.cleaned_data.get('food_item')
-                    user_last_nutrition.portion = nutrition_form.cleaned_data.get('portion')
+                    nutrition.food_item = nutrition_form.cleaned_data.get('food_item')
+                    nutrition.portion = nutrition_form.cleaned_data.get('portion')
 
-                    food_item = user_last_nutrition.food_item
-                    portion = user_last_nutrition.portion
+                    food_item = nutrition.food_item
+                    portion = nutrition.portion
 
-                    user_last_nutrition.calories_intake, user_last_nutrition.fats, \
-                         user_last_nutrition.protein, user_last_nutrition.carbs = \
+                    nutrition.calories_intake, nutrition.fats, \
+                         nutrition.protein, nutrition.carbs = \
                          get_macronutrients(food_item, portion)
 
                     calories_intake, fats, protein, carbs = \
-                        user_last_nutrition.calories_intake, user_last_nutrition.fats, \
-                        user_last_nutrition.protein, user_last_nutrition.carbs
+                        nutrition.calories_intake, nutrition.fats, \
+                        nutrition.protein, nutrition.carbs
 
                     # commit changes
-                    user_last_nutrition.save() 
+                    nutrition.save() 
                     print('nutrition form saved')
 
                     messages.add_message(
@@ -250,30 +256,43 @@ def profile_details(request):
             birthdate = user_last_profile.birthdate
             age = (date.today() - birthdate) // timedelta(days=365.2425)
             weight = user_last_profile.weight
+            weight_target = user_last_profile.weight_target
             profile_image = user_last_profile.profile_image
 
+
+            # Profile form
             profile_form = ProfileForm()
 
             # If the user updates the values
             if request.method == "POST":
-                profile_form = ProfileForm(data=request.POST, files=request.FILES, instance=user_last_profile)
+                profile_form = ProfileForm(data=request.POST, files=request.FILES)
 
                 if profile_form.is_valid() and username == request.user:
                     profile = profile_form.save(commit=False)
 
                     profile.user_id = request.user.id
                     # get data from the form
-                    user_last_profile.height = profile_form.cleaned_data.get('height')
-                    height = user_last_profile.height
+                    profile.height = profile_form.cleaned_data.get('height')
+                    profile.birthdate = profile_form.cleaned_data.get('birthdate')
+                    profile.weight, profile.weight_target  = weight, weight_target
 
-                    user_last_profile.birthdate = profile_form.cleaned_data.get('birthdate')
-                    age = (date.today() - user_last_profile.birthdate) // timedelta(days=365.2425)
+                    # if user updates picture use new one if not keep the last one
+                    try:
+                        if 'placeholder' in profile.profile_image.url:
+                            profile.profile_image = user_last_profile.profile_image
+                        else:
+                            profile.profile_image = profile_form.cleaned_data.get('profile_image')
+                    except:
+                        profile.profile_image = profile_form.cleaned_data.get('profile_image')
 
-                    user_last_profile.profile_image = profile_form.cleaned_data.get('profile_image')
-                    profile_image = user_last_profile.profile_image
+                    profile_image = profile.profile_image
+
+                    age = (date.today() - profile.birthdate) // timedelta(days=365.2425)
+                    height = profile.height
+                    birthdate = profile.height
 
                     # commit changes
-                    user_last_profile.save() 
+                    profile.save() 
                     print('profile form saved')
 
                     messages.add_message(
@@ -292,6 +311,7 @@ def profile_details(request):
                     'age': age,
                     'profile_image': profile_image,
                     'profile_form': profile_form,
+                    'birthdate': birthdate
                 })
         
         else:
@@ -381,11 +401,21 @@ def nutrition_history(request):
             
             food_item = user_last_nutrition.food_item
             profile_image = user_last_profile.profile_image
+
+            all_objects = user_nutritions.all()
+            for i in all_objects:
+                print(i)
+                print(i.nutrition_on)
+            
+
+
+            # graph = plot_graph()
         
             return render(
                 request,
                 "dashboard/nutrition.html",
                 {
+                    'graph': graph,
                     'food_item': food_item,
                     'profile_image': profile_image,
                 })
@@ -425,14 +455,21 @@ def calendar(request):
             user_last_profile =  user_profiles.latest('updated_on')
             profile_image = user_last_profile.profile_image
 
-    return render(
-        request,
-        "dashboard/calendar.html",
-        {   
-            'profile_image': profile_image,
-            'GOOGLE_API_KEY': settings.GOOGLE_API_KEY,
-            'GOOGLE_CLIENT_ID': settings.GOOGLE_CLIENT_ID,
-        })
+            return render(
+                request,
+                "dashboard/calendar.html",
+                {   
+                    'profile_image': profile_image,
+                    'GOOGLE_API_KEY': settings.GOOGLE_API_KEY,
+                    'GOOGLE_CLIENT_ID': settings.GOOGLE_CLIENT_ID,
+                })
+
+        else:
+            dict = entry_create(request)
+            return render(
+                request,
+                "dashboard/entry_create.html",
+                dict)
 
 
 def entry_create(request):
@@ -552,6 +589,24 @@ def entry_delete(request):
                 'Your last entry has been deleted!')             
 
     return HttpResponseRedirect(reverse('home'))
+
+
+def plot_graph():
+
+    x = np.arange(0,np.pi*3,.1)
+    y = np.sin(x)
+
+    fig = plt.figure()
+    plt.plot(x,y)
+
+    plt.figure(figsize=(16,10), dpi= 80)
+
+    imgdata = StringIO()
+    fig.savefig(imgdata, format='svg')
+    imgdata.seek(0)
+
+    data = imgdata.getvalue()
+    return data
 
 
 

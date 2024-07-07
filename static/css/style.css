@@ -137,7 +137,7 @@ html, body {
     top: 0;
 }
 
-.nav-item:hover {
+.sidebar .nav-item:hover {
     background-color: #f05f40;
     border-color: #f05f40;
     border-radius: 5px; 
