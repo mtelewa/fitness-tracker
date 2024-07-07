@@ -6,12 +6,12 @@ from django.conf import settings
 # Other external modules
 from datetime import date, timedelta
 import matplotlib.pyplot as plt
-import seaborn as sns
 from io import StringIO
+import seaborn as sns
 import numpy as np
 import requests
 import os
-# Own modules
+# Local imports
 from .models import Activity, Profile, Nutrition
 from .forms import MetricsForm, ProfileForm, FullForm, ActivityForm, NutritionForm
 
@@ -216,6 +216,8 @@ def dashboard(request):
                     'fats': fats,
                     'calories_intake': calories_intake,
                     'nutrition_form': nutrition_form,
+                    'GOOGLE_API_KEY': settings.GOOGLE_API_KEY,
+                    'GOOGLE_CLIENT_ID': settings.GOOGLE_CLIENT_ID,
                 })
 
         else:
@@ -637,7 +639,6 @@ def plot_graph(x, y, ylabel, **kwargs):
 
     data = imgdata.getvalue()
     return data
-
 
 
 def get_metrics(height, weight, birthdate):

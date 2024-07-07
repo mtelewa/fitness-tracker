@@ -15,9 +15,10 @@ const deleteNutritionButton = $('#btn-delete-nutrition');
 const deleteActivityButton = $('#btn-delete-activity');
 const deleteProfileButton = $('#btn-delete-profile');
 const deleteModalElement = $('#deleteModal')
+let deleteModal
 if (deleteModalElement.length) {
   // Initialize the Bootstrap modal
-  const deleteModal = new bootstrap.Modal($('#deleteModal'));
+  deleteModal = new bootstrap.Modal($('#deleteModal'));
 }
 const cardText = $('.card-text');
 const weightText = $('#id_weight');
