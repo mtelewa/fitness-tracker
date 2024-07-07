@@ -27,39 +27,45 @@
     <h1 class="p-5"> Your Profile</h1>
     <div id="dashboard" class="d-flex flex-row justify-content-center dashboard-border--shadow dashboard--bg-color p-3 p-lg-5 mx-auto">
         <div class="card container-fluid dashboard-item-border--shadow bg-light" >
-            <div class="card-body d-flex flex-column">
-                <h3 class="card-title">Details</h3>
-                <form class="hide-show-profile d-none" enctype="multipart/form-data" method="post">
-                    {% crispy profile_form %}
-                    {% csrf_token %}
-                </form>
+            <div class="card-body d-flex row">
+                <div class="col-3">
+                    <h3 class="card-title">Details</h3>
+                    <form class="hide-show-profile d-none" enctype="multipart/form-data" method="post">
+                        {% crispy profile_form %}
+                        {% csrf_token %}
+                    </form>
 
-                <div class="image-container mb-3">
-                    {% if "placeholder" in profile_image.url %}
-                    <img src="{% static 'images/nobody.jpg' %}" class="profile-image rounded-circle"  alt="profile-image">
-                    {% else %}
-                    {% load cloudinary %}      
-                    {% cloudinary profile_image format="jpg" class="profile-image rounded-circle" %}
-                    {% endif %}
+                    <div class="image-container mb-3">
+                        {% if "placeholder" in profile_image.url %}
+                        <img src="{% static 'images/nobody.jpg' %}" class="profile-image rounded-circle"  alt="profile-image">
+                        {% else %}
+                        {% load cloudinary %}      
+                        {% cloudinary profile_image format="jpg" class="profile-image rounded-circle" %}
+                        {% endif %}
+                    </div>
+
+                    <p class="card-text mt-3 show-hide-profile"> 
+                        <span> Username: </span> 
+                        <span class=" text-primary fw-bold">{{ user }}</span> <br>
+
+                        <span> Age: </span> 
+                        <span class="text-primary fw-bold {% if age is None %} ddash {% endif %}">{{ age }}</span>
+
+                        <span class="d-none" id="birthdate-val">{{ birthdate }}</span>
+                        <span class="text-primary fw-bold {% if age is None %} d-none {% endif %}"> years </span>  <br>
+
+                        <span> Height: </span> 
+                        <span class="text-primary fw-bold {% if height is None %} ddash {% endif %}" id="height-val">{{ height }}</span>
+                        <span class="text-primary fw-bold {% if height is None %} d-none {% endif %}"> cm </span>  <br>
+                        
+                        <span> Weight: </span> 
+                        <span class="text-primary fw-bold" id="weight-val">{{ weight }}</span>
+                        <span class="text-primary fw-bold"> kg </span> <br>
+                    </p>
                 </div>
-
-                <p class="card-text mt-3 show-hide-profile"> 
-                    <span> Username: </span> 
-                    <span class=" text-primary fw-bold">{{ user }}</span> <br>
-
-                    <span> Age: </span> 
-                    <span class="text-primary fw-bold {% if age is None %} ddash {% endif %}">{{ age }}</span>
-                    <span class="d-none" id="birthdate-val">{{ birthdate }}</span>
-                    <span class="text-primary fw-bold {% if age is None %} d-none {% endif %}"> years </span>  <br>
-
-                    <span> Height: </span> 
-                    <span class="text-primary fw-bold {% if height is None %} ddash {% endif %}" id="height-val">{{ height }}</span>
-                    <span class="text-primary fw-bold {% if height is None %} d-none {% endif %}"> cm </span>  <br>
-                    
-                    <span> Weight: </span> 
-                    <span class="text-primary fw-bold" id="weight-val">{{ weight }}</span>
-                    <span class="text-primary fw-bold"> kg </span> <br>
-                </p>
+                <div class="col-9">
+                    {{ graph|safe }}
+                </div>
             </div>
             <div class="align-self-end pb-3 show-hide-profile">
                 <a href="{% url 'home' %}" class="btn btn-md btn--size btn-primary m-1" role="button"> Home </a>

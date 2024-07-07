@@ -261,6 +261,15 @@ def profile_details(request):
             profile_image = user_last_profile.profile_image
 
 
+            all_objects = user_profiles.all()
+
+            time, weights = [], []
+            for i in all_objects:
+                time.append(i.updated_on)
+                weights.append(i.weight)
+
+            graph = plot_graph(time, weights, "Weight (Kg)", ls='none')
+
             # Profile form
             profile_form = ProfileForm()
 
@@ -307,6 +316,7 @@ def profile_details(request):
                 request,
                 "dashboard/profile.html",
                 {
+                    'graph': graph,
                     'height': height,
                     'weight': weight,
                     'age': age,
@@ -354,11 +364,21 @@ def activity_history(request):
             
             activity = user_last_activity.activity_type
             profile_image = user_last_profile.profile_image
+
+            all_objects = user_activities.all()
+
+            time, calories_burnt = [], []
+            for i in all_objects:
+                time.append(i.activity_on)
+                calories_burnt.append(i.calories_burnt)
+
+            graph = plot_graph(time, calories_burnt, "Calories")
         
             return render(
                 request,
                 "dashboard/activity.html",
                 {
+                    'graph': graph,
                     'activity': activity,
                     'profile_image': profile_image,
                 })
@@ -592,12 +612,18 @@ def entry_delete(request):
     return HttpResponseRedirect(reverse('home'))
 
 
-def plot_graph(x, y, ylabel):
-
+def plot_graph(x, y, ylabel, **kwargs):
+    """
+    Plot the graphs for tracking values with time
+    """
     plt.style.use('static/python/custom.mplstyle')
 
     fig, ax = plt.subplots(nrows=1, ncols=1, sharex=True)
-    ax.plot(x,y, marker="x", linewidth=3, markersize=12)
+
+    if 'ls' in kwargs:
+        ax.plot(x,y, marker="x", linewidth=3, markersize=12, ls='none')
+    else:
+        ax.plot(x,y, marker="x", linewidth=3, markersize=12)
 
     ax.tick_params(axis='x', labelrotation=60)
     ax.set_xlabel('Time')
