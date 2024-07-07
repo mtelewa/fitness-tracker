@@ -1,17 +1,16 @@
+# Django modules
 from django.shortcuts import render, get_object_or_404, redirect, reverse
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.conf import settings
-from django.http import HttpResponseRedirect
+# Other external modules
 from datetime import date, timedelta
 import numpy as np
-from pprint import pprint
 import requests
-
+# Own modules
 from .models import Activity, Profile, Nutrition
 from .forms import MetricsForm, ProfileForm, FullForm, ActivityForm, NutritionForm
 
-# Create your views here.
 
 def dashboard(request):
     """
@@ -419,10 +418,18 @@ def calendar(request):
     :template:`dashboard/profile_details.html`
     """
 
+    if request.user.is_authenticated:
+        user_profiles = Profile.objects.filter(user=request.user)
+
+        if user_profiles.exists():
+            user_last_profile =  user_profiles.latest('updated_on')
+            profile_image = user_last_profile.profile_image
+
     return render(
         request,
         "dashboard/calendar.html",
-        {
+        {   
+            'profile_image': profile_image,
             'GOOGLE_API_KEY': settings.GOOGLE_API_KEY,
             'GOOGLE_CLIENT_ID': settings.GOOGLE_CLIENT_ID,
         })
