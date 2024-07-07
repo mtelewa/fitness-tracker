@@ -66,7 +66,6 @@ $(document).ready(function(){
   let birthdate = $('#birthdate-val');
   // if profile is created, show the user's birthdate
   // else show today's date
-  console.log(new Date(birthdate.text()))
   if (isValidDate(new Date(birthdate.text()))){
     birthdateText.val($.datepicker.formatDate('dd-mm-yy', new Date(birthdate.text())));
   } else{
