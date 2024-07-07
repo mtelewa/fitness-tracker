@@ -621,13 +621,14 @@ def plot_graph(x, y, ylabel, **kwargs):
     fig, ax = plt.subplots(nrows=1, ncols=1, sharex=True)
 
     if 'ls' in kwargs:
-        ax.plot(x,y, marker="x", linewidth=3, markersize=12, ls='none')
+        ax.plot(x,y, marker="x", linewidth=3, markersize=12, ls='none', color='black')
     else:
-        ax.plot(x,y, marker="x", linewidth=3, markersize=12)
+        ax.plot(x,y, marker="x", linewidth=3, markersize=12, color='black')
 
     ax.tick_params(axis='x', labelrotation=60)
     ax.set_xlabel('Time')
     ax.set_ylabel(ylabel)
+    ax.set_facecolor('#f3906b')
     ax.grid()
 
     imgdata = StringIO()

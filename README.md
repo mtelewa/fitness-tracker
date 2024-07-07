@@ -49,3 +49,5 @@ https://api-ninjas.com/api/caloriesburned
 https://stackoverflow.com/questions/17165147/how-can-i-make-a-django-form-field-contain-only-alphanumeric-characters
 
 https://stackoverflow.com/questions/3617797/regex-to-match-only-letters
+
+https://stackoverflow.com/questions/40534715/how-to-embed-matplotlib-graph-in-django-webpage
