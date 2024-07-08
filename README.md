@@ -236,17 +236,17 @@ The main features of the website are
 
 ### Validator Testing
 
-* [HTML Validator](https://validator.w3.org/) result for the `.html` files were as following:
+* [HTML Validator](https://validator.w3.org/) result for the template files were as following:
     
     First for unauthorized access, the 'Validate by URI' was used and showed no errors
 
-    * For the index or home page (as well as other pages)
+    * For the index template (as well as activity, nutrition, profile, )
 
     <p align="center">
     <img src="documentation/testing/html-validator-index.png" alt="html-validation-index" width="90%">
     </p>
 
-    Next, 
+    Next, the 
 
     * For the quiz pages (all categories) showed the same warnings
 

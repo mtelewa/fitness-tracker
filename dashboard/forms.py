@@ -157,6 +157,8 @@ class FullForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
+
+        self.helper.form_class =  'hide-show-metrics d-none mt-3'
         self.helper.form_method = 'post'
 
         self.fields['height'].widget.attrs['min'], \
