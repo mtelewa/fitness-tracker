@@ -256,6 +256,9 @@
             </div>
         </div>
     </div>
+    <!-- to avoid calendar errors in log -->
+    <button class="btn btn-md btn-md btn--size btn-success m-1 d-none" id="authorize_button" onclick="handleAuthClick()">Authorize</button>
+    <button class="d-none" id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
 </section>
 
 {% endblock %}

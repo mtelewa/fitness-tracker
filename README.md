@@ -1,10 +1,10 @@
-# Fitness tracker project
-
-[View the deployed project here](https://fitness-tracker-mt-b349b401ceed.herokuapp.com/)
-
-Fun Stats is a quiz website offering 4 different categories: History, Science, Arts and Sports. The quiz is unconventional in the sense that the answers to all questions lies in the figures or statistics behind a certain event or phenomenon. The aim is to let the user grasp how huge/small or old/recent an event or a phenomenon really is.
+# Fitness Tracker project
 
 ![Mockup](documentation/features/mockup.png)
+
+Fitness Tracker is an app to help you stay on top of your fitness goals and lead a healthier life. Designed for both beginners and fitness enthusiasts, Fitness Tracker offers a comprehensive suite of features to track your physical activities with calories burnt counter, log your meals with calories intake counter, and set personalized weight targets.
+
+Link to live site - [https://fitness-tracker-mt-b349b401ceed.herokuapp.com/](https://fitness-tracker-mt-b349b401ceed.herokuapp.com/)
 
 
 ## Contents
