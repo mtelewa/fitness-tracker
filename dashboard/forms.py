@@ -13,7 +13,7 @@ class MetricsForm(forms.ModelForm):
         self.helper.form_method = 'post'
         self.helper.form_class = 'hide-show-metrics d-none'
         self.helper.add_input(Submit('submitMetrics', 'Submit', css_class='btn-success btn-submit'))
-        self.helper.add_input(Button('cancel', 'Cancel', css_class='btn-secondary btn-cancel',
+        self.helper.add_input(Button('cancelMetrics', 'Cancel', css_class='btn-secondary btn-cancel',
             onclick="window.location.href = '{}';".format(reverse('home'))))
 
     class Meta:
@@ -38,7 +38,7 @@ class ProfileForm(forms.ModelForm):
         self.helper.form_class = 'hide-show-profile d-none'
         self.helper.form_enctype = 'multipart/form-data'
         self.helper.add_input(Submit('submitProfile', 'Submit', css_class='btn-success btn-submit'))
-        self.helper.add_input(Button('cancel', 'Cancel', css_class='btn-secondary btn-cancel',
+        self.helper.add_input(Button('cancelProfile', 'Cancel', css_class='btn-secondary btn-cancel',
             onclick="window.location.href = '{}';".format(reverse('profile'))))
 
     class Meta:
@@ -66,7 +66,7 @@ class ActivityForm(forms.ModelForm):
             )
 
         self.helper.add_input(Submit('submitActivity', 'Submit', css_class='btn-success btn-submit'))
-        self.helper.add_input(Button('cancel', 'Cancel', css_class='btn-secondary btn-cancel',
+        self.helper.add_input(Button('cancelActivity', 'Cancel', css_class='btn-secondary btn-cancel',
             onclick="window.location.href = '{}';".format(reverse('home'))))
 
     class Meta:
@@ -90,7 +90,7 @@ class NutritionForm(forms.ModelForm):
         self.helper.form_method = 'post'
 
         self.helper.add_input(Submit('submitNutrition', 'Submit', css_class='btn-success btn-submit'))
-        self.helper.add_input(Button('cancel', 'Cancel', css_class='btn-secondary btn-cancel',
+        self.helper.add_input(Button('cancelNutrition', 'Cancel', css_class='btn-secondary btn-cancel',
             onclick="window.location.href = '{}';".format(reverse('home'))))
 
     class Meta:
@@ -183,5 +183,5 @@ class FullForm(forms.Form):
         
         # Buttons
         self.helper.add_input(Submit('submitFull', 'Submit', css_class='btn-success btn-submit'))
-        self.helper.add_input(Button('cancel', 'Cancel', css_class='btn-secondary btn-cancel',
+        self.helper.add_input(Button('cancelFull', 'Cancel', css_class='btn-secondary btn-cancel',
             onclick="window.location.href = '{}';".format(reverse('home'))))

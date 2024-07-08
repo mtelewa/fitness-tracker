@@ -106,7 +106,7 @@
             <!-- Calendar Card -->
             <div class="card col-md-12 col-lg-6 bg-light dashboard-item-border--shadow" >
                 <iframe src="https://calendar.google.com/calendar/embed?src=usertesting573%40gmail.com&ctz=Europe%2FBerlin"
-                    style="border: 0" width="100%" height="100%" frameborder="0" scrolling="no"></iframe>
+                    style="border: 0" width="100%" height="100%" class="frame"></iframe>
                 <button class="btn btn-md btn-md btn--size btn-success m-1 d-none" id="authorize_button" onclick="handleAuthClick()">Authorize</button>
                 <button class="d-none" id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
             </div>
@@ -136,7 +136,7 @@
                     <div class="col-lg-6 d-flex flex-column">
                         <hr class="h-divider h-divider--orange d-lg-none">
                         <h5 class="mx-auto show-hide-activity"> You burnt </h5>
-                        <span class="text-success fw-bold mx-auto show-hide-activity"><h3> {{ calories_burnt }} </h3></span>
+                        <h3 class="text-success mx-auto show-hide-activity"> {{ calories_burnt }} </h3>
                         <span class="text-success fw-bold mx-auto show-hide-activity"> Calories </span>
                     </div>
                 </div>
@@ -177,7 +177,7 @@
                     <div class="col-lg-6 d-flex flex-column">
                         <hr class="h-divider h-divider--orange d-lg-none">
                         <h5 class="mx-auto show-hide-nutrition"> Your intake </h5>
-                        <span class="text-danger fw-bold mx-auto show-hide-nutrition"><h3> {{ calories_intake }} </h3></span>
+                        <h3 class="text-danger mx-auto show-hide-nutrition"> {{ calories_intake }} </h3>
                         <span class="text-danger fw-bold mx-auto show-hide-nutrition"> Calories </span>
                     </div>
                 </div>
