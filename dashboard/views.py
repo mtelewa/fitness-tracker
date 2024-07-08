@@ -263,15 +263,15 @@ def profile_details(request):
             weight_target = user_last_profile.weight_target
             profile_image = user_last_profile.profile_image
 
-
-            all_objects = user_profiles.all()
+            # plotting
+            all_objects = user_profiles.order_by('updated_on')
 
             time, weights = [], []
             for i in all_objects:
                 time.append(i.updated_on)
                 weights.append(i.weight)
 
-            graph = plot_graph(time, weights, "Weight (Kg)", ls='none')
+            graph = plot_graph(time, weights, "Weight (Kg)", figsize=(14,6))
 
             # Profile form
             profile_form = ProfileForm()
@@ -368,14 +368,14 @@ def activity_history(request):
             activity = user_last_activity.activity_type
             profile_image = user_last_profile.profile_image
 
-            all_objects = user_activities.all()
+            all_objects = user_activities.order_by('activity_on')
 
             time, calories_burnt = [], []
             for i in all_objects:
                 time.append(i.activity_on)
                 calories_burnt.append(i.calories_burnt)
 
-            graph = plot_graph(time, calories_burnt, "Calories")
+            graph = plot_graph(time, calories_burnt, "Calories", figsize=(19,6))
         
             return render(
                 request,
@@ -426,14 +426,14 @@ def nutrition_history(request):
             food_item = user_last_nutrition.food_item
             profile_image = user_last_profile.profile_image
 
-            all_objects = user_nutritions.all()
+            all_objects = user_nutritions.order_by('nutrition_on')
 
             time, calories_intake = [], []
             for i in all_objects:
                 time.append(i.nutrition_on)
                 calories_intake.append(i.calories_intake)
 
-            graph = plot_graph(time, calories_intake, "Calories")
+            graph = plot_graph(time, calories_intake, "Calories", figsize=(19,6))
         
             return render(
                 request,
@@ -622,16 +622,11 @@ def plot_graph(x, y, ylabel, **kwargs):
     # plt.style.use('static/python/custom.mplstyle')
     plt.style.use('cyberpunk')
 
-    fig, ax = plt.subplots(nrows=1, ncols=1, sharex=True)
+    fig, ax = plt.subplots(nrows=1, ncols=1, sharex=True, **kwargs)
 
-    if 'ls' in kwargs:
-        plt.scatter(x, y, marker = 'o', c='lime')
-        mplcyberpunk.make_scatter_glow()
-        # ax.plot(x,y, marker="x", linewidth=3, markersize=12, ls='none')
-    else:
-        ax.plot(x,y, marker="x", linewidth=3, markersize=12)
-        mplcyberpunk.make_lines_glow()
-        mplcyberpunk.add_gradient_fill(alpha_gradientglow=0.5, gradient_start='zero')        
+    ax.plot(x,y, marker="x", linewidth=3, markersize=12)
+    mplcyberpunk.make_lines_glow()
+    mplcyberpunk.add_gradient_fill(alpha_gradientglow=0.5, gradient_start='zero')        
 
     ax.tick_params(axis='x', labelrotation=60)
     ax.set_xlabel('Time')
