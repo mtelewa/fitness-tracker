@@ -260,7 +260,7 @@ The main features of the website are
 
 The aforementioned errors and warnings do not affect the functionality of the website by any means.
 
-* [CSS Validator](https://jigsaw.w3.org/css-validator/) result for the `.css` file showed no errors, however it showed 10 warnings related to the importing of google fonts and using vendor extensions. These warnings do not affect the deployment of the website by any means
+* [CSS Validator](https://jigsaw.w3.org/css-validator/) result for the `.css` file showed no errors, however it showed 4 warnings related to the importing of google fonts and using vendor extensions. These warnings do not affect the deployment of the website by any means
 
 <p align="center">
 <img src="documentation/testing/css-validation.png" alt="css validation" width="80%">
@@ -278,13 +278,13 @@ The aforementioned errors and warnings do not affect the functionality of the we
 <img src="documentation/testing/css-warnings.png" alt="css validation" width="80%">
 </p>
 
-* [JavaScript Validator](https://jshint.com/) result for the `.js` file showed no errors, however it showed 8 warnings, all on one line where the database is imported. These warnings do not affect the logic handling, datastructure or flow control of the script.
+* [JavaScript Validator](https://jshint.com/) result for the `.js` file showed no errors, however it showed 1 warning and 1 unused variable. The warning does not affect the logic handling, data structure or flow control of the script. The unused variable is in fact an event handler function that fetched data from the calories API when user types in an activity or a meal.
 
 <p align="center">
 <img src="documentation/testing/js-validator.png" alt="js-validation" width="40%">
 </p>
 
-* [JSON Validator](https://jsonlint.com/) showed that the JSON file is valid
+* [JSON Validator](https://jsonlint.com/) showed that the JSON files used in the fixtures are valid
 
 <p align="center">
 <img src="documentation/testing/json-validator.png" alt="json-validation" width="50%">

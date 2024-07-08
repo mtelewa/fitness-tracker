@@ -34,10 +34,13 @@ $(document).ready(function(){
    * and old data disappears
    */
 
+  let showHide;
+  let hideShow;
+
   updateButtons.click(function() {
     if (this.id == 'btn-update-metrics') {
-      var showHide = $('.show-hide-metrics');
-      var hideShow = $('.hide-show-metrics');
+      showHide = $('.show-hide-metrics');
+      hideShow = $('.hide-show-metrics');
     } else if (this.id == 'btn-update-activity') {
       showHide = $('.show-hide-activity');
       hideShow = $('.hide-show-activity');
@@ -82,7 +85,7 @@ $(document).ready(function(){
   // Date validation
   function isValidDate(d) {
     return d instanceof Date && !isNaN(d);
-  };
+  }
 
   // For new users with no previous records, show -- for None entries
   ddash.text('--');
@@ -128,13 +131,13 @@ function fetchCaloriesBurnt(event) {
         var activities = [];
         for (var i = 0; i < activity_list.length; i++) {
             if (activity_list[i].hasOwnProperty('name')) {
-                activities.push(activity_list[i]['name']);
+                activities.push(activity_list[i].name);
             }
         }
         // Show activities list in the select menu
-        var str = ""
+        var str = "";
         for (let i of activities) {
-            str += `<option value="${i}">${i}</option>`
+            str += `<option value="${i}">${i}</option>`;
         }
         $('#activity_list').html(
           `
@@ -142,7 +145,7 @@ function fetchCaloriesBurnt(event) {
             ${str}
           </select>
           `
-        )
+        );
     },
     error: function(xhr) {
         console.log("Error:", xhr.status, xhr.responseText);
