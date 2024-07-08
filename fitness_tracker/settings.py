@@ -37,7 +37,7 @@ GOOGLE_APPLICATION_CREDENTIALS = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS"
 CAL_BURN_API_KEY = os.environ.get("CAL_BURN_API_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     '8000-mtelewa-fitnesstracker-7ihzqt4w0n6.ws.codeinstitute-ide.net',

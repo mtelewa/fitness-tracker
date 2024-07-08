@@ -6,6 +6,7 @@ from django.conf import settings
 # Other external modules
 from datetime import date, timedelta
 import matplotlib.pyplot as plt
+import mplcyberpunk
 from io import StringIO
 import seaborn as sns
 import numpy as np
@@ -618,19 +619,23 @@ def plot_graph(x, y, ylabel, **kwargs):
     """
     Plot the graphs for tracking values with time
     """
-    plt.style.use('static/python/custom.mplstyle')
+    # plt.style.use('static/python/custom.mplstyle')
+    plt.style.use('cyberpunk')
 
     fig, ax = plt.subplots(nrows=1, ncols=1, sharex=True)
 
     if 'ls' in kwargs:
-        ax.plot(x,y, marker="x", linewidth=3, markersize=12, ls='none', color='black')
+        plt.scatter(x, y, marker = 'o', c='lime')
+        mplcyberpunk.make_scatter_glow()
+        # ax.plot(x,y, marker="x", linewidth=3, markersize=12, ls='none')
     else:
-        ax.plot(x,y, marker="x", linewidth=3, markersize=12, color='black')
+        ax.plot(x,y, marker="x", linewidth=3, markersize=12)
+        mplcyberpunk.make_lines_glow()
+        mplcyberpunk.add_gradient_fill(alpha_gradientglow=0.5, gradient_start='zero')        
 
     ax.tick_params(axis='x', labelrotation=60)
     ax.set_xlabel('Time')
     ax.set_ylabel(ylabel)
-    ax.set_facecolor('#f3906b')
     ax.grid()
 
     imgdata = StringIO()
