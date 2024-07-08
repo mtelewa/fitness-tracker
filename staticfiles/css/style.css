@@ -139,7 +139,6 @@ html, body {
 
 .sidebar .nav-item:hover {
     background-color: #f05f40;
-    border-color: #f05f40;
     border-radius: 5px; 
 }
 
@@ -147,7 +146,6 @@ html, body {
 
 .btn--red {
     background-color: #f05f40;
-    border-color: #f05f40;
     border-radius: 15px;
 }
 
@@ -167,7 +165,6 @@ html, body {
 .btn--red:focus,
 .btn--red:active:focus {
     background-color: #df4929;
-    border-color: #df4929;
     color: white;
 }
 

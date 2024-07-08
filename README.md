@@ -240,49 +240,27 @@ The main features of the website are
     
     First for unauthorized access, the 'Validate by URI' was used and showed no errors
 
-    * For the index template (as well as activity, nutrition, profile, )
+    * For the index template (as well as activity, nutrition, profile)
 
     <p align="center">
     <img src="documentation/testing/html-validator-index.png" alt="html-validation-index" width="90%">
     </p>
 
-    Next, the 
-
-    * For the quiz pages (all categories) showed the same warnings
+    Next, the validation was performed by 'Direct Input' by passing the page source. The templates (activity, nutrition and profile) showed some errors all related to one element - the SVG figure. Since this error did not affect how the figure is displayed and does not interact with other elements on the page, it was not handled.
 
     <p align="center">
-    <img src="documentation/testing/html-validator-quiz-pages.png" alt="html-validation-quiz" width="90%">
+    <img src="documentation/testing/svg-error.png" alt="svg-error" width="90%">
     </p>
 
-    * For the contact page
+    * For the index and calendar templates, an error was raised from the iframe element. The styling of the iframe width and height was also performed from the CSS file but it was ignored. So it was left within the html file. The errors do not affect how the template is displayed.
 
     <p align="center">
-    <img src="documentation/testing/html-validator-contact.png" alt="html-validation-contact" width="90%">
+    <img src="documentation/testing/index-error.png" alt="iframe-error" width="90%">
     </p>
 
-    * For the about page
+The aforementioned errors and warnings do not affect the functionality of the website by any means.
 
-    <p align="center">
-    <img src="documentation/testing/html-validator-about.png" alt="html-validation-about" width="90%">
-    </p>
-
-
-    * For the calendar page
-
-    505
-
-
-
-
-
-
-
-
-
-
-As seen, there are no errors and only warnings of no heading was obtained. This does not affect the functionality of the website by any means.
-
-* [CSS Validator](https://jigsaw.w3.org/css-validator/) result for the `.css` file showed no errors, however it showed 9 warnings related to the importing of google fonts and using vendor extensions. These warnings do not affect the deployment of the website by any means
+* [CSS Validator](https://jigsaw.w3.org/css-validator/) result for the `.css` file showed no errors, however it showed 10 warnings related to the importing of google fonts and using vendor extensions. These warnings do not affect the deployment of the website by any means
 
 <p align="center">
 <img src="documentation/testing/css-validation.png" alt="css validation" width="80%">
