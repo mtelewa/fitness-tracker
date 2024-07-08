@@ -9,6 +9,9 @@ alpha = RegexValidator(r'^[a-zA-Z]+$', 'Only alphabetical characters\
 
 
 class Activity(models.Model):
+    """
+    Stores a single activity entry related to :model:`auth.User`.
+    """
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="user_activity"
         )
@@ -35,6 +38,9 @@ class Activity(models.Model):
 
 
 class Nutrition(models.Model):
+    """
+    Stores a single nutrition entry related to :model:`auth.User`.
+    """
     food_item = models.CharField(max_length=200,
                                  validators=[alpha])
     portion = models.IntegerField(
@@ -53,6 +59,9 @@ class Nutrition(models.Model):
 
 
 class Profile(models.Model):
+    """
+    Stores a single metric profile entry related to :model:`auth.User`.
+    """
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="user_profile"
         )

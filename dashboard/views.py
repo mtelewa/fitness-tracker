@@ -1,9 +1,4 @@
-# Django modules
-from django.shortcuts import render, get_object_or_404, redirect, reverse
-from django.http import HttpResponse, HttpResponseRedirect
-from django.contrib import messages
-from django.conf import settings
-# Other external modules
+# Standard library imports
 from datetime import date, timedelta
 import matplotlib.pyplot as plt
 import mplcyberpunk
@@ -12,6 +7,11 @@ import seaborn as sns
 import numpy as np
 import requests
 import os
+# Third-party imports
+from django.shortcuts import render, get_object_or_404, redirect, reverse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib import messages
+from django.conf import settings
 # Local imports
 from .models import Activity, Profile, Nutrition
 from .forms import *
@@ -19,16 +19,20 @@ from .forms import *
 
 def dashboard(request):
     """
-    Display an individual :model:`dashboard.Profile`.
+    Renders the dashboard for logged in users.
+    The dashboard consists of 4 cards: profile, 
+    calendar, activity and nutrition.
+    Display 3 models:
+        :model:`dashboard.Profile`.
+        :model:`dashboard.Activity`.
+        :model:`dashboard.Nutrition`.
 
     **Context**
+    variables, forms and API Keys
 
-    ``profile``
-        An instance of :model:`dashboard.Profile`.
-
-    **Template:**
-
-    :template:`dashboard/index.html`
+    **Templates:**
+    :template:`dashboard/entry_create` for new users
+    :template:`dashboard/index.html` for existing users
     """
 
     if request.user.is_authenticated:
@@ -87,7 +91,6 @@ def dashboard(request):
 
                     # commit changes
                     metrics.save()
-                    print('metrics form saved')
 
                     messages.add_message(
                         request, messages.SUCCESS,
@@ -101,7 +104,6 @@ def dashboard(request):
 
             # If the user updates the values
             if request.method == "POST" and 'submitActivity' in request.POST:
-                print('POST is executed')
                 activity_form = ActivityForm(data=request.POST)
 
                 # If user updates activity form
@@ -127,7 +129,6 @@ def dashboard(request):
 
                     # commit changes
                     activity.save()
-                    print('activity form saved')
 
                     messages.add_message(
                         request, messages.SUCCESS,
@@ -141,7 +142,6 @@ def dashboard(request):
 
             # If the user updates the values
             if request.method == "POST" and 'submitNutrition' in request.POST:
-                print('POST is executed')
                 nutrition_form = NutritionForm(data=request.POST)
 
                 # If user updates activity form
@@ -168,7 +168,6 @@ def dashboard(request):
 
                     # commit changes
                     nutrition.save()
-                    print('nutrition form saved')
 
                     messages.add_message(
                         request, messages.SUCCESS,
@@ -243,16 +242,16 @@ def dashboard(request):
 
 def profile_details(request):
     """
-    Display an individual :model:`dashboard.Nutrition`.
+    Renders the profile page
+    Display an individual model :model:`dashboard.Profile`.
 
     **Context**
+    metrics variables, matplotlib figure, cloudinary image and profile form
 
-    ``profile``
-        An instance of :model:`dashboard.Nutrition`.
-
-    **Template:**
-
-    :template:`dashboard/profile_details.html`
+    **Templates:**
+    :template:`dashboard/entry_create` for new users
+    :template:`dashboard/profile` for existing users
+    :template:`dashboard/index.html` for unauthorized users
     """
 
     if request.user.is_authenticated:
@@ -320,7 +319,6 @@ def profile_details(request):
 
                     # commit changes
                     profile.save()
-                    print('profile form saved')
 
                     messages.add_message(
                         request, messages.SUCCESS,
@@ -336,10 +334,10 @@ def profile_details(request):
                     'graph': graph,
                     'height': height,
                     'weight': weight,
+                    'birthdate': birthdate,
                     'age': age,
                     'profile_image': profile_image,
                     'profile_form': profile_form,
-                    'birthdate': birthdate
                 })
 
         else:
@@ -358,16 +356,16 @@ def profile_details(request):
 
 def activity_history(request):
     """
-    Display an individual :model:`dashboard.Nutrition`.
+    Renders the activity page
+    Display an individual model :model:`dashboard.Activity`.
 
     **Context**
+    variable, matplotlib figure and cloudinary image
 
-    ``profile``
-        An instance of :model:`dashboard.Nutrition`.
-
-    **Template:**
-
-    :template:`dashboard/profile_details.html`
+    **Templates:**
+    :template:`dashboard/entry_create` for new users
+    :template:`dashboard/activity` for existing users
+    :template:`dashboard/index.html` for unauthorized users
     """
 
     if request.user.is_authenticated:
@@ -416,16 +414,16 @@ def activity_history(request):
 
 def nutrition_history(request):
     """
-    Display an individual :model:`dashboard.Nutrition`.
+    Renders the nutrition page
+    Display an individual model :model:`dashboard.Nutrition`.
 
     **Context**
+    variable, matplotlib figure and cloudinary image
 
-    ``profile``
-        An instance of :model:`dashboard.Nutrition`.
-
-    **Template:**
-
-    :template:`dashboard/profile_details.html`
+    **Templates:**
+    :template:`dashboard/entry_create` for new users
+    :template:`dashboard/nutrition` for existing users
+    :template:`dashboard/index.html` for unauthorized users
     """
 
     if request.user.is_authenticated:
@@ -475,16 +473,15 @@ def nutrition_history(request):
 
 def calendar(request):
     """
-    Display an individual :model:`dashboard.Profile`.
+    Renders the calendar page
 
     **Context**
+    cloudinary image and API keys
 
-    ``profile``
-        An instance of :model:`dashboard.Profile`.
-
-    **Template:**
-
-    :template:`dashboard/profile_details.html`
+    **Templates:**
+    :template:`dashboard/entry_create` for new users
+    :template:`dashboard/calendar` for existing users
+    :template:`dashboard/index.html` for unauthorized users
     """
 
     if request.user.is_authenticated:
@@ -509,20 +506,27 @@ def calendar(request):
                 request,
                 "dashboard/entry_create.html",
                 dict)
+    
+    else:
+        return render(
+            request,
+            "dashboard/index.html",
+        )
 
 
 def entry_create(request):
     """
-    Display an individual :model:`dashboard.Nutrition`.
+    Creates a new user's profile
+    Display a form (full form) based on 3 models
+         :model:`dashboard.Profile`
+         :model:`dashboard.Nutrition`
+         :model:`dashboard.Activity`         
 
     **Context**
+    variables, cloudinary image, API key and full form
 
-    ``profile``
-        An instance of :model:`dashboard.Nutrition`.
-
-    **Template:**
-
-    :template:`dashboard/profile_details.html`
+    **Templates:**
+    :template:`dashboard/entry_create` for new users
     """
 
     full_form = FullForm()
@@ -567,8 +571,6 @@ def entry_create(request):
                                      calories_intake=calories_intake,
                                      fats=fats, protein=protein, carbs=carbs)
 
-            print('full form saved')
-
             messages.add_message(
                 request, messages.SUCCESS,
                 'Your data has been created!'
@@ -588,16 +590,9 @@ def entry_create(request):
 
 def entry_delete(request):
     """
-    Display an individual :model:`dashboard.Nutrition`.
+    Deletes a user's profile, activity or nutrition entry
+    while preventing them to delete their very first entry
 
-    **Context**
-
-    ``profile``
-        An instance of :model:`dashboard.Nutrition`.
-
-    **Template:**
-
-    :template:`dashboard/profile_details.html`
     """
 
     request_url = request.build_absolute_uri()
@@ -706,7 +701,8 @@ def get_metrics(height, weight, birthdate):
 
 def get_calories_burnt(activity, duration):
     """
-    Fetch API to get caloroies for a certain activity and duration
+    Fetch the calories burnt API to get caloroies
+    for a certain activity and duration
     """
 
     api_url = \
@@ -724,7 +720,8 @@ def get_calories_burnt(activity, duration):
 
 def get_macronutrients(food, serving):
     """
-    Fetch API to get caloroies for a certain food and serving
+    Fetch the nutrition API to get caloroies
+    for a certain food and serving
     """
 
     api_url = \

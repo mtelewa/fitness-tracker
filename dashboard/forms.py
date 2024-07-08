@@ -6,7 +6,9 @@ from .models import Profile, Activity, Nutrition
 
 
 class MetricsForm(forms.ModelForm):
-
+    """
+    Form based on the profile custom model
+    """
     # helper form
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
