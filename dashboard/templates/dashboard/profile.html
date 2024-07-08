@@ -39,7 +39,7 @@
                         <img src="{% static 'images/nobody.jpg' %}" class="profile-image rounded-circle"  alt="profile-image">
                         {% else %}
                         {% load cloudinary %}      
-                        {% cloudinary profile_image format="jpg" class="profile-image rounded-circle" %}
+                        {% cloudinary profile_image format="jpg" class="profile-image rounded-circle" alt="profile-image" %}
                         {% endif %}
                     </div>
 
