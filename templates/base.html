@@ -86,7 +86,7 @@
           <img src="{% static 'images/nobody.jpg' %}" width="24" height="24" class="rounded-circle me-2"  alt="profile-image">
           {% else %}
           {% load cloudinary %}      
-          {% cloudinary profile_image format="jpg" width="24" height="24" class="rounded-circle me-2" %}
+          {% cloudinary profile_image format="jpg" width="24" height="24" class="rounded-circle me-2" alt="profile-image" %}
           {% endif %}
         </a>
         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser3">
@@ -137,7 +137,7 @@
           <img src="{% static 'images/nobody.jpg' %}" width="32" height="32" class="rounded-circle me-2"  alt="profile-image">
           {% else %}
           {% load cloudinary %}      
-          {% cloudinary profile_image format="jpg" width="32" height="32" class="rounded-circle me-2" %}
+          {% cloudinary profile_image format="jpg" width="32" height="32" class="rounded-circle me-2" alt="profile-image" %}
           {% endif %}
           <strong>{{ user }}</strong>
         </a>

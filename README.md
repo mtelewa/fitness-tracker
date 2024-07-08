@@ -262,6 +262,20 @@ The main features of the website are
     <img src="documentation/testing/html-validator-about.png" alt="html-validation-about" width="90%">
     </p>
 
+
+    * For the calendar page
+
+    505
+
+
+
+
+
+
+
+
+
+
 As seen, there are no errors and only warnings of no heading was obtained. This does not affect the functionality of the website by any means.
 
 * [CSS Validator](https://jigsaw.w3.org/css-validator/) result for the `.css` file showed no errors, however it showed 9 warnings related to the importing of google fonts and using vendor extensions. These warnings do not affect the deployment of the website by any means
