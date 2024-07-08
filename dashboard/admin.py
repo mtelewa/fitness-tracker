@@ -1,17 +1,19 @@
 from django.contrib import admin
 from .models import *
 
-# Register your models here.
 
 @admin.register(Activity)
 class ActivityAdmin(admin.ModelAdmin):
-    list_display = ('activity_type', 'duration', 'calories_burnt', 'activity_on',)
+    list_display = ('activity_type', 'duration', 'calories_burnt',
+                    'activity_on',)
     ordering = ('-activity_on',)
+
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('weight', 'height', 'birthdate', 'updated_on',)
     ordering = ('-updated_on',)
+
 
 @admin.register(Nutrition)
 class NutritionAdmin(admin.ModelAdmin):

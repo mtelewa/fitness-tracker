@@ -290,6 +290,9 @@ The aforementioned errors and warnings do not affect the functionality of the we
 <img src="documentation/testing/json-validator.png" alt="json-validation" width="50%">
 </p>
 
+* [Python PEP8 CI Linter](https://pep8ci.herokuapp.com/) was used to check the python scripts
+
+
 
 ### Browser Compatibility
 

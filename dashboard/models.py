@@ -4,7 +4,8 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from cloudinary.models import CloudinaryField
 from django.core.validators import RegexValidator
 
-alpha = RegexValidator(r'^[a-zA-Z]+$', 'Only alphabetical characters are allowed.')
+alpha = RegexValidator(r'^[a-zA-Z]+$', 'Only alphabetical characters\
+                                        are allowed.')
 
 
 class Activity(models.Model):
@@ -13,10 +14,10 @@ class Activity(models.Model):
         )
     activity_type = models.CharField(max_length=200)
     distance = models.FloatField(blank=True, null=True,
-                validators=[
-                    MaxValueValidator(999),
-                    MinValueValidator(1)
-                ])
+                                 validators=[
+                                    MaxValueValidator(999),
+                                    MinValueValidator(1)
+                                 ])
     duration = models.IntegerField(
                 validators=[
                     MaxValueValidator(999),
@@ -35,7 +36,7 @@ class Activity(models.Model):
 
 class Nutrition(models.Model):
     food_item = models.CharField(max_length=200,
-                 validators=[alpha])
+                                 validators=[alpha])
     portion = models.IntegerField(
                 validators=[
                     MaxValueValidator(2999),
@@ -61,16 +62,16 @@ class Profile(models.Model):
                     MinValueValidator(1)
                 ])
     weight = models.FloatField(null=True,
-                validators=[
-                    MaxValueValidator(999),
-                    MinValueValidator(1)
-                ])
+                               validators=[
+                                   MaxValueValidator(999),
+                                   MinValueValidator(1)
+                               ])
     weight_target = models.FloatField(null=True,
-                validators=[
-                    MaxValueValidator(999),
-                    MinValueValidator(1)
-                ])
-    profile_image = CloudinaryField('image', default="placeholder", null=True, blank=True)
+                                      validators=[
+                                          MaxValueValidator(999),
+                                          MinValueValidator(1)
+                                      ])
+    profile_image = CloudinaryField('image', default="placeholder",
+                                    null=True, blank=True)
     updated_on = models.DateTimeField(auto_now=True)
     birthdate = models.DateField()
-

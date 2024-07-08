@@ -4,6 +4,7 @@ from crispy_forms.layout import Layout, Submit, Button, Field, MultiField, Div
 from django.shortcuts import reverse
 from .models import Profile, Activity, Nutrition
 
+
 class MetricsForm(forms.ModelForm):
 
     # helper form
@@ -12,13 +13,16 @@ class MetricsForm(forms.ModelForm):
         self.helper = FormHelper(self)
         self.helper.form_method = 'post'
         self.helper.form_class = 'hide-show-metrics d-none'
-        self.helper.add_input(Submit('submitMetrics', 'Submit', css_class='btn-success btn-submit'))
-        self.helper.add_input(Button('cancelMetrics', 'Cancel', css_class='btn-secondary btn-cancel',
-            onclick="window.location.href = '{}'".format(reverse('home'))))
+        self.helper.add_input(Submit('submitMetrics', 'Submit',
+                                     css_class='btn-success btn-submit'))
+        self.helper.add_input(Button('cancelMetrics', 'Cancel',
+                                     css_class='btn-secondary btn-cancel',
+                                     onclick="window.location.href ='{}'"
+                                     .format(reverse('home'))))
 
     class Meta:
         model = Profile
-        fields = ('weight','weight_target')
+        fields = ('weight', 'weight_target')
         labels = {
             'weight': 'Weight (Kg)',
             'weight_target': 'Target Weight (Kg)',
@@ -37,9 +41,12 @@ class ProfileForm(forms.ModelForm):
         self.helper.form_method = 'post'
         self.helper.form_class = 'hide-show-profile d-none'
         self.helper.form_enctype = 'multipart/form-data'
-        self.helper.add_input(Submit('submitProfile', 'Submit', css_class='btn-success btn-submit'))
-        self.helper.add_input(Button('cancelProfile', 'Cancel', css_class='btn-secondary btn-cancel',
-            onclick="window.location.href = '{}'".format(reverse('profile'))))
+        self.helper.add_input(Submit('submitProfile', 'Submit',
+                              css_class='btn-success btn-submit'))
+        self.helper.add_input(Button('cancelProfile', 'Cancel',
+                              css_class='btn-secondary btn-cancel',
+                              onclick="window.location.href = '{}'"
+                                      .format(reverse('profile'))))
 
     class Meta:
         model = Profile
@@ -58,16 +65,19 @@ class ActivityForm(forms.ModelForm):
         self.helper = FormHelper(self)
         self.helper.form_method = 'post'
         self.helper.form_class = 'hide-show-activity d-none'
-        
+
         self.helper.layout = Layout(
             Field('activity_type', oninput="fetchCaloriesBurnt()",),
             Div(css_class="mb-3", css_id="activity_list"),
             ('duration'), ('distance')
             )
 
-        self.helper.add_input(Submit('submitActivity', 'Submit', css_class='btn-success btn-submit'))
-        self.helper.add_input(Button('cancelActivity', 'Cancel', css_class='btn-secondary btn-cancel',
-            onclick="window.location.href = '{}'".format(reverse('home'))))
+        self.helper.add_input(Submit('submitActivity', 'Submit',
+                                     css_class='btn-success btn-submit'))
+        self.helper.add_input(Button('cancelActivity', 'Cancel',
+                                     css_class='btn-secondary btn-cancel',
+                                     onclick="window.location.href = '{}'"
+                                             .format(reverse('home'))))
 
     class Meta:
         model = Activity
@@ -89,9 +99,12 @@ class NutritionForm(forms.ModelForm):
         self.helper.form_class = 'hide-show-nutrition d-none'
         self.helper.form_method = 'post'
 
-        self.helper.add_input(Submit('submitNutrition', 'Submit', css_class='btn-success btn-submit'))
-        self.helper.add_input(Button('cancelNutrition', 'Cancel', css_class='btn-secondary btn-cancel',
-            onclick="window.location.href = '{}'".format(reverse('home'))))
+        self.helper.add_input(Submit('submitNutrition', 'Submit',
+                                     css_class='btn-success btn-submit'))
+        self.helper.add_input(Button('cancelNutrition', 'Cancel',
+                                     css_class='btn-secondary btn-cancel',
+                                     onclick="window.location.href = '{}'"
+                                     .format(reverse('home'))))
 
     class Meta:
         model = Nutrition
@@ -108,57 +121,57 @@ class FullForm(forms.Form):
     for the user to fill out after signing up
     """
     height = forms.FloatField(
-        label = "Height (cm)",
-        required = True,
+        label="Height (cm)",
+        required=True,
         )
 
     weight = forms.FloatField(
-        label = "Weight (kg)",
-        required = True,
+        label="Weight (kg)",
+        required=True,
         )
 
     weight_target = forms.FloatField(
-        label = "Target Weight (kg)",
-        required = True,
+        label="Target Weight (kg)",
+        required=True,
         )
-        
+
     birthdate = forms.DateField(
-        label = "Birth Date",
+        label="Birth Date",
         input_formats=['%d-%m-%Y'],
-        required = True,
+        required=True,
         )
-    
+
     activity_type = forms.CharField(
-        label = "Last Activity",
-        max_length = 200,
-        required = True,
+        label="Last Activity",
+        max_length=200,
+        required=True,
         )
-    
+
     duration = forms.FloatField(
-        label = "Duration (min)",
-        required = True,
+        label="Duration (min)",
+        required=True,
         )
 
     distance = forms.FloatField(
-        label = "Distance (km)",
-        required = False,
+        label="Distance (km)",
+        required=False,
         )
-    
+
     food_item = forms.CharField(
-        label = "Last meal",
-        required = True,
+        label="Last meal",
+        required=True,
         )
 
     portion = forms.IntegerField(
-        label = "Serving (g)",
-        required = True,
+        label="Serving (g)",
+        required=True,
         )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
 
-        self.helper.form_class =  'hide-show-metrics d-none mt-3'
+        self.helper.form_class = 'hide-show-metrics d-none mt-3'
         self.helper.form_method = 'post'
 
         self.fields['height'].widget.attrs['min'], \
@@ -182,8 +195,11 @@ class FullForm(forms.Form):
             Div(css_class="mb-3", css_id="activity_list"),
             ('duration'), ('distance'), ('food_item'), ('portion'),
             )
-        
+
         # Buttons
-        self.helper.add_input(Submit('submitFull', 'Submit', css_class='btn-success btn-submit'))
-        self.helper.add_input(Button('cancelFull', 'Cancel', css_class='btn-secondary btn-cancel',
-            onclick="window.location.href = '{}'".format(reverse('home'))))
+        self.helper.add_input(Submit('submitFull', 'Submit',
+                              css_class='btn-success btn-submit'))
+        self.helper.add_input(Button('cancelFull', 'Cancel',
+                              css_class='btn-secondary btn-cancel',
+                              onclick="window.location.href = '{}'"
+                              .format(reverse('home'))))

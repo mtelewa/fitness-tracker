@@ -14,7 +14,7 @@ import requests
 import os
 # Local imports
 from .models import Activity, Profile, Nutrition
-from .forms import MetricsForm, ProfileForm, FullForm, ActivityForm, NutritionForm
+from .forms import *
 
 
 def dashboard(request):
@@ -77,21 +77,23 @@ def dashboard(request):
                     metrics.user_id = request.user.id
                     # get data from the form
                     metrics.weight = metrics_form.cleaned_data.get('weight')
-                    metrics.weight_target = metrics_form.cleaned_data.get('weight_target')
-                    weight, weight_target = metrics.weight, metrics.weight_target
+                    metrics.weight_target = \
+                        metrics_form.cleaned_data.get('weight_target')
+                    weight, weight_target = \
+                        metrics.weight, metrics.weight_target
                     metrics.height = user_last_profile.height
                     metrics.birthdate = user_last_profile.birthdate
                     metrics.profile_image = user_last_profile.profile_image
 
                     # commit changes
-                    metrics.save() 
+                    metrics.save()
                     print('metrics form saved')
 
                     messages.add_message(
                         request, messages.SUCCESS,
                         'Your data has been updated!'
                         )
-                    
+
                     return redirect('home')
 
             # Activity Form
@@ -108,19 +110,23 @@ def dashboard(request):
                     activity.user_id = request.user.id
 
                     # get data from the form
-                    activity.activity_type = request.POST.get('select-activity')
-                    activity.duration = activity_form.cleaned_data.get('duration')
-                    activity.distance = activity_form.cleaned_data.get('distance')
+                    activity.activity_type = \
+                        request.POST.get('select-activity')
+                    activity.duration = \
+                        activity_form.cleaned_data.get('duration')
+                    activity.distance = \
+                        activity_form.cleaned_data.get('distance')
 
-                    calories_burnt = get_calories_burnt(activity.activity_type, duration)
+                    calories_burnt = \
+                        get_calories_burnt(activity.activity_type, duration)
 
                     activity.calories_burnt = calories_burnt
-                    activity_type, duration, distance = activity.activity_type, \
-                                                        activity.duration, \
-                                                        activity.distance
+                    activity_type, duration, distance = \
+                        activity.activity_type, activity.duration, \
+                        activity.distance
 
                     # commit changes
-                    activity.save() 
+                    activity.save()
                     print('activity form saved')
 
                     messages.add_message(
@@ -144,22 +150,24 @@ def dashboard(request):
                     nutrition.user_id = request.user.id
 
                     # get data from the form
-                    nutrition.food_item = nutrition_form.cleaned_data.get('food_item')
-                    nutrition.portion = nutrition_form.cleaned_data.get('portion')
+                    nutrition.food_item = \
+                        nutrition_form.cleaned_data.get('food_item')
+                    nutrition.portion = \
+                        nutrition_form.cleaned_data.get('portion')
 
                     food_item = nutrition.food_item
                     portion = nutrition.portion
 
                     nutrition.calories_intake, nutrition.fats, \
-                         nutrition.protein, nutrition.carbs = \
-                         get_macronutrients(food_item, portion)
+                        nutrition.protein, nutrition.carbs = \
+                        get_macronutrients(food_item, portion)
 
                     calories_intake, fats, protein, carbs = \
                         nutrition.calories_intake, nutrition.fats, \
                         nutrition.protein, nutrition.carbs
 
                     # commit changes
-                    nutrition.save() 
+                    nutrition.save()
                     print('nutrition form saved')
 
                     messages.add_message(
@@ -168,24 +176,22 @@ def dashboard(request):
                         )
 
                     return redirect('home')
-         
 
             # Profile Variables
-            weight_rec = get_metrics(height,weight,birthdate)['weight_rec']
+            weight_rec = get_metrics(height, weight, birthdate)['weight_rec']
 
             bmi, bmi_target, bmi_rec =  \
-                        get_metrics(height,weight,birthdate)['bmi'], \
-                        get_metrics(height,weight_target,birthdate)['bmi'], 24
-            
+                get_metrics(height, weight, birthdate)['bmi'], \
+                get_metrics(height, weight_target, birthdate)['bmi'], 24
+
             bmr, bmr_target, bmr_rec =  \
-                        get_metrics(height,weight,birthdate)['bmr'], \
-                        get_metrics(height,weight_target,birthdate)['bmr'], \
-                        get_metrics(height,weight_rec,birthdate)['bmr']
+                get_metrics(height, weight, birthdate)['bmr'], \
+                get_metrics(height, weight_target, birthdate)['bmr'], \
+                get_metrics(height, weight_rec, birthdate)['bmr']
 
             classification, classification_target = \
-                        get_metrics(height,weight,birthdate)['classification'], \
-                        get_metrics(height,weight_target,birthdate)['classification']
-
+                get_metrics(height, weight, birthdate)['classification'], \
+                get_metrics(height, weight_target, birthdate)['classification']
 
             return render(
                 request,
@@ -254,7 +260,7 @@ def profile_details(request):
 
         # If user has profiles (existing user)
         if user_profiles.exists():
-            user_last_profile =  user_profiles.latest('updated_on')
+            user_last_profile = user_profiles.latest('updated_on')
             username = user_last_profile.user
             height = user_last_profile.height
             birthdate = user_last_profile.birthdate
@@ -271,14 +277,15 @@ def profile_details(request):
                 time.append(i.updated_on)
                 weights.append(i.weight)
 
-            graph = plot_graph(time, weights, "Weight (Kg)", figsize=(14,6))
+            graph = plot_graph(time, weights, "Weight (Kg)", figsize=(14, 6))
 
             # Profile form
             profile_form = ProfileForm()
 
             # If the user updates the values
             if request.method == "POST":
-                profile_form = ProfileForm(data=request.POST, files=request.FILES)
+                profile_form = ProfileForm(data=request.POST,
+                                           files=request.FILES)
 
                 if profile_form.is_valid() and username == request.user:
                     profile = profile_form.save(commit=False)
@@ -286,26 +293,33 @@ def profile_details(request):
                     profile.user_id = request.user.id
                     # get data from the form
                     profile.height = profile_form.cleaned_data.get('height')
-                    profile.birthdate = profile_form.cleaned_data.get('birthdate')
-                    profile.weight, profile.weight_target  = weight, weight_target
+                    profile.birthdate = \
+                        profile_form.cleaned_data.get('birthdate')
+                    profile.weight, profile.weight_target = \
+                        weight, weight_target
 
-                    # if user updates picture use new one if not keep the last one
+                    # if user updates picture use new one
+                    # if not keep the last one
                     try:
                         if 'placeholder' in profile.profile_image.url:
-                            profile.profile_image = user_last_profile.profile_image
+                            profile.profile_image = \
+                                user_last_profile.profile_image
                         else:
-                            profile.profile_image = profile_form.cleaned_data.get('profile_image')
-                    except:
-                        profile.profile_image = profile_form.cleaned_data.get('profile_image')
+                            profile.profile_image = \
+                                profile_form.cleaned_data.get('profile_image')
+                    except AttributeError:
+                        profile.profile_image = \
+                            profile_form.cleaned_data.get('profile_image')
 
                     profile_image = profile.profile_image
 
-                    age = (date.today() - profile.birthdate) // timedelta(days=365.2425)
+                    age = (date.today() - profile.birthdate) // \
+                        timedelta(days=365.2425)
                     height = profile.height
                     birthdate = profile.height
 
                     # commit changes
-                    profile.save() 
+                    profile.save()
                     print('profile form saved')
 
                     messages.add_message(
@@ -314,7 +328,7 @@ def profile_details(request):
                         )
 
                     return redirect('profile')
-        
+
             return render(
                 request,
                 "dashboard/profile.html",
@@ -327,14 +341,14 @@ def profile_details(request):
                     'profile_form': profile_form,
                     'birthdate': birthdate
                 })
-        
+
         else:
             dict = entry_create(request)
             return render(
                 request,
                 "dashboard/entry_create.html",
                 dict)
-    
+
     else:
         return render(
             request,
@@ -362,9 +376,8 @@ def activity_history(request):
 
         # If user has profiles (existing user)
         if user_profiles.exists():
-            user_last_activity =  user_activities.latest('activity_on')
-            user_last_profile =  user_profiles.latest('updated_on')
-            
+            user_last_activity = user_activities.latest('activity_on')
+            user_last_profile = user_profiles.latest('updated_on')
             activity = user_last_activity.activity_type
             profile_image = user_last_profile.profile_image
 
@@ -375,8 +388,9 @@ def activity_history(request):
                 time.append(i.activity_on)
                 calories_burnt.append(i.calories_burnt)
 
-            graph = plot_graph(time, calories_burnt, "Calories", figsize=(19,6))
-        
+            graph = plot_graph(time, calories_burnt,
+                               "Calories", figsize=(19, 6))
+
             return render(
                 request,
                 "dashboard/activity.html",
@@ -385,14 +399,14 @@ def activity_history(request):
                     'activity': activity,
                     'profile_image': profile_image,
                 })
-        
+
         else:
             dict = entry_create(request)
             return render(
                 request,
                 "dashboard/entry_create.html",
                 dict)
-    
+
     else:
         return render(
             request,
@@ -420,9 +434,9 @@ def nutrition_history(request):
 
         # If user has profiles (existing user)
         if user_profiles.exists():
-            user_last_nutrition =  user_nutritions.latest('nutrition_on')
-            user_last_profile =  user_profiles.latest('updated_on')
-            
+            user_last_nutrition = user_nutritions.latest('nutrition_on')
+            user_last_profile = user_profiles.latest('updated_on')
+
             food_item = user_last_nutrition.food_item
             profile_image = user_last_profile.profile_image
 
@@ -433,8 +447,9 @@ def nutrition_history(request):
                 time.append(i.nutrition_on)
                 calories_intake.append(i.calories_intake)
 
-            graph = plot_graph(time, calories_intake, "Calories", figsize=(19,6))
-        
+            graph = plot_graph(time, calories_intake,
+                               "Calories", figsize=(19, 6))
+
             return render(
                 request,
                 "dashboard/nutrition.html",
@@ -443,14 +458,14 @@ def nutrition_history(request):
                     'food_item': food_item,
                     'profile_image': profile_image,
                 })
-        
+
         else:
             dict = entry_create(request)
             return render(
                 request,
                 "dashboard/entry_create.html",
                 dict)
-    
+
     else:
         return render(
             request,
@@ -476,13 +491,13 @@ def calendar(request):
         user_profiles = Profile.objects.filter(user=request.user)
 
         if user_profiles.exists():
-            user_last_profile =  user_profiles.latest('updated_on')
+            user_last_profile = user_profiles.latest('updated_on')
             profile_image = user_last_profile.profile_image
 
             return render(
                 request,
                 "dashboard/calendar.html",
-                {   
+                {
                     'profile_image': profile_image,
                     'GOOGLE_API_KEY': settings.GOOGLE_API_KEY,
                     'GOOGLE_CLIENT_ID': settings.GOOGLE_CLIENT_ID,
@@ -524,8 +539,9 @@ def entry_create(request):
             birthdate = full_form.cleaned_data.get('birthdate')
             age = (date.today() - birthdate) // timedelta(days=365.2425)
 
-            Profile.objects.create(user=request.user, height=height, weight=weight, 
-                                birthdate=birthdate, weight_target=weight_target)
+            Profile.objects.create(user=request.user, height=height,
+                                   weight=weight, birthdate=birthdate,
+                                   weight_target=weight_target)
 
             # Create Activity
             activity_type = request.POST.get('select-activity')
@@ -533,21 +549,23 @@ def entry_create(request):
             distance = full_form.cleaned_data.get('distance')
 
             calories_burnt = get_calories_burnt(activity_type, duration)
-            
-            Activity.objects.create(user=request.user, activity_type=activity_type,
-                                duration=duration, distance=distance,
-                                calories_burnt = calories_burnt)
+
+            Activity.objects.create(user=request.user,
+                                    activity_type=activity_type,
+                                    duration=duration, distance=distance,
+                                    calories_burnt=calories_burnt)
 
             # Create Nutrition
             food_item = full_form.cleaned_data.get('food_item')
             portion = full_form.cleaned_data.get('portion')
 
             calories_intake, fats, protein, carbs = \
-                    get_macronutrients(food_item, portion)
+                get_macronutrients(food_item, portion)
 
             Nutrition.objects.create(user=request.user, food_item=food_item,
-                                portion=portion, calories_intake=calories_intake,
-                                fats=fats, protein=protein, carbs=carbs)
+                                     portion=portion,
+                                     calories_intake=calories_intake,
+                                     fats=fats, protein=protein, carbs=carbs)
 
             print('full form saved')
 
@@ -581,7 +599,7 @@ def entry_delete(request):
 
     :template:`dashboard/profile_details.html`
     """
-    
+
     request_url = request.build_absolute_uri()
     profiles = Profile.objects.filter(user=request.user)
     activities = Activity.objects.filter(user=request.user)
@@ -589,28 +607,30 @@ def entry_delete(request):
 
     if 'profile' in request_url:
         if len(profiles) == 1:
-            messages.add_message(request, messages.ERROR, 
-                'You can not delete your first profile!')
+            messages.add_message(request, messages.ERROR,
+                                 'You can not delete your first profile!')
         else:
             profiles.latest('updated_on').delete()
             messages.add_message(request, messages.SUCCESS,
-                'Your last entry has been deleted!')
+                                 'Your last entry has been deleted!')
     if 'activity' in request_url:
         if len(activities) == 1:
-            messages.add_message(request, messages.ERROR, 
-                'You can not delete your first activity entry!')
+            messages.add_message(request, messages.ERROR,
+                                 'You can not delete your \
+                                  first activity entry!')
         else:
             activities.latest('activity_on').delete()
             messages.add_message(request, messages.SUCCESS,
-                'Your last entry has been deleted!')
+                                 'Your last entry has been deleted!')
     if 'nutrition' in request_url:
         if len(nutritions) == 1:
-            messages.add_message(request, messages.ERROR, 
-            'You can not delete your first nutrition entry!')
+            messages.add_message(request, messages.ERROR,
+                                 'You can not delete your \
+                                 first nutrition entry!')
         else:
             nutritions.latest('nutrition_on').delete()
             messages.add_message(request, messages.SUCCESS,
-                'Your last entry has been deleted!')             
+                                 'Your last entry has been deleted!')
 
     return HttpResponseRedirect(reverse('home'))
 
@@ -619,14 +639,14 @@ def plot_graph(x, y, ylabel, **kwargs):
     """
     Plot the graphs for tracking values with time
     """
-    # plt.style.use('static/python/custom.mplstyle')
     plt.style.use('cyberpunk')
 
     fig, ax = plt.subplots(nrows=1, ncols=1, sharex=True, **kwargs)
 
-    ax.plot(x,y, marker="x", linewidth=3, markersize=12)
+    ax.plot(x, y, marker="x", linewidth=3, markersize=12)
     mplcyberpunk.make_lines_glow()
-    mplcyberpunk.add_gradient_fill(alpha_gradientglow=0.5, gradient_start='zero')        
+    mplcyberpunk.add_gradient_fill(alpha_gradientglow=0.5,
+                                   gradient_start='zero')
 
     ax.tick_params(axis='x', labelrotation=60)
     ax.set_xlabel('Time', fontsize=18)
@@ -647,10 +667,10 @@ def get_metrics(height, weight, birthdate):
     """
 
     # Body Mass Index (BMI)
-    bmi = np.round(weight / (height/100)**2, 2) # kg/m2
+    bmi = np.round(weight / (height / 100) ** 2, 2)  # kg/m2
 
     # recommended weight
-    weight_rec =  np.round(24 * (height/100)**2)
+    weight_rec = np.round(24 * (height / 100) ** 2)
 
     # Age
     age = (date.today() - birthdate) // timedelta(days=365.2425)
@@ -671,26 +691,28 @@ def get_metrics(height, weight, birthdate):
         classification = 'Overweight'
     elif bmi >= 30 and bmi < 35:
         classification = 'Obese Class I'
-    elif bmi >=35 and bmi < 40:
+    elif bmi >= 35 and bmi < 40:
         classification = 'Obese Class II'
     else:
         classification = 'Obese Class III'
-    
+
     return {
             'bmi': bmi,
             'bmr': bmr,
             'weight_rec': weight_rec,
             'classification': classification
             }
-        
+
 
 def get_calories_burnt(activity, duration):
     """
     Fetch API to get caloroies for a certain activity and duration
     """
 
-    api_url = f'https://api.api-ninjas.com/v1/caloriesburned?activity={activity}'
-    response = requests.get(api_url, headers={'X-Api-Key': settings.CAL_BURN_API_KEY})
+    api_url = \
+        f'https://api.api-ninjas.com/v1/caloriesburned?activity={activity}'
+    response = requests.get(api_url,
+                            headers={'X-Api-Key': settings.CAL_BURN_API_KEY})
     if response.status_code == requests.codes.ok:
         activity = response.json()
         calories_burnt = activity[0]['total_calories'] * duration / 60
@@ -700,14 +722,15 @@ def get_calories_burnt(activity, duration):
     return calories_burnt
 
 
-
 def get_macronutrients(food, serving):
     """
     Fetch API to get caloroies for a certain food and serving
     """
 
-    api_url = f'https://api.api-ninjas.com/v1/nutrition?query={serving}g {food}'
-    response = requests.get(api_url, headers={'X-Api-Key': settings.CAL_BURN_API_KEY})
+    api_url = \
+        f'https://api.api-ninjas.com/v1/nutrition?query={serving}g {food}'
+    response = requests.get(api_url,
+                            headers={'X-Api-Key': settings.CAL_BURN_API_KEY})
     if response.status_code == requests.codes.ok:
         macronutrients = response.json()[0]
         calories_intake = macronutrients['calories']
