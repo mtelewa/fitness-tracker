@@ -2,20 +2,21 @@
 // Sidebar
 /* global bootstrap: false */
 (function () {
-  'use strict'
-  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+  'use strict';
+  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
   tooltipTriggerList.forEach(function (tooltipTriggerEl) {
-    new bootstrap.Tooltip(tooltipTriggerEl)
-  })
-})()
+    new bootstrap.Tooltip(tooltipTriggerEl);
+  });
+})();
 
 
 const updateButtons = $('.btn-update');
 const deleteNutritionButton = $('#btn-delete-nutrition');
 const deleteActivityButton = $('#btn-delete-activity');
 const deleteProfileButton = $('#btn-delete-profile');
-const deleteModalElement = $('#deleteModal')
-let deleteModal
+const deleteModalElement = $('#deleteModal');
+let deleteModal;
+let deleteConfirm;
 if (deleteModalElement.length) {
   // Initialize the Bootstrap modal
   deleteModal = new bootstrap.Modal($('#deleteModal'));
@@ -25,7 +26,7 @@ const weightText = $('#id_weight');
 const targetWeightText = $('#id_weight_target');
 const heightText = $('#id_height');
 const birthdateText = $('#id_birthdate');
-const ddash = $('.ddash')
+const ddash = $('.ddash');
 
 $(document).ready(function(){
   /**
@@ -38,20 +39,20 @@ $(document).ready(function(){
       var showHide = $('.show-hide-metrics');
       var hideShow = $('.hide-show-metrics');
     } else if (this.id == 'btn-update-activity') {
-      var showHide = $('.show-hide-activity');
-      var hideShow = $('.hide-show-activity');
+      showHide = $('.show-hide-activity');
+      hideShow = $('.hide-show-activity');
     } else if (this.id == 'btn-update-nutrition') {
-      var showHide = $('.show-hide-nutrition');
-      var hideShow = $('.hide-show-nutrition');
+      showHide = $('.show-hide-nutrition');
+      hideShow = $('.hide-show-nutrition');
     } else if (this.id == 'btn-update-profile') {
-      var showHide = $('.show-hide-profile');
-      var hideShow = $('.hide-show-profile');
+      showHide = $('.show-hide-profile');
+      hideShow = $('.hide-show-profile');
     } 
     // toggle class to hide displayed text
     showHide.toggleClass('d-none position-absolute');
     // toggle class to display and hide form
-    hideShow.toggleClass('hide-show d-none')
-    hideShow.toggleClass('hide-show d-block')
+    hideShow.toggleClass('hide-show d-none');
+    hideShow.toggleClass('hide-show d-block');
     // remove y-margin from the
     cardText.addClass('my-0');
   });
