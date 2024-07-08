@@ -238,11 +238,15 @@ The main features of the website are
 
 * [HTML Validator](https://validator.w3.org/) result for the `.html` files were as following:
     
-    * For the index or home page
+    First for unauthorized access, the 'Validate by URI' was used and showed no errors
+
+    * For the index or home page (as well as other pages)
 
     <p align="center">
     <img src="documentation/testing/html-validator-index.png" alt="html-validation-index" width="90%">
     </p>
+
+    Next, 
 
     * For the quiz pages (all categories) showed the same warnings
 
