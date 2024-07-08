@@ -1,10 +1,11 @@
 # Fitness tracker project
 
-[View the deployed project here](https://mtelewa.github.io/fun-stats)
+[View the deployed project here](https://fitness-tracker-mt-b349b401ceed.herokuapp.com/)
 
 Fun Stats is a quiz website offering 4 different categories: History, Science, Arts and Sports. The quiz is unconventional in the sense that the answers to all questions lies in the figures or statistics behind a certain event or phenomenon. The aim is to let the user grasp how huge/small or old/recent an event or a phenomenon really is.
 
 ![Mockup](documentation/features/mockup.png)
+
 
 ## Contents
 * [User Experience (UX)](#user-experience-ux) 
@@ -64,11 +65,7 @@ Fun Stats is a quiz website offering 4 different categories: History, Science, A
 
 ### Color Scheme
 
-The colors chosen were based on pantone color palette like as in [here](https://www.pinterest.com/pin/128563764357456253/).
-
-CONTINUE
-
-This was inspired by the "Extraterrestrial" color palette in the book "Color Harmony" by Leatrice Eiseman. The colors are to represent a deep dive into each category, also a calm setting to allow user to focus on the questions.
+The colors chosen were based on pantone color palette like as in [here](https://www.pinterest.com/pin/128563764357456253/). The dashboard background was inspired by the "Active" color palette in the book "Color Harmony" by Leatrice Eiseman. The colors are to represent a vibrant, summer and outdoor moods.
 <br>
 <br>
 
