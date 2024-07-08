@@ -10,6 +10,8 @@ class MetricsForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
+        self.helper.form_method = 'post'
+        self.helper.form_class = 'hide-show-metrics d-none'
         self.helper.add_input(Submit('submitMetrics', 'Submit', css_class='btn-success btn-submit'))
         self.helper.add_input(Button('cancel', 'Cancel', css_class='btn-secondary btn-cancel',
             onclick="window.location.href = '{}';".format(reverse('home'))))
@@ -32,6 +34,9 @@ class ProfileForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
+        self.helper.form_method = 'post'
+        self.helper.form_class = 'hide-show-profile d-none'
+        self.helper.form_enctype = 'multipart/form-data'
         self.helper.add_input(Submit('submitProfile', 'Submit', css_class='btn-success btn-submit'))
         self.helper.add_input(Button('cancel', 'Cancel', css_class='btn-secondary btn-cancel',
             onclick="window.location.href = '{}';".format(reverse('profile'))))
@@ -51,6 +56,8 @@ class ActivityForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
+        self.helper.form_method = 'post'
+        self.helper.form_class = 'hide-show-activity d-none'
         
         self.helper.layout = Layout(
             Field('activity_type', oninput="fetchCaloriesBurnt()",),
@@ -79,6 +86,8 @@ class NutritionForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
+        self.helper.form_class = 'hide-show-nutrition d-none'
+        self.helper.form_method = 'post'
 
         self.helper.add_input(Submit('submitNutrition', 'Submit', css_class='btn-success btn-submit'))
         self.helper.add_input(Button('cancel', 'Cancel', css_class='btn-secondary btn-cancel',
@@ -148,6 +157,8 @@ class FullForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
+        self.helper.form_method = 'post'
+
         self.fields['height'].widget.attrs['min'], \
             self.fields['height'].widget.attrs['max'] = 1, 999
         self.fields['weight'].widget.attrs['min'], \

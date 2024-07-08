@@ -41,10 +41,10 @@
                     <h3 class="card-title">Profile</h3>
                     <div class="col-lg-6">
                         <h5> Current Metrics </h5>
-                        <!-- <form class="hide-show-metrics d-none" method="post"> -->
+  
                             {% crispy metrics_form %}
                             {% csrf_token %}
-                        <!-- </form> -->
+
                         <p class="card-text"> 
                             <span class="show-hide-metrics"> Weight: </span> 
                             <span class="show-hide-metrics text-primary fw-bold" id="weight-val">{{ weight }}</span>
@@ -117,10 +117,10 @@
                     <h3 class="card-title">Activity</h3>
                     <div class="col-lg-6">
                         <h5> Last Activity </h5>
-                        <form class="hide-show-activity d-none" method="post">
+
                             {% crispy activity_form %}
                             {% csrf_token %}
-                        </form>
+
                         {{ CAL_BURN_API_KEY|json_script:"calBurnAPI" }}
                         <p class="card-text show-hide-activity"> 
                             <span> Activity: </span> 
@@ -153,10 +153,10 @@
                     <h3 class="card-title">Nutrition</h3>
                     <div class="col-lg-6">
                         <h5> Last Meal </h5>
-                        <form class="hide-show-nutrition d-none" method="post">
-                            {% crispy nutrition_form %}
-                            {% csrf_token %}
-                        </form>
+                        
+                        {% crispy nutrition_form %}
+                        {% csrf_token %}
+
                         <p class="card-text show-hide-nutrition"> 
                             <span> Food: </span> 
                             <span class="text-primary fw-bold">{{ food_item }}</span> <br>
