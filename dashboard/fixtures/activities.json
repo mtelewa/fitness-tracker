@@ -1,0 +1,134 @@
+[
+    {
+        "model": "dashboard.activity",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "activity_on": "2023-01-01",
+            "activity_type": "Skiing, water skiing",
+            "duration": "30",
+            "calories_burnt": "250"
+        }
+    },
+    {
+        "model": "dashboard.activity",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "activity_on": "2023-01-15",
+            "activity_type": "Running",
+            "duration": "45",
+            "calories_burnt": "400"
+        }
+    },
+    {
+        "model": "dashboard.activity",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "activity_on": "2023-02-01",
+            "activity_type": "Cycling",
+            "duration": "60",
+            "calories_burnt": "500"
+        }
+    },
+    {
+        "model": "dashboard.activity",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "activity_on": "2023-02-15",
+            "activity_type": "Swimming",
+            "duration": "30",
+            "calories_burnt": "300"
+        }
+    },
+    {
+        "model": "dashboard.activity",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "activity_on": "2023-03-01",
+            "activity_type": "Hiking",
+            "duration": "90",
+            "calories_burnt": "600"
+        }
+    },
+    {
+        "model": "dashboard.activity",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "activity_on": "2023-03-15",
+            "activity_type": "Yoga",
+            "duration": "60",
+            "calories_burnt": "200"
+        }
+    },
+    {
+        "model": "dashboard.activity",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "activity_on": "2023-04-01",
+            "activity_type": "Dancing",
+            "duration": "45",
+            "calories_burnt": "350"
+        }
+    },
+    {
+        "model": "dashboard.activity",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "activity_on": "2023-04-15",
+            "activity_type": "Rowing",
+            "duration": "30",
+            "calories_burnt": "280"
+        }
+    },
+    {
+        "model": "dashboard.activity",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "activity_on": "2023-05-01",
+            "activity_type": "Weightlifting",
+            "duration": "60",
+            "calories_burnt": "400"
+        }
+    },
+    {
+        "model": "dashboard.activity",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "activity_on": "2023-05-15",
+            "activity_type": "Basketball",
+            "duration": "90",
+            "calories_burnt": "700"
+        }
+    },
+    {
+        "model": "dashboard.activity",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "activity_on": "2023-06-01",
+            "activity_type": "Tennis",
+            "duration": "60",
+            "calories_burnt": "450"
+        }
+    },
+    {
+        "model": "dashboard.activity",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "activity_on": "2023-06-15",
+            "activity_type": "Walking",
+            "duration": "30",
+            "calories_burnt": "150"
+        }
+    }
+]

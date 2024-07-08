@@ -64,7 +64,11 @@ Fun Stats is a quiz website offering 4 different categories: History, Science, A
 
 ### Color Scheme
 
-The colors chosen were based on pantone color palette like as in [here](https://icolorpalette.com/color/pantone-10239-c). This was inspired by the "Extraterrestrial" color palette in the book "Color Harmony" by Leatrice Eiseman. The colors are to represent a deep dive into each category, also a calm setting to allow user to focus on the questions.
+The colors chosen were based on pantone color palette like as in [here](https://www.pinterest.com/pin/128563764357456253/).
+
+CONTINUE
+
+This was inspired by the "Extraterrestrial" color palette in the book "Color Harmony" by Leatrice Eiseman. The colors are to represent a deep dive into each category, also a calm setting to allow user to focus on the questions.
 <br>
 <br>
 
@@ -425,11 +429,7 @@ Note: For step no.4 to work, first generate SSH keys and add your generated key 
 ### Code Used
 
 * Hover to zoom effect [CSS snippet](https://www.w3schools.com/howto/howto_css_zoom_hover.asp)
-* Add hyperlink to background image [HTML snippet](https://stackoverflow.com/questions/3778611/how-do-i-add-a-hyperlink-to-a-background-image)
-* Modal window [CSS and JS snippets](https://www.w3schools.com/howto/howto_css_modals.asp)
-* Create an array with random numbers [JS snippet](https://stackoverflow.com/questions/5836833/create-an-array-with-random-values)
-* Slider styling [CSS snippet](https://blog.logrocket.com/creating-custom-css-range-slider-javascript-upgrades/)
-
+* 
 
 
 
@@ -443,9 +443,6 @@ Note: For step no.4 to work, first generate SSH keys and add your generated key 
 
 
 
-
-Color-Palette
-https://www.pinterest.com/pin/128563764357456253/
 
 
 
@@ -500,7 +497,7 @@ https://towardsdatascience.com/upgrade-your-data-visualisations-4-python-librari
 * [Swimmer image](https://www.freepik.com/free-photo/side-view-female-swimmer-with-cap-goggles-swimming-water_10296634.htm#fromView=search&page=1&position=2&uuid=4ffe75cb-1350-45fd-a92e-041aa8d949b9)
 * [Kayaking image](https://www.freepik.com/free-photo/kayaking-man-paddling-kayak-canoeing-paddling_26921714.htm#fromView=search&page=1&position=9&uuid=61a985f1-7f60-4b00-916f-31656f04c379)
 * [Lifting image](https://www.freepik.com/free-photo/low-angle-view-unrecognizable-muscular-build-man-preparing-lifting-barbell-health-club_25743546.htm#fromView=search&page=1&position=0&uuid=e541bca9-0193-4687-b077-c0d88bc50b43)
-
+* [CyberPunk Plot](https://www.analyticsvidhya.com/blog/2021/07/cyberpunk-themed-charts-advanced-data-visualization-in-python/)
 
 
 ### Acknowledgement

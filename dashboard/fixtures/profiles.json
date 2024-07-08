@@ -1,0 +1,146 @@
+[
+    {
+        "model": "dashboard.profile",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "weight": 90,
+            "height": 180,
+            "weight_target": 80,
+            "birthdate": "1990-09-07",
+            "updated_on": "2023-01-01"
+        }
+    },
+    {
+        "model": "dashboard.profile",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "weight": 88,
+            "height": 180,
+            "weight_target": 80,
+            "birthdate": "1990-09-07",
+            "updated_on": "2023-02-01"
+        }
+    },
+    {
+        "model": "dashboard.profile",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "weight": 87,
+            "height": 180,
+            "weight_target": 80,
+            "birthdate": "1990-09-07",
+            "updated_on": "2023-03-01"
+        }
+    },
+    {
+        "model": "dashboard.profile",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "weight": 89,
+            "height": 180,
+            "weight_target": 80,
+            "birthdate": "1990-09-07",
+            "updated_on": "2023-04-01"
+        }
+    },
+    {
+        "model": "dashboard.profile",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "weight": 85,
+            "height": 180,
+            "weight_target": 80,
+            "birthdate": "1990-09-07",
+            "updated_on": "2023-05-01"
+        }
+    },
+    {
+        "model": "dashboard.profile",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "weight": 84,
+            "height": 180,
+            "weight_target": 80,
+            "birthdate": "1990-09-07",
+            "updated_on": "2023-06-01"
+        }
+    },
+    {
+        "model": "dashboard.profile",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "weight": 83,
+            "height": 180,
+            "weight_target": 80,
+            "birthdate": "1990-09-07",
+            "updated_on": "2023-07-01"
+        }
+    },
+    {
+        "model": "dashboard.profile",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "weight": 81,
+            "height": 180,
+            "weight_target": 80,
+            "birthdate": "1990-09-07",
+            "updated_on": "2023-08-01"
+        }
+    },
+    {
+        "model": "dashboard.profile",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "weight": 85,
+            "height": 180,
+            "weight_target": 80,
+            "birthdate": "1990-09-07",
+            "updated_on": "2023-09-01"
+        }
+    },
+    {
+        "model": "dashboard.profile",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "weight": 82,
+            "height": 180,
+            "weight_target": 80,
+            "birthdate": "1990-09-07",
+            "updated_on": "2023-10-01"
+        }
+    },
+    {
+        "model": "dashboard.profile",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "weight": 80,
+            "height": 180,
+            "weight_target": 80,
+            "birthdate": "1990-09-07",
+            "updated_on": "2023-11-01"
+        }
+    },
+    {
+        "model": "dashboard.profile",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "weight": 81,
+            "height": 180,
+            "weight_target": 80,
+            "birthdate": "1990-09-07",
+            "updated_on": "2023-12-01"
+        }
+    }
+]

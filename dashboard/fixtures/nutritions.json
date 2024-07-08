@@ -1,0 +1,338 @@
+[
+    {
+        "model": "dashboard.nutrition",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "food_item": "chicken",
+            "portion": "50",
+            "nutrition_on": "2023-01-01",
+            "fats": "34",
+            "carbs": "2",
+            "protein": "25",
+            "calories_intake": "250"
+        }
+    },
+    {
+        "model": "dashboard.nutrition",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "food_item": "salmon",
+            "portion": "100",
+            "nutrition_on": "2023-01-10",
+            "fats": "20",
+            "carbs": "0",
+            "protein": "22",
+            "calories_intake": "200"
+        }
+    },
+    {
+        "model": "dashboard.nutrition",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "food_item": "broccoli",
+            "portion": "150",
+            "nutrition_on": "2023-01-20",
+            "fats": "0",
+            "carbs": "12",
+            "protein": "4",
+            "calories_intake": "50"
+        }
+    },
+    {
+        "model": "dashboard.nutrition",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "food_item": "apple",
+            "portion": "120",
+            "nutrition_on": "2023-02-01",
+            "fats": "5",
+            "carbs": "25",
+            "protein": "3",
+            "calories_intake": "95"
+        }
+    },
+    {
+        "model": "dashboard.nutrition",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "food_item": "almonds",
+            "portion": "30",
+            "nutrition_on": "2023-02-15",
+            "fats": "14",
+            "carbs": "6",
+            "protein": "6",
+            "calories_intake": "170"
+        }
+    },
+    {
+        "model": "dashboard.nutrition",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "food_item": "egg",
+            "portion": "70",
+            "nutrition_on": "2023-03-01",
+            "fats": "5",
+            "carbs": "1",
+            "protein": "6",
+            "calories_intake": "80"
+        }
+    },
+    {
+        "model": "dashboard.nutrition",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "food_item": "banana",
+            "portion": "110",
+            "nutrition_on": "2023-03-15",
+            "fats": "3",
+            "carbs": "27",
+            "protein": "13",
+            "calories_intake": "105"
+        }
+    },
+    {
+        "model": "dashboard.nutrition",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "food_item": "spinach",
+            "portion": "80",
+            "nutrition_on": "2023-03-30",
+            "fats": "4",
+            "carbs": "68",
+            "protein": "54",
+            "calories_intake": "23"
+        }
+    },
+    {
+        "model": "dashboard.nutrition",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "food_item": "tofu",
+            "portion": "150",
+            "nutrition_on": "2023-04-10",
+            "fats": "8",
+            "carbs": "4",
+            "protein": "16",
+            "calories_intake": "145"
+        }
+    },
+    {
+        "model": "dashboard.nutrition",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "food_item": "yogurt",
+            "portion": "200",
+            "nutrition_on": "2023-04-25",
+            "fats": "5",
+            "carbs": "20",
+            "protein": "10",
+            "calories_intake": "150"
+        }
+    },
+    {
+        "model": "dashboard.nutrition",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "food_item": "beef",
+            "portion": "120",
+            "nutrition_on": "2023-05-05",
+            "fats": "15",
+            "carbs": "0",
+            "protein": "22",
+            "calories_intake": "250"
+        }
+    },
+    {
+        "model": "dashboard.nutrition",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "food_item": "quinoa",
+            "portion": "50",
+            "nutrition_on": "2023-05-20",
+            "fats": "19",
+            "carbs": "19",
+            "protein": "41",
+            "calories_intake": "110"
+        }
+    },
+    {
+        "model": "dashboard.nutrition",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "food_item": "chicken",
+            "portion": "50",
+            "nutrition_on": "2024-01-01",
+            "fats": "34",
+            "carbs": "2",
+            "protein": "25",
+            "calories_intake": "250"
+        }
+    },
+    {
+        "model": "dashboard.nutrition",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "food_item": "salmon",
+            "portion": "100",
+            "nutrition_on": "2024-01-10",
+            "fats": "20",
+            "carbs": "0",
+            "protein": "22",
+            "calories_intake": "200"
+        }
+    },
+    {
+        "model": "dashboard.nutrition",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "food_item": "broccoli",
+            "portion": "150",
+            "nutrition_on": "2024-01-20",
+            "fats": "0",
+            "carbs": "12",
+            "protein": "4",
+            "calories_intake": "50"
+        }
+    },
+    {
+        "model": "dashboard.nutrition",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "food_item": "apple",
+            "portion": "120",
+            "nutrition_on": "2024-02-01",
+            "fats": "5",
+            "carbs": "25",
+            "protein": "3",
+            "calories_intake": "95"
+        }
+    },
+    {
+        "model": "dashboard.nutrition",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "food_item": "almonds",
+            "portion": "30",
+            "nutrition_on": "2024-02-15",
+            "fats": "14",
+            "carbs": "6",
+            "protein": "6",
+            "calories_intake": "170"
+        }
+    },
+    {
+        "model": "dashboard.nutrition",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "food_item": "egg",
+            "portion": "70",
+            "nutrition_on": "2024-03-01",
+            "fats": "5",
+            "carbs": "1",
+            "protein": "6",
+            "calories_intake": "80"
+        }
+    },
+    {
+        "model": "dashboard.nutrition",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "food_item": "banana",
+            "portion": "110",
+            "nutrition_on": "2024-03-15",
+            "fats": "3",
+            "carbs": "27",
+            "protein": "13",
+            "calories_intake": "105"
+        }
+    },
+    {
+        "model": "dashboard.nutrition",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "food_item": "spinach",
+            "portion": "80",
+            "nutrition_on": "2024-03-30",
+            "fats": "4",
+            "carbs": "68",
+            "protein": "54",
+            "calories_intake": "23"
+        }
+    },
+    {
+        "model": "dashboard.nutrition",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "food_item": "tofu",
+            "portion": "150",
+            "nutrition_on": "2024-04-10",
+            "fats": "8",
+            "carbs": "4",
+            "protein": "16",
+            "calories_intake": "145"
+        }
+    },
+    {
+        "model": "dashboard.nutrition",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "food_item": "yogurt",
+            "portion": "200",
+            "nutrition_on": "2024-04-25",
+            "fats": "5",
+            "carbs": "20",
+            "protein": "10",
+            "calories_intake": "150"
+        }
+    },
+    {
+        "model": "dashboard.nutrition",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "food_item": "beef",
+            "portion": "120",
+            "nutrition_on": "2024-05-05",
+            "fats": "15",
+            "carbs": "0",
+            "protein": "22",
+            "calories_intake": "250"
+        }
+    },
+    {
+        "model": "dashboard.nutrition",
+        "pk": null,
+        "fields": {
+            "user": 1,
+            "food_item": "quinoa",
+            "portion": "50",
+            "nutrition_on": "2024-05-20",
+            "fats": "19",
+            "carbs": "19",
+            "protein": "41",
+            "calories_intake": "110"
+        }
+    }
+]

@@ -6,7 +6,6 @@ from django.core.validators import RegexValidator
 
 alpha = RegexValidator(r'^[a-zA-Z]+$', 'Only alphabetical characters are allowed.')
 
-# Create your models here.
 
 class Activity(models.Model):
     user = models.ForeignKey(

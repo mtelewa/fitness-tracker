@@ -629,8 +629,8 @@ def plot_graph(x, y, ylabel, **kwargs):
     mplcyberpunk.add_gradient_fill(alpha_gradientglow=0.5, gradient_start='zero')        
 
     ax.tick_params(axis='x', labelrotation=60)
-    ax.set_xlabel('Time')
-    ax.set_ylabel(ylabel)
+    ax.set_xlabel('Time', fontsize=18)
+    ax.set_ylabel(ylabel, fontsize=18)
     ax.grid()
 
     imgdata = StringIO()
