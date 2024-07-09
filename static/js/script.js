@@ -90,25 +90,6 @@ $(document).ready(function(){
   // For new users with no previous records, show -- for None entries
   ddash.text('--');
 
-
-  // Delete nutrition entries
-  deleteNutritionButton.click(function() {
-    deleteConfirm.href = 'nutrition_delete/';
-    deleteModal.show();
-  });
-
-  // Delete profile entries
-  deleteProfileButton.click(function() {
-    deleteConfirm.href = 'profile_delete/';
-    deleteModal.show();
-  });
-
-  // Delete activity entries
-  deleteActivityButton.click(function() {
-    deleteConfirm.href = 'activity_delete/';
-    deleteModal.show();
-  });
-
 });
 
 
@@ -152,3 +133,21 @@ function fetchCaloriesBurnt(event) {
     }
   });
 }
+
+// Delete nutrition entries
+deleteNutritionButton.click(function() {
+  deleteConfirm.attr('href', 'nutrition_delete/');
+  deleteModal.show();
+});
+
+// Delete profile entries
+deleteProfileButton.click(function() {
+  deleteConfirm.attr('href', 'profile_delete/');
+  deleteModal.show();
+});
+
+// Delete activity entries
+deleteActivityButton.click(function() {
+  deleteConfirm.attr('href', 'activity_delete/');
+  deleteModal.show();
+});
