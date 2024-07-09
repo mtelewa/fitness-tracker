@@ -2,29 +2,31 @@
 
 ![Mockup](documentation/features/mockup.png)
 
-Fitness Tracker is an app to help you stay on top of your fitness goals and lead a healthier life. Designed for both beginners and fitness enthusiasts, Fitness Tracker offers a comprehensive suite of features to track your physical activities with calories burnt counter, log your meals with calories intake counter, and set personalized weight targets.
+Fitness Tracker is the app to help you stay on top of your fitness goals and lead a healthier life. Designed for both beginners and fitness enthusiasts, Fitness Tracker offers a comprehensive suite of features to track your physical activities with calories burnt counter, log your meals with calories intake counter, and set personalized weight targets.
 
 Link to live site - [https://fitness-tracker-mt-b349b401ceed.herokuapp.com/](https://fitness-tracker-mt-b349b401ceed.herokuapp.com/)
 
 
 ## Contents
+* [Concept](#concept)
 * [User Experience (UX)](#user-experience-ux) 
+    * [Target Audience](#target-audience)
+    * [User Stories](#user-stories)
+        * [Existing Users](#existing-users)
+        * [New Users](#new-users)
+        * [Site Owner](#site-owner)
 * [Design](#design)
     * [Color scheme](#color-scheme)
     * [Typography](#typography)
     * [Imagery](#imagery)
-    * [Wireframes](#wireframes)
     * [Accessibility](#accessibility)
+    * [Wireframes](#wireframes)
+    * [Data Base](#data-base-management) 
 * [Features](#features)
 * [Technologies Used](#technologies-used)
     * [Languages](#languages)
     * [Frameworks, Libraries & Programs](#frameworks-libraries--programs)
 * [Testing](#testing)
-    * [Validator Testing](#validator-testing)
-    * [Browser Compatibility](#browser-compatibility)
-    * [Accessibility and Performance](#accessibility-and-performance)
-    * [Test Cases and Results](#test-cases-and-results)
-    * [Known Bugs](#known-bugs)
 * [Deployment & Local Development](#deployment--local-development)
     * [Deployment](#deployment)
     * [Local Development](#local-development)
@@ -36,25 +38,42 @@ Link to live site - [https://fitness-tracker-mt-b349b401ceed.herokuapp.com/](htt
 
 - - -
 
+## Concept
+
+The app is for anyone who wants to keep track of their fitness level by creating a diary or logs of their activities and nutrition plans. The app consists of 4 main cards on the dashboard, these are:
+1. Profile card: this here is not the usual social profile rather the metric profile (weight, target weight, height and birth date). This input is used to calculate the user's body mass index (BMI), basal metabolic rate (BMR) and a classification of the user's metrics.
+
+2. Activity card: the user can log and track here any activity alongside the intensity, duration and distance. An API is fetched to compute the calories burnt by the user and displays the value on the card.
+
+3. Nutrition card: the user can log and track their meals and the serving. Similar to the activity card, a calorie intake calculator API is fetched and displayed.
+
+4. Calendar card (WIP): the user can view their logged in activities and meals, if desired. Only the calendar display has been implemented for a test user to show how it should look like. Creating and deleting events from/to the calendar has not been implemented yet.
+
+The data in the first three cards are saved to the PostgreSQL database as custom models in Django. 
+
 ## User Experience (UX)
+
+### Target Audience
+
+Users of all ages and genders are welcome to use the app. The fact that users can update their height as well as other metrics encourages also users of young age to take part and track their fitness measures.
 
 ### User Stories
 
-#### First Time Visitor Goals
+Agile methods have been utilised in the project using [Github's Projects Kanban board](https://github.com/users/mtelewa/projects/5/views/1). Here is a brief summary of the main user stories.
 
-* I want to get informed about some interesting facts
-* I want to increase my knowledge in different topics
-* I want the game rules to be easily accessible
-* I want to easily navigate from category to another
+#### Existing users
 
+*  As a user I can **log my activity/nutrition/profile session** so that **I can track my performance**
 
-#### Returning Visitor Goals
+*  As a **Site User** I can **see plots of my activity/nutrition/profile data** so that **i track my performance**
+
+#### New Users
 
 * I want to know more facts 
 * I want to check out other categories
 * I want to improve my score
 
-#### Frequent Visitor Goals
+#### Site Owner
 
 * I want to get a perfect score and solve as many questions with the exact correct answer
 * I want to check out other categories
@@ -184,9 +203,7 @@ The main features of the website are
 
 * Future Implementations that shall allow returning and frequent users to visit more often
 
-    * After getting 10 correct answers, the difficulty level goes up, so now your answer has to be the exact correct answer
-    * Showing users the total points they could have got if they answered all questions precisely
-    * Score leaderboard to make the quiz app more competitive between users
+    * 
 
 - - -
 
@@ -196,7 +213,8 @@ The main features of the website are
 
 * HTML5
 * CSS3
-* JavaScript
+* JavaScript (with jQuery)
+* Python3.12.3
 
 ### Frameworks, Libraries & Programs 
 
@@ -212,6 +230,27 @@ The main features of the website are
 
 * [Fontawesome](https://fontawesome.com/) for the icons near the header
 
+* [Bootstrap](https://getbootstrap.com/) for the styling of the templates
+
+* [Heroku](https://www.heroku.com/) for cloud application deployment
+
+* [drawSQL](https://drawsql.app/) to desing the entity relationship diagram (ERD)
+
+* [API Ninjas](https://api-ninjas.com/) for these 2 APIs:
+
+    * Calories burnt [API](https://api-ninjas.com/api/caloriesburned)
+    * Nutrition Calories [API](https://api-ninjas.com/api/nutrition)
+
+* [PostgreSQL from Code Institute](https://dbs.ci-dbs.net/) to provide the database
+
+* [Django](https://www.djangoproject.com/) to manage the backend database
+
+* [Django Crispy forms](https://django-crispy-forms.readthedocs.io/en/latest/) to manage forms
+
+* [allauth template](https://docs.allauth.org/en/latest/common/templates.html) for signin, signup and logout templates
+
+* [Cloudinary](https://cloudinary.com/ip/gr-sea-gg-brand-home-base?utm_source=google&utm_medium=search&utm_campaign=goog_selfserve_brand_wk22_replicate_core_branded_keyword&utm_term=1329&campaignid=17601148700&adgroupid=141182782954&keyword=cloudinary&device=c&matchtype=e&adposition=&gad_source=1&gclid=CjwKCAjwnK60BhA9EiwAmpHZwy2kAjmhDnHieTvklfuHGv7o3aiSJqrMtHQM8C58vsCkbwrm9aQYnBoCYdwQAvD_BwE) to manage media uploads
+
 * [Ilovemage](https://www.iloveimg.com/) to compress and resize images
 
 * [Cloud Convert](https://cloudconvert.com/jpg-to-webp) to convert jpg to webp images
@@ -226,163 +265,16 @@ The main features of the website are
 
 * [balsamiq](https://balsamiq.com/) for wireframes
 
-* [JSON](https://www.json.org/json-en.html) for writing the questions database
+* [JSON](https://www.json.org/json-en.html) for writing the fixtures
 
+* In addition to some of the Python libraries imported in the python files which are listed in the `requirements.txt`
 
 - - -
 
 
 ## Testing
 
-### Validator Testing
-
-* [HTML Validator](https://validator.w3.org/) result for the template files were as following:
-    
-    First for unauthorized access, the 'Validate by URI' was used and showed no errors
-
-    * For the index template (as well as activity, nutrition, profile)
-
-    <p align="center">
-    <img src="documentation/testing/html-validator-index.png" alt="html-validation-index" width="90%">
-    </p>
-
-    Next, the validation was performed by 'Direct Input' by passing the page source. The templates (activity, nutrition and profile) showed some errors all related to one element - the SVG figure. Since this error did not affect how the figure is displayed and does not interact with other elements on the page, it was not handled.
-
-    <p align="center">
-    <img src="documentation/testing/svg-error.png" alt="svg-error" width="90%">
-    </p>
-
-    * For the index and calendar templates, an error was raised from the iframe element. The styling of the iframe width and height was also performed from the CSS file but it was ignored. So it was left within the html file. The errors do not affect how the template is displayed.
-
-    <p align="center">
-    <img src="documentation/testing/index-error.png" alt="iframe-error" width="90%">
-    </p>
-
-The aforementioned errors and warnings do not affect the functionality of the website by any means.
-
-* [CSS Validator](https://jigsaw.w3.org/css-validator/) result for the `.css` file showed no errors, however it showed 4 warnings related to the importing of google fonts and using vendor extensions. These warnings do not affect the deployment of the website by any means
-
-<p align="center">
-<img src="documentation/testing/css-validation.png" alt="css validation" width="80%">
-</p>
-
-<p align="center">
-    <a href="http://jigsaw.w3.org/css-validator/check/referer">
-        <img style="border:0;width:88px;height:31px"
-            src="http://jigsaw.w3.org/css-validator/images/vcss"
-            alt="Valid CSS!" />
-    </a>
-</p>
-
-<p align="center">
-<img src="documentation/testing/css-warnings.png" alt="css validation" width="80%">
-</p>
-
-* [JavaScript Validator](https://jshint.com/) result for the `.js` file showed no errors, however it showed 1 warning and 1 unused variable. The warning does not affect the logic handling, data structure or flow control of the script. The unused variable is in fact an event handler function that fetched data from the calories API when user types in an activity or a meal.
-
-<p align="center">
-<img src="documentation/testing/js-validator.png" alt="js-validation" width="40%">
-</p>
-
-* [JSON Validator](https://jsonlint.com/) showed that the JSON files used in the fixtures are valid
-
-<p align="center">
-<img src="documentation/testing/json-validator.png" alt="json-validation" width="50%">
-</p>
-
-* [Python PEP8 CI Linter](https://pep8ci.herokuapp.com/) was used to check the python scripts
-
-
-
-### Browser Compatibility
-
-* Testing has been carried out on the following browsers :
-    * Chrome 123.0.6312.86 (Official Build) (64-bit)
-    * Chrome 123.0.6312.99
-    * Firefox 124.0.1 (64-bit) 
-
-### Accessibility and performance
-
-These tests were carried out using Lighthouse
-
-
-`index.html`
-
-<p align="center">
-<img src="documentation/testing/lighthouse-home.png" alt="lighthouse-home" width="40%">
-</p>
-
-
-Quiz pages
-
-<p align="center">
-<img src="documentation/testing/lighthouse-quiz.png" alt="lighthouse-quiz" width="40%">
-</p>
-
-
-`contact.html`
-
-<p align="center">
-<img src="documentation/testing/lighthouse-contact.png" alt="lighthouse-contact" width="40%">
-</p>
-
-`about.html`
-
-<p align="center">
-<img src="documentation/testing/lighthouse-about.png" alt="lighthouse-about" width="40%">
-</p>
-
-
-The website scores very high on accessibility, best practices and search engine optimization. Performance can still be improved.
-
-### Test Cases and Results
-
-The following test cases were performed on each page
-
-* Home page
-
-| Feature | Expected Outcome | Testing Performed | Result | Pass/Fail |
-| --- | --- | --- | --- | --- |
-| Category hover with zoom | image and text are zoomed and box gets highlighted | mouse hover | image and text are zoomed and box shadow color changes | Pass |
-| Toggle box for the game rules | Box opens with game rules when clicked | mouse click | game rules are displayed | Pass |
-| Internal navigation | User is directed to About, Contact and category pages | mouse click | gets directed to the respective page | Pass |
-| External navigation | User is directed to social media pages | mouse click | gets directed to the respective page in a new tab | Pass |
-
-* Quiz pages
-
-| Feature | Expected Outcome | Testing Performed | Result | Pass/Fail |
-| --- | --- | --- | --- | --- |
-| Focus on slider on page load | the focus is on the slider to allow keyboard use to move slider | load or reload page | pressing up/down or left/right moves the slider | Pass |
-| Submitting through Enter key | pressing enter shall allow the user to submit without using the mouse | Enter key press | answer is submitted | Pass |
-| Submitting through button | user can submit through mouse click on submit button | mouse click | answer is submitted | Pass |
-| Getting correct but not exact answers | if user gets correct but not exact answer, they get 1 point | submit +1 or -1 from the correct answer | score tally increases by 1 | Pass |
-| Getting correct and exact answers | if user gets correct and exact answer, they get 3 points | submit the correct answer | score tally increases by 3 | Pass |
-| Message on wrong answer | if user gets wrong answer, the quiz ends with game over message | submit the wrong answer | modal window appears with game over message | Pass |
-| Message on finishing the quiz | if user gets correct or semi-correct answers, they get congrats message | finish the quiz successfully | modal window appears with congrats message | Pass |
-
-
-* About page
-
-| Feature | Expected Outcome | Testing Performed | Result | Pass/Fail |
-| --- | --- | --- | --- | --- |
-| Internal navigation in the same tab | User is the home page | mouse click | gets directed to the home page | Pass |
-
-
-* Contact page
-
-| Feature | Expected Outcome | Testing Performed | Result | Pass/Fail |
-| --- | --- | --- | --- | --- |
-| Internal navigation | User is the home page | mouse click | gets directed to the home page | Pass |
-| Reject numbers in the name field | alert appears if numbers are entered in the name field | write numbers in name field | alert pops up | Pass |
-| Submit form validation | user gets directed to thanks page | submit the form by clicking send button | directs to thanks page | Pass |
-
-
-### Known Bugs
-
-* The website depends on *Font Awesome* package. If *Font Awesome* is down, the icons do not load and so the footer would not look as intended. The icons next to quiz page headers also will not load. This was encountered once when *Font Awesome* was having major issues.
-
-* In small displays, the range values sometimes are squeezed by the slider when the value has large string length. A compromisation has to be done by reducing the slider length to fit the minimum and maximum values. However, this will reduce the slider area, thus affecting the user interface on mobile devices.
-
+Please refer to [TESTING.md](TESTING.md) for all the testing carriied out.
 
 - - -
 
@@ -391,12 +283,27 @@ The following test cases were performed on each page
 
 ### Deployment
 
-The website is deployed using GitHub Pages. To Deploy the website:
+The app is deployed using [Heroku](https://www.heroku.com/) platform. To Deploy the app:
 
-1. Go to the [fun-stats](https://github.com/mtelewa/fun-stats/) repository for this project on Github - this was the initial name of the website
-2. Navigate to settings/pages
-3. From the source dropdown select "Deploy from a branch" and press save
-4. The site has now been deployed and the website goes live
+1. Create a new app, add a unique app name (e.g. flight-scanner) and then choose the region
+2. Click on "Create app"
+3. Go to "Settings"
+4. Under Config Vars add the following KEY-VALUE pairs
+    * CAL_BURN_API_KEY : `API  Key obtained from API Ninjas`
+    * CLOUDINARY_URL : `CLOUDINARY KEY`
+    * DATABASE_URL : `PostgreSQL URL from Code Institute`
+    * SECRET_KEY : `Provided by Django initialization or from https://djecrety.ir/`
+    * PORT: `8000`
+5. Go to "Deploy" and select "GitHub" in "Deployment method"
+6. To connect Heroku app to the Github repository enter the repository name, click 'Search' and then 'Connect'.
+7. Choose the branch you want to build your app from, here it was `main`
+8. If preferred, click on "Enable Automatic Deploys", which keeps the app up to date with your GitHub repository
+9. Wait for the app to build. Once ready you will see the “App was successfully deployed” message and a 'View' button to take you to your deployed link.
+
+Note: In the CDE or IDE, a Procfile shall be created that contains the following command declared:
+    ```
+    web: gunicorn fitness_tracker.wsgi
+    ```
 
 ### Local Development
 
@@ -404,19 +311,26 @@ The website is deployed using GitHub Pages. To Deploy the website:
 
 To fork the repository:
 
-1. Go to the [fun-stats](https://github.com/mtelewa/fun-stats/) repository
+1. Go to the [fitness-tracker](https://github.com/mtelewa/fitness-tracker) repository
 2. Click the "Fork" button in the top right corner.
 
 #### How to Clone
 
 To clone the repository:
 
-1. Go to the [fun-stats](https://github.com/mtelewa/fun-stats/) repository
+1. Go to the [fitness-tracker](https://github.com/mtelewa/fitness-tracker) repository
 2. Click on the "Code" button, select "SSH" and copy the link
 3. Open the terminal and change the current working directory to the location you want the cloned directory to be in
-4. Use the command `git clone git@github.com:mtelewa/fun-stats.git` into the terminal
+4. Use the command `git clone git@github.com:mtelewa/fitness-tracker.git` into the terminal
 
 Note: For step no.4 to work, first generate SSH keys and add your generated key in Account Settings -> SSH Keys. More on this can be found on the [github docs](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account).
+
+#### Local Run 
+
+* Install all the packages in the `requirements.txt` using `pip install -r /path/to/requirements.txt`
+* To run the server, in the terminal run `python3 manage.py runserver` and open the browser on the open port (usually `8000`)
+* To migrate any database changes
+`python3 manage.py makemigrations` followed by `python3 manage.py migrate`
 
 - - -
 
@@ -424,68 +338,22 @@ Note: For step no.4 to work, first generate SSH keys and add your generated key 
 
 ### Code Used
 
-* Hover to zoom effect [CSS snippet](https://www.w3schools.com/howto/howto_css_zoom_hover.asp)
-* 
-
-
-
-* 
-
-
-
-
-
-
-
-
-
-
-
-
-
-https://stackoverflow.com/questions/33680908/how-to-redirect-to-url-by-cancel-button-in-django-crispy-forms
-
-
-https://stackoverflow.com/questions/46314246/how-to-update-a-foreign-key-field-in-django-models-py
-
-
-
-https://jqueryui.com/datepicker/
-https://stackoverflow.com/questions/5250244/jquery-date-formatting
-
-
-https://stackoverflow.com/questions/1353684/detecting-an-invalid-date-date-instance-in-javascript
-
-
-https://stackoverflow.com/questions/25632918/django-crispy-forms-file-upload
-
-
-https://api.jquery.com/jQuery.ajax/
-
-
-https://stackoverflow.com/questions/72529252/how-to-get-select-option-value-in-views-django
-
-
-API
-https://api-ninjas.com/api/caloriesburned
-
-
-https://stackoverflow.com/questions/17165147/how-can-i-make-a-django-form-field-contain-only-alphanumeric-characters
-
-https://stackoverflow.com/questions/3617797/regex-to-match-only-letters
-
-https://stackoverflow.com/questions/40534715/how-to-embed-matplotlib-graph-in-django-webpage
-
-
-https://towardsdatascience.com/upgrade-your-data-visualisations-4-python-libraries-to-enhance-your-matplotlib-charts-74361bc3b92e
-
-
-
+* Redirect cancel button in django crispy forms [snippet](https://stackoverflow.com/questions/33680908/how-to-redirect-to-url-by-cancel-button-in-django-crispy-forms)
+* jQuert date formatting [snippet](https://jqueryui.com/datepicker/
+https://stackoverflow.com/questions/5250244/jquery-date-formatting)
+* Date validation in JS [snippet](https://stackoverflow.com/questions/1353684/detecting-an-invalid-date-date-instance-in-javascript)
+* File upload in crispy forms [snippet](https://stackoverflow.com/questions/25632918/django-crispy-forms-file-upload)
+* jQuery Ajax [snippet](https://api.jquery.com/jQuery.ajax/)
+* Bootsrap `select` in django [snippet](https://stackoverflow.com/questions/72529252/how-to-get-select-option-value-in-views-django)
+* Embed Matplotlib plots in django template [snippet](https://stackoverflow.com/questions/40534715/how-to-embed-matplotlib-graph-in-django-webpage)
+* Regex to match letters only - used in activity custom model [snippet](https://stackoverflow.com/questions/3617797/regex-to-match-only-letters)
+* Accept only alphanumeric characters in django form [snippet](https://stackoverflow.com/questions/17165147/how-can-i-make-a-django-form-field-contain-only-alphanumeric-characters)
+* CyberPunk plot [snippet](https://towardsdatascience.com/upgrade-your-data-visualisations-4-python-libraries-to-enhance-your-matplotlib-charts-74361bc3b92e)
 
 
 ### Content
 
-* The idea and content of the webpage are my own. I had the inspiration for building a fitness tracker app and some challenges to tackle from [dev](https://dev.to/arafat4693/top-10-full-stack-projects-for-beginners-1338).
+* The idea and content of the webpage are my own. I had the inspiration for building a fitness tracker app and some challenges to tackle from [dev](https://dev.to/arafat4693/top-10-full-stack-projects-for-beginners-1338). The fixtures JSON files were made with the help of OpenAI's [GPT](https://chat.openai.com/).
 
 ### Media
 
@@ -498,6 +366,7 @@ https://towardsdatascience.com/upgrade-your-data-visualisations-4-python-librari
 
 ### Acknowledgement
 
-I would like to thank my Code Institute mentor Jubril Akolade for his feedback and support
+I would like to thank my Code Institute mentor Jubril Akolade for his feedback and support.
+I am also thankful to Sean, my fellow student at CI for providing some tips and advise against pitfalls and generally for sharing some thoughts and nice conversations. I would like to thank Kay, our cohort facilitator for the continous motivation and support.
 
 
