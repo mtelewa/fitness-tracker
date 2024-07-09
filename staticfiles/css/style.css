@@ -249,3 +249,7 @@ hr.h-divider {
     height: 100%;
     width: 100%;
 }
+
+#calendar-container {
+    min-height: 350px;
+}
