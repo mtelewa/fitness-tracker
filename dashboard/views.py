@@ -20,7 +20,7 @@ from .forms import *
 def dashboard(request):
     """
     Renders the dashboard for logged in users.
-    The dashboard consists of 4 cards: profile, 
+    The dashboard consists of 4 cards: profile,
     calendar, activity and nutrition.
     Display 3 models:
         :model:`dashboard.Profile`.
@@ -158,21 +158,29 @@ def dashboard(request):
                     food_item = nutrition.food_item
                     portion = nutrition.portion
 
-                    nutrition.calories_intake, nutrition.fats, \
-                        nutrition.protein, nutrition.carbs = \
-                        get_macronutrients(food_item, portion)
-
-                    calories_intake, fats, protein, carbs = \
+                    # if food item is in database save entry
+                    # else display error message
+                    if nutrition.calories_intake is not None:
                         nutrition.calories_intake, nutrition.fats, \
-                        nutrition.protein, nutrition.carbs
+                            nutrition.protein, nutrition.carbs = \
+                            get_macronutrients(request, food_item, portion)
 
-                    # commit changes
-                    nutrition.save()
+                        calories_intake, fats, protein, carbs = \
+                            nutrition.calories_intake, nutrition.fats, \
+                            nutrition.protein, nutrition.carbs
 
-                    messages.add_message(
-                        request, messages.SUCCESS,
-                        'Your data has been updated!'
-                        )
+                        # commit changes
+                        nutrition.save()
+
+                        messages.add_message(
+                            request, messages.SUCCESS,
+                            'Your data has been updated!'
+                            )
+                    else:
+                        messages.add_message(request, messages.ERROR,
+                                             'This food item does not \
+                                             exist in the database. \
+                                             Please try another item!')
 
                     return redirect('home')
 
@@ -506,7 +514,7 @@ def calendar(request):
                 request,
                 "dashboard/entry_create.html",
                 dict)
-    
+
     else:
         return render(
             request,
@@ -520,7 +528,7 @@ def entry_create(request):
     Display a form (full form) based on 3 models
          :model:`dashboard.Profile`
          :model:`dashboard.Nutrition`
-         :model:`dashboard.Activity`         
+         :model:`dashboard.Activity`
 
     **Context**
     variables, cloudinary image, API key and full form
@@ -564,7 +572,7 @@ def entry_create(request):
             portion = full_form.cleaned_data.get('portion')
 
             calories_intake, fats, protein, carbs = \
-                get_macronutrients(food_item, portion)
+                get_macronutrients(request, food_item, portion)
 
             Nutrition.objects.create(user=request.user, food_item=food_item,
                                      portion=portion,
@@ -718,7 +726,7 @@ def get_calories_burnt(activity, duration):
     return calories_burnt
 
 
-def get_macronutrients(food, serving):
+def get_macronutrients(request, food, serving):
     """
     Fetch the nutrition API to get caloroies
     for a certain food and serving
@@ -729,11 +737,15 @@ def get_macronutrients(food, serving):
     response = requests.get(api_url,
                             headers={'X-Api-Key': settings.CAL_BURN_API_KEY})
     if response.status_code == requests.codes.ok:
-        macronutrients = response.json()[0]
-        calories_intake = macronutrients['calories']
-        fats = macronutrients['fat_total_g']
-        protein = macronutrients['protein_g']
-        carbs = macronutrients['carbohydrates_total_g']
+        try:
+            macronutrients = response.json()[0]
+            calories_intake = macronutrients['calories']
+            fats = macronutrients['fat_total_g']
+            protein = macronutrients['protein_g']
+            carbs = macronutrients['carbohydrates_total_g']
+        except IndexError:
+            macronutrients = calories_intake = fats = \
+                protein = carbs = None
     else:
         print("Error:", response.status_code, response.text)
 
