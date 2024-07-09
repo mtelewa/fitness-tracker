@@ -119,8 +119,7 @@ These fonts were chosen to convey an active dynamic environment.
 The homepage for non-authorized users is the 'Get Started' page while authorized users see their dashboard:
 
 <p align="center">
-<img src="documentation/design/home.png" alt="home" width="45%">
-<img src="documentation/design/dashboard.png" alt="dashboard" width="45%">
+<img src="documentation/design/index.png" alt="home" width="60%">
 </p>
 
 A user can open each card to see their details
