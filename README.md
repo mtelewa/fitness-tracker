@@ -63,20 +63,26 @@ Agile methods have been utilised in the project using [Github's Projects Kanban 
 
 #### Existing users
 
-*  As a user I can **log my activity/nutrition/profile session** so that **I can track my performance**
+* As a **Site User** I can **login to the website** so that **I can access my dashboard**
+*  As a **Site User** I can **log my activity/nutrition/profile session** so that **I can track my performance**
+* As a **Site User** I can **input a food item** so that **I get calories intake**
+As a **Site User** I can **input activity duration and distance** so that **I get calories burnt count**
+* As a **Site User** I can **input target weight** so that **I stay on track**
+* As a **Site User** I can **input my birth date** so that **my age updates automatically and so measurements are accurate**
+* As a **Site User** I can **update my profile attributes** so that **it shows on my profile page**
+*  As a **Site User** I can **see plots of my activity/nutrition/profile data** so that **I track my performance**
+* As a **Site User** I can **see the difference between target and current metrics on dashboard** so that **I can check how far i am from the target**
 
-*  As a **Site User** I can **see plots of my activity/nutrition/profile data** so that **i track my performance**
 
 #### New Users
 
-* I want to know more facts 
-* I want to check out other categories
-* I want to improve my score
+* As a **Site User** I can **create a metric profile** so that **it shows on my profile page**
+* As a **Site User** I can **sign up to the website** so that **I can access my dashboard**
 
 #### Site Owner
 
-* I want to get a perfect score and solve as many questions with the exact correct answer
-* I want to check out other categories
+* As a **Site Owner** I can **connect to Django database** so that **I see apps on admin dashboard**
+* As a **Site Owner** I can **show the dashboard only to authenticated users** so that **users sign up/in**
 
 - - -
 
