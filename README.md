@@ -409,8 +409,8 @@ Note: For step no.4 to work, first generate SSH keys and add your generated key 
 ### Code Used
 
 * Redirect cancel button in django crispy forms [snippet](https://stackoverflow.com/questions/33680908/how-to-redirect-to-url-by-cancel-button-in-django-crispy-forms)
-* jQuert date formatting [snippet](https://jqueryui.com/datepicker/
-https://stackoverflow.com/questions/5250244/jquery-date-formatting)
+* jQuery datepicker  [snippet](https://jqueryui.com/datepicker/)
+* jQuetry Date formatting [snippet](https://stackoverflow.com/questions/5250244/jquery-date-formatting)
 * Date validation in JS [snippet](https://stackoverflow.com/questions/1353684/detecting-an-invalid-date-date-instance-in-javascript)
 * File upload in crispy forms [snippet](https://stackoverflow.com/questions/25632918/django-crispy-forms-file-upload)
 * jQuery Ajax [snippet](https://api.jquery.com/jQuery.ajax/)
