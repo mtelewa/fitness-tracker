@@ -116,10 +116,16 @@ These fonts were chosen to convey an active dynamic environment.
 ### Wireframes
 
 * Wireframes were created using [balsamiq](https://balsamiq.com/). The following images serve as a preliminary design for the website interface and intended functionality.
-The homepage for non-authorized users is the 'Get Started' page while authorized users see their dashboard:
+The homepage for non-authorized users is the 'Get Started' page
 
 <p align="center">
 <img src="documentation/design/index.png" alt="home" width="60%">
+</p>
+
+While authorized users see their dashboard
+
+<p align="center">
+<img src="documentation/design/dashboard.png" alt="dashboard" width="60%">
 </p>
 
 A user can open each card to see their details
