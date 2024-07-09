@@ -154,8 +154,11 @@ As can be seen, there is still enough contrast between the content and the backg
 
 ### Database
 
+The database consists of 4 custom models. Three of which were implemented as Django custom models. These are the activity, nutrition and profile custom models. The entity-relationship diagram shows at the moment no relations between the models except for the user custom model (not shown in the diagram). The user id have a one-to-many relationship to all the fields within the other custom models.
 
-
+<p align="center">
+<img src="documentation/design/erd.png" alt="erd" width="60%">
+</p>
 
 - - - 
 
@@ -175,52 +178,90 @@ The main features of the website are
 <img src="documentation/features/favicon.png" alt="favicon" width="20%">
 </p>
 
-* Easily accessible icons to choose a category through text or image. Also the icons have zoom and hover effect to highlight what category the user is about to select.
+* Easily accessible buttons on the homepage to sign up. The buttons have hover effects to show what the user is about to select.
 
 <p align="center">
-<img src="documentation/features/hover-icons.png" alt="hover-zoom-effect" width="60%">
+<img src="documentation/features/homepage.png" alt="homepage" width="60%">
 </p>
 
-*  **Toggle dialog box** to present additional information regarding game rules **without filling the page with text**.
+*  Navbar with toggle feature for navigation to login or signup pages.
 
 <p align="center">
-<img src="documentation/features/toggle-box-closed.png" alt="togle-box-closed" width="60%"> <br><br>
-<img src="documentation/features/toggle-box-open.png" alt="togle-box-closed" width="60%">
+<img src="documentation/features/navbar.png" alt="navbar" width="60%"> <br><br>
+<img src="documentation/features/navbar-small-display.png" alt="navbar-toggled" width="60%">
 </p>
 
-* Quiz main area where the category is shown in the title, the question is displayed underneath and a slider to select the answer within a certain range and a submit button to submit the answer. The user's choice is shown as they move the slider
-
-* A score box where the user's points are recorded and updated
+* Sidebar for authorized users to ease navigation
 
 <p align="center">
-<img src="documentation/features/quiz-main-area.png" alt="quiz-window" width="60%">
+<img src="documentation/features/sidebar.png" alt="sidebar" width="20%">
 </p>
 
-* A modal winow "Game Over!" when the user inputs a wrong answer
+* Signup, login and logout pages
+
+* C in CRUD functionality: the user creates a profile once they signup
 
 <p align="center">
-<img src="documentation/features/modal-loss.png" alt="modal-window-loss" width="60%">
-</p>
-
-
-* A modal winow "Congrats!" when the user answers all answers correctly
-
-<p align="center">
-<img src="documentation/features/modal-win.png" alt="modal-window-win" width="60%">
-</p>
-
-* About and contact pages to provide more context and depth to the website by providing form to the user to fill and information to read about the website. These pages also have buttons to navigate to the homepage
-
-<p align="center">
-<img src="documentation/features/contact.png" alt="contact-page" width="60%"> <br><br>
-<img src="documentation/features/about.png" alt="about-page" width="60%">
+<img src="documentation/features/create_profile.png" alt="create-profile" width="60%">
 </p>
 
 
+* R,U and D in CRUD: the user can read, update and delete their most recent metrics, nutrition and activity on the dashboard
+
+<p align="center">
+<img src="documentation/features/dashboard.png" alt="dashboard" width="60%">
+</p>
+
+The 'update' button opens up a form for the user to update their values
+
+<p align="center">
+<img src="documentation/features/metrics-form.png" alt="form" width="60%">
+</p>
+
+While the delete button opens up a modal to warn the user that they are about to delete an entry
+
+<p align="center">
+<img src="documentation/features/modal.png" alt="modal" width="60%">
+</p>
+
+
+* Search activity as the user types. This is done by fetching data from the API as the user types in an activity. The API offers a variety of options of activities that also includes intensity
+
+<p align="center">
+<img src="documentation/features/calorie-counter.png" alt="calorie-counter" width="60%">
+</p>
+
+* Calorie counters for calories intake as well as burnt depending on the meal and activity, respectively
+
+<p align="center">
+<img src="documentation/features/dropdown-activity.png" alt="dropdown" width="60%">
+</p>
+
+* Uploading a profile image that shows up on the sidebar as well as on the profile page
+
+<p align="center">
+<img src="documentation/features/profile-image.png" alt="profile-image" width="60%">
+</p>
+
+* Plots to track activity, nutrition and metrics in individual pages to provide more visual representation of the user's performance. Here is an example of the activity plot.
+
+<p align="center">
+<img src="documentation/features/plot.png" alt="contact-page" width="60%"> <br><br>
+</p>
+
+* Calendar page. This should ideally be integrated with the user's logs, however, now it is only implemented as an iframe. Note, here i used a fixed user's google account (testuser573@gmail.com) but ideally the user shall signup with their email and their calendar should show here. This also requires that the user [makes their calendar public](https://support.google.com/calendar/answer/37083?hl=en)
+
+<p align="center">
+<img src="documentation/features/calendar.png" alt="calendar" width="60%"> <br><br>
+</p>
 
 * Future Implementations that shall allow returning and frequent users to visit more often
 
-    * 
+    * Calendar events: the user gets a calendar event as they log their activity, weight or meal
+    * Reviews and feedback: the user can write a feedback to the site owners/developers and can give a review so that it can reach other users
+    * Unit conversion: the user can convert the units for metrics or distance from/to metric and US customary units
+    * Display motivational messages as a modal or pop-ups to show the user how far they are doing. This is already somehow implemented in the profile card on the dashboard but could be further improved for better UX.
+
 
 - - -
 
