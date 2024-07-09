@@ -15,8 +15,8 @@ const deleteNutritionButton = $('#btn-delete-nutrition');
 const deleteActivityButton = $('#btn-delete-activity');
 const deleteProfileButton = $('#btn-delete-profile');
 const deleteModalElement = $('#deleteModal');
+const deleteConfirm = $('#deleteConfirm');
 let deleteModal;
-let deleteConfirm;
 if (deleteModalElement.length) {
   // Initialize the Bootstrap modal
   deleteModal = new bootstrap.Modal($('#deleteModal'));
