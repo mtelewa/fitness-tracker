@@ -344,7 +344,7 @@ While the delete button opens up a modal to warn the user that they are about to
 
 ## Testing
 
-Please refer to [TESTING.md](TESTING.md) for all the testing carriied out.
+Please refer to [TESTING.md](TESTING.md) for all the testing carried out.
 
 - - -
 
