@@ -103,11 +103,11 @@ The colors chosen were based on pantone color palette like as in [here](https://
 
 Google Fonts was used to import the chosen fonts. The three main fonts used across the website are
 
-* [Segwick Ave](https://fonts.google.com/specimen/Sedgwick+Ave) for the page header or title
-* [Platypi](https://fonts.google.com/specimen/Platypi) for the answers as well as the game rules text
-* The `Indie Flower` font was inspired by [this page on Medium](https://bootcamp.uxdesign.cc/10-best-script-and-handwritten-google-fonts-afc4b77fdb0c). It was used mainly for the questions.
+* [Libre Baskerville](https://fonts.google.com/specimen/Libre+Baskerville) for the page header or title
+* [Lemonada](https://fonts.google.com/specimen/Lemonada) for the cards titles and the calorie counters
+* [Palanquin](https://fonts.google.com/specimen/Palanquin). It was used for the cards paragraph text.
 
-These fonts were chosen to convey the playful nature of the website since it is a quiz. Also, I wanted to deliver this hand-written feeling to attract users from different ages.
+These fonts were chosen to convey an active dynamic environment.
 
 ### Imagery
 

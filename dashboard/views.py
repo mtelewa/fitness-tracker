@@ -276,7 +276,7 @@ def profile_details(request):
                 time.append(i.updated_on)
                 weights.append(i.weight)
 
-            graph = plot_graph(time, weights, "Weight (Kg)", figsize=(14, 6))
+            graph = plot_graph(time, weights, "Weight (Kg)", figsize=(10, 6))
 
             # Profile form
             profile_form = ProfileForm()
@@ -387,7 +387,7 @@ def activity_history(request):
                 calories_burnt.append(i.calories_burnt)
 
             graph = plot_graph(time, calories_burnt,
-                               "Calories", figsize=(19, 6))
+                               "Calories", figsize=(12, 6))
 
             return render(
                 request,
@@ -446,7 +446,7 @@ def nutrition_history(request):
                 calories_intake.append(i.calories_intake)
 
             graph = plot_graph(time, calories_intake,
-                               "Calories", figsize=(19, 6))
+                               "Calories", figsize=(12, 6))
 
             return render(
                 request,
