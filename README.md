@@ -202,6 +202,13 @@ The main features of the website are
 <img src="documentation/features/sidebar.png" alt="sidebar" width="20%">
 </p>
 
+Sidebar is responsive, for small displays, only the icons are displayed
+
+<p align="center">
+<img src="documentation/features/sidebar-small-display.png" alt="sidebar" width="5%" height=400px>
+</p>
+
+
 * Signup, login and logout pages
 
 * C in CRUD functionality: the user creates a profile once they signup

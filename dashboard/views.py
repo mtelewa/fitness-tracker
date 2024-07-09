@@ -122,18 +122,25 @@ def dashboard(request):
                     calories_burnt = \
                         get_calories_burnt(activity.activity_type, duration)
 
-                    activity.calories_burnt = calories_burnt
-                    activity_type, duration, distance = \
-                        activity.activity_type, activity.duration, \
-                        activity.distance
+                    if calories_burnt is not None:
+                        activity.calories_burnt = calories_burnt
+                        activity_type, duration, distance = \
+                            activity.activity_type, activity.duration, \
+                            activity.distance
 
-                    # commit changes
-                    activity.save()
+                        # commit changes
+                        activity.save()
 
-                    messages.add_message(
-                        request, messages.SUCCESS,
-                        'Your data has been updated!'
-                        )
+                        messages.add_message(
+                            request, messages.SUCCESS,
+                            'Your data has been updated!'
+                            )
+
+                    else:
+                        messages.add_message(request, messages.ERROR,
+                                             'This activity does not \
+                                             exist in the database. \
+                                             Please try another entry!')
 
                     return redirect('home')
 
@@ -160,7 +167,10 @@ def dashboard(request):
 
                     # if food item is in database save entry
                     # else display error message
-                    if nutrition.calories_intake is not None:
+                    calories_intake = \
+                        get_macronutrients(request, food_item, portion)[0]
+
+                    if calories_intake is not None:
                         nutrition.calories_intake, nutrition.fats, \
                             nutrition.protein, nutrition.carbs = \
                             get_macronutrients(request, food_item, portion)
@@ -566,27 +576,71 @@ def entry_create(request):
 
             calories_burnt = get_calories_burnt(activity_type, duration)
 
-            Activity.objects.create(user=request.user,
-                                    activity_type=activity_type,
-                                    duration=duration, distance=distance,
-                                    calories_burnt=calories_burnt)
+            if calories_burnt is not None:
+                full_form.calories_burnt = \
+                    get_calories_burnt(activity_type, duration)
+
+                Activity.objects.create(user=request.user,
+                                        activity_type=activity_type,
+                                        duration=duration, distance=distance,
+                                        calories_burnt=calories_burnt)
+
+                messages.add_message(
+                    request, messages.SUCCESS,
+                    'Your data has been created!'
+                )
+
+            else:
+                Activity.objects.create(user=request.user,
+                                         activity_type='run',
+                                         duration='30',
+                                         calories_burnt='360')
+
+                messages.add_message(request, messages.ERROR,
+                                     'This activity does not \
+                                      exist in the database. \
+                                      Default values have been added!')
 
             # Create Nutrition
             food_item = full_form.cleaned_data.get('food_item')
             portion = full_form.cleaned_data.get('portion')
 
-            calories_intake, fats, protein, carbs = \
-                get_macronutrients(request, food_item, portion)
+            # if food item is in database save entry
+            # else display error message
+            calories_intake = \
+                get_macronutrients(request, food_item, portion)[0]
+            if calories_intake is not None:
+                full_form.calories_intake, full_form.fats, \
+                    full_form.protein, full_form.carbs = \
+                    get_macronutrients(request, food_item, portion)
 
-            Nutrition.objects.create(user=request.user, food_item=food_item,
-                                     portion=portion,
-                                     calories_intake=calories_intake,
-                                     fats=fats, protein=protein, carbs=carbs)
+                calories_intake, fats, protein, carbs = \
+                    full_form.calories_intake, full_form.fats, \
+                    full_form.protein, full_form.carbs
 
-            messages.add_message(
-                request, messages.SUCCESS,
-                'Your data has been created!'
-            )
+                Nutrition.objects.create(user=request.user,
+                                         food_item=food_item,
+                                         portion=portion,
+                                         calories_intake=calories_intake,
+                                         fats=fats, protein=protein,
+                                         carbs=carbs)
+
+                messages.add_message(
+                    request, messages.SUCCESS,
+                    'Your data has been created!'
+                )
+
+            else:
+                Nutrition.objects.create(user=request.user,
+                                         food_item='rice',
+                                         portion='100',
+                                         calories_intake='130',
+                                         fats='1', protein='3',
+                                         carbs='28')
+                messages.add_message(request, messages.ERROR,
+                                     'This food item does not \
+                                     exist in the database. \
+                                     Default values have been added!')
 
     dict = {
             'height': height,
@@ -722,8 +776,11 @@ def get_calories_burnt(activity, duration):
     response = requests.get(api_url,
                             headers={'X-Api-Key': settings.CAL_BURN_API_KEY})
     if response.status_code == requests.codes.ok:
-        activity = response.json()
-        calories_burnt = activity[0]['total_calories'] * duration / 60
+        try:
+            calories_burnt = \
+                response.json()[0]['total_calories'] * duration / 60
+        except IndexError:
+            calories_burnt = None
     else:
         print("Error:", response.status_code, response.text)
 

@@ -98,40 +98,49 @@ Dashboard
 <img src="documentation/testing/lighthouse-nutrition.png" alt="lighthouse-nutrition" width="40%">
 </p>
 
-The website scores very high on accessibility, best practices and search engine optimization. Performance can still be improved.
+The website scores very high on accessibility, best practices and search engine optimization. Performance can still be improved on the index and dashboard pages.
 
 ### Test Cases and Results
 
 The following test cases were performed on each page
 
-* Home page
+* Home page (Unauthorized)
 
 | Feature | Expected Outcome | Testing Performed | Result | Pass/Fail |
 | --- | --- | --- | --- | --- |
-| Category hover with zoom | image and text are zoomed and box gets highlighted | mouse hover | image and text are zoomed and box shadow color changes | Pass |
-| Toggle box for the game rules | Box opens with game rules when clicked | mouse click | game rules are displayed | Pass |
-| Internal navigation | User is directed to About, Contact and category pages | mouse click | gets directed to the respective page | Pass |
-| External navigation | User is directed to social media pages | mouse click | gets directed to the respective page in a new tab | Pass |
+| Button hover | button background color changes to reflect hover | mouse hover | button background color changes | Pass |
+| Navbar items hover | navbar text and icon become darker to reflect hover  | mouse hover | navbar item color changes | Pass |
+| Navbar toggle and burger icon | for small displays the burger icon is displayed | open homepage on small display | burger icon appears instead of navbar | Pass |
+| Login | user is redireced to login page when login is pressed  | mouse click | user is redirected to login page | Pass |
+| Signup | user is redireced to signup page when signup or "Get started" or "try it now" buttons are pressed  | mouse click | user is redirected to signup page | Pass |
 
-* Quiz pages
-
-| Feature | Expected Outcome | Testing Performed | Result | Pass/Fail |
-| --- | --- | --- | --- | --- |
-| Focus on slider on page load | the focus is on the slider to allow keyboard use to move slider | load or reload page | pressing up/down or left/right moves the slider | Pass |
-| Submitting through Enter key | pressing enter shall allow the user to submit without using the mouse | Enter key press | answer is submitted | Pass |
-| Submitting through button | user can submit through mouse click on submit button | mouse click | answer is submitted | Pass |
-| Getting correct but not exact answers | if user gets correct but not exact answer, they get 1 point | submit +1 or -1 from the correct answer | score tally increases by 1 | Pass |
-| Getting correct and exact answers | if user gets correct and exact answer, they get 3 points | submit the correct answer | score tally increases by 3 | Pass |
-| Message on wrong answer | if user gets wrong answer, the quiz ends with game over message | submit the wrong answer | modal window appears with game over message | Pass |
-| Message on finishing the quiz | if user gets correct or semi-correct answers, they get congrats message | finish the quiz successfully | modal window appears with congrats message | Pass |
-
-
-* About page
+* Signup page
 
 | Feature | Expected Outcome | Testing Performed | Result | Pass/Fail |
 | --- | --- | --- | --- | --- |
-| Internal navigation in the same tab | User is the home page | mouse click | gets directed to the home page | Pass |
+| Required fields | user should get notified if they skip required field | submit empty form | "Please fill out this field" pops up | Pass |
+| Invalid field | user should get notified if there input is invalid  | enter invalid email address | "missing @ in address" pops up | Pass |
+| Invalid field | user should get notified if there input is invalid  | enter invalid email address | "missing @ in address" pops up | Pass |
+| Different passwords | user should get notified if they submit different passwords | enter different passwords | "You must type the same password each time." pops up | Pass |
 
+* Login page
+
+| Feature | Expected Outcome | Testing Performed | Result | Pass/Fail |
+| --- | --- | --- | --- | --- |
+| Required fields | user should get notified if they skip required field | submit empty form | "Please fill out this field" pops up | Pass |
+| Non-existing user | user should get notified if the do not have an account | login with a new username | "The username and/or password you specified are not correct." pops up | Pass |
+
+* Create profile page
+
+| Feature | Expected Outcome | Testing Performed | Result | Pass/Fail |
+| --- | --- | --- | --- | --- |
+| Auto redirect after signup | user is redirected to the create profile page after signup | perform signup | gets redirected to create profile page | Pass |
+| No data unless user creates profile | new user get '--' for their metric values | open create profile page | None values are displayed with '--' | Pass |
+| Create profile | new user can create their profile when they press the button | click on create profile | form opens | Pass |
+| Avoid alphabetical values| user should not be able to input letters in numeric fields | enter letters in numeric fields | field does not get updated | Pass |
+
+| Avoid numerical values | user should not be able to input invalid data | enter numbers in alphabetical fields | field does not get updated | Pass |
+| Avoid numerical values | user should not be able to input invalid data | enter letters in numeric fields | field does not get updated | Pass |
 
 * Contact page
 
@@ -143,10 +152,22 @@ The following test cases were performed on each page
 
 
 
-
-
 ### Known Bugs
 
 * The website depends on *Font Awesome* package. If *Font Awesome* is down, the icons do not load and so the footer would not look as intended. The icons next to quiz page headers also will not load. This was encountered once when *Font Awesome* was having major issues.
 
-* In small displays, the range values sometimes are squeezed by the slider when the value has large string length. A compromisation has to be done by reducing the slider length to fit the minimum and maximum values. However, this will reduce the slider area, thus affecting the user interface on mobile devices.
+* In medium and small displays, the SVG figure used for plotting does not fit within the `div` element. I have tried styling the element and its container in the CSS file but it ignores the values I specify. The workaround is to specify the `figsize` attribute in the matplotib plot object, however, the figure becomes small for large displays.
+
+<p align="center">
+<img src="documentation/testing/svg-bug.png" alt="SVG bug" width="80%">
+</p>
+
+* On the logout page, the profile image disappears. This is because the profile image is not passed as a variable to the `logout` template.
+
+<p align="center">
+<img src="documentation/testing/signout-bug.png" alt="SVG bug" width="80%">
+</p>
+
+* On login page, the `forgot password` link leads to a password reset template. When the user fills in the email and clicks on `Reset My Password`, A Server Error (500) is obtained. This is simply because the reset password was not managed in this project.
+
+* Updating any form field on the profile page (like birth date or height or uploading image) will add another point on the weight plot as it counts as another profile entry which is appended to the plot. This could be circumvented by separating the profile custom model from the user's metrics.
