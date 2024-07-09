@@ -137,20 +137,45 @@ The following test cases were performed on each page
 | Auto redirect after signup | user is redirected to the create profile page after signup | perform signup | gets redirected to create profile page | Pass |
 | No data unless user creates profile | new user get '--' for their metric values | open create profile page | None values are displayed with '--' | Pass |
 | Create profile | new user can create their profile when they press the button | click on create profile | form opens | Pass |
-| Avoid alphabetical values| user should not be able to input letters in numeric fields | enter letters in numeric fields | field does not get updated | Pass |
+| Avoid alphabetical values | user should not be able to input letters in numeric fields | enter letters in numeric fields | field does not get updated | Pass |
+| Avoid numerical values | user should not be able to input numbers in alphabetical fields | enter numbers in alphabetical fields | values set to default and user is shown an error message | Pass |
+| Birth date from a date picker | user can input birth date by choosing by selection from a date picker | press on date field | datepicker opens up | Pass |
 
-| Avoid numerical values | user should not be able to input invalid data | enter numbers in alphabetical fields | field does not get updated | Pass |
-| Avoid numerical values | user should not be able to input invalid data | enter letters in numeric fields | field does not get updated | Pass |
-
-* Contact page
+* Dashboard page 
 
 | Feature | Expected Outcome | Testing Performed | Result | Pass/Fail |
 | --- | --- | --- | --- | --- |
-| Internal navigation | User is the home page | mouse click | gets directed to the home page | Pass |
-| Reject numbers in the name field | alert appears if numbers are entered in the name field | write numbers in name field | alert pops up | Pass |
-| Submit form validation | user gets directed to thanks page | submit the form by clicking send button | directs to thanks page | Pass |
+| Display metrics | user is shown their last weight and target weight entries | mouse click on Home or dashboard | last input metrics are shown | Pass |
+| Display calorie burnt counter | user is shown their burnt calories according to their last activity and duration | enter activity and duration | calories burnt counter is updated | Pass |
+| Display calorie intake counter | user is shown their intake calories according to their last meal and serving size | enter meal and serving | calories intake counter is updated | Pass |
+| Delete last entry | user can delete their last activity/nutrition/metric profile entry | press delete button | message of entry deleted shows up | Pass |
+| Avoid deleting first entry | user can not delete their initial entry | press delete button after creating first entry | 'You can not delete your first entry' shows up | Pass |
+| Sidebar items navigation | user gets directed to the corresponding page for details on a certain card | press sidebar item | user gets navigated to the corresponding page | Pass |
+| View details/History | user gets directed to the corresponding page for details on a certain card | press button | user gets navigated to the corresponding page | Pass |
+
+* Profile page
+
+| Feature | Expected Outcome | Testing Performed | Result | Pass/Fail |
+| --- | --- | --- | --- | --- |
+| Age from birth date | user's age is calculated from their input birth date | press button | user gets navigated to the corresponding page | Pass |
+| Update profile | user can update their birth date or height | press button | a form opens up to input or upload data | Pass |
+| Height value changes metrics | user's input height affects their BMI and BMR | update height | user gets new BMI and BMR values | Pass |
+| Upload profile image | user can upload a profile image | upload image | it shows up as a profile image in side bar and on profile page | Pass |
 
 
+* Activity and Nutrition pages
+
+| Feature | Expected Outcome | Testing Performed | Result | Pass/Fail |
+| --- | --- | --- | --- | --- |
+| Display last entry | user can see their last logged entry | go to page | last entry shows | Pass |
+| Display plot | user can keep a visual track of their past entries | go to page | a plot shows | Pass |
+| Update plot | plots stay up-to-date by appending data points to the plot | add entry from dashboard | plot gets updated by last entry | Pass |
+
+* Calendar page
+
+| Feature | Expected Outcome | Testing Performed | Result | Pass/Fail |
+| --- | --- | --- | --- | --- |
+| Display calendar iframe | user can see their calendar events | go to calendar page | calendar shows | Pass |
 
 ### Known Bugs
 
