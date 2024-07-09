@@ -68,33 +68,35 @@ The aforementioned errors and warnings do not affect the functionality of the we
 
 These tests were carried out using Lighthouse
 
-
 `index.html`
 
 <p align="center">
 <img src="documentation/testing/lighthouse-home.png" alt="lighthouse-home" width="40%">
 </p>
 
-
-Quiz pages
-
-<p align="center">
-<img src="documentation/testing/lighthouse-quiz.png" alt="lighthouse-quiz" width="40%">
-</p>
-
-
-`contact.html`
+Dashboard
 
 <p align="center">
-<img src="documentation/testing/lighthouse-contact.png" alt="lighthouse-contact" width="40%">
+<img src="documentation/testing/lighthouse-dashboard.png" alt="lighthouse-dhashboard" width="40%">
 </p>
 
-`about.html`
+`profile.html`
 
 <p align="center">
-<img src="documentation/testing/lighthouse-about.png" alt="lighthouse-about" width="40%">
+<img src="documentation/testing/lighthouse-profile.png" alt="lighthouse-profile" width="40%">
 </p>
 
+`activity.html`
+
+<p align="center">
+<img src="documentation/testing/lighthouse-activity.png" alt="lighthouse-activity" width="40%">
+</p>
+
+`nutrition.html`
+
+<p align="center">
+<img src="documentation/testing/lighthouse-nutrition.png" alt="lighthouse-nutrition" width="40%">
+</p>
 
 The website scores very high on accessibility, best practices and search engine optimization. Performance can still be improved.
 

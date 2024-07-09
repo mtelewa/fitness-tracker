@@ -21,7 +21,7 @@ Link to live site - [https://fitness-tracker-mt-b349b401ceed.herokuapp.com/](htt
     * [Imagery](#imagery)
     * [Accessibility](#accessibility)
     * [Wireframes](#wireframes)
-    * [Data Base](#data-base-management) 
+    * [Database](#database) 
 * [Features](#features)
 * [Technologies Used](#technologies-used)
     * [Languages](#languages)
@@ -111,20 +111,25 @@ These fonts were chosen to convey an active dynamic environment.
 
 ### Imagery
 
-* The images chosen next as a cover to each category as well as the icons in the header are to reflect the category's nature.
+* The images chosen on the homepage are to represent a variety of sports to reflect that all kinds of activities are included.
 
 ### Wireframes
 
 * Wireframes were created using [balsamiq](https://balsamiq.com/). The following images serve as a preliminary design for the website interface and intended functionality.
+The homepage for non-authorized users is the 'Get Started' page while authorized users see their dashboard:
 
 <p align="center">
-<img src="documentation/design/index.png" alt="home" width="45%">
-<img src="documentation/design/science.png" alt="science-quiz" width="45%">
+<img src="documentation/design/home.png" alt="home" width="45%">
+<img src="documentation/design/dashboard.png" alt="dashboard" width="45%">
 </p>
 
+A user can open each card to see their details
+
 <p align="center">
-<img src="documentation/design/science_almost_correct.png" alt="home" width="45%">
-<img src="documentation/design/science_bullseye.png" alt="science-quiz" width="45%">
+<img src="documentation/design/profile.png" alt="profile" width="45%">
+<img src="documentation/design/activity.png" alt="activity" width="45%">
+<img src="documentation/design/nutrition.png" alt="nutrition" width="45%">
+<img src="documentation/design/calendar.png" alt="calendar" width="45%">
 </p>
 
 
@@ -144,7 +149,13 @@ I used the chrome extension [Web Disability Simulator](https://chrome.google.com
 <img src="documentation/design/tritanopia.png" alt="tritanopia" width="60%">
 </p>
 
-As can be seen, there is still enough contrast between the text and the background.
+As can be seen, there is still enough contrast between the content and the background.
+
+
+### Database
+
+
+
 
 - - - 
 
